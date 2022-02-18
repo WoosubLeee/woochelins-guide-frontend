@@ -1,4 +1,5 @@
 .App {
+  position: relative;
   max-width: 480px;
   height: 100%;
 }

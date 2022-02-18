@@ -1,0 +1,12 @@
+.main {
+  height: 100%;
+  width: 100%;
+}
+.listButton {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.listButtonFocused {
+  bottom: 100px !important;
+}
