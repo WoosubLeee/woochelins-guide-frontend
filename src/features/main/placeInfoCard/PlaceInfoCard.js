@@ -1,19 +1,18 @@
 import styles from "./PlaceInfoCard.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { focusPlace } from "../map/mapSlice";
-import { useParams } from "react-router-dom";
-import PlaceAddList from "./placeAddList/PlaceAddList";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { requestGetPlace } from "../../../apis/placeApi";
+import { createPath } from "../../../utils/functions/common";
 
 const PlaceInfoCard = () => {
   const { googleMapsId } = useParams();
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const focusedPlace = useSelector(state => state.map.focusedPlace);
-
-  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     if (!focusedPlace || focusedPlace.googleMapsId !== googleMapsId) {
@@ -27,14 +26,11 @@ const PlaceInfoCard = () => {
   return (
     <>
       {focusedPlace &&
-        <div>
-          <div className={styles.card}>
-            <h5>{focusedPlace.name}</h5>
-            <button onClick={() => setIsAdding(!isAdding)}>
-              <i className="bi bi-bookmark-plus" />
-            </button>
-          </div>
-          {isAdding && <PlaceAddList />}
+        <div className={styles.card}>
+          <h5>{focusedPlace.name}</h5>
+          <Link to={createPath(`/main/place/${googleMapsId}/add`, location)}>
+            <i className="bi bi-bookmark-plus" />
+          </Link>
         </div>
       }
     </>

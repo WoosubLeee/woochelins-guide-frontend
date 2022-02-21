@@ -1,11 +1,15 @@
 import styles from "./PlaceAddList.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
 import { requestGetGroupsLists } from "../../../../apis/authApi";
 import { requestGetSavedUserPlace } from "../../../../apis/placeApi";
+import { createPath } from "../../../../utils/functions/common";
 
 const PlaceAddList = () => {
+  const location = useLocation();
+
   const focusedPlace = useSelector(state => state.map.focusedPlace);
 
   const [groups, setGroups] = useState([]);
@@ -54,7 +58,8 @@ const PlaceAddList = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`full-screen ${styles.container}`}>
+      <h5>모임</h5>
       <ul>
         {saved && groups.map((group, i) => {
           return (
@@ -67,6 +72,7 @@ const PlaceAddList = () => {
           )
         })}
       </ul>
+      <h5>내 리스트</h5>
       <ul>
         {saved && placeLists.map((placeList, i) => {
           return (
@@ -79,6 +85,7 @@ const PlaceAddList = () => {
           )
         })}
       </ul>
+      <Link to={createPath(`/main/place/${focusedPlace.googleMapsId}`, location)}>닫기</Link>
     </div>
   );
 }
