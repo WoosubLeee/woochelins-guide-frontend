@@ -1,8 +1,8 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
-import { requestCreateGroup } from "../../../../apis/groupApi";
-import { createPath } from "../../../../utils/functions/common";
+import { requestCreateGroup } from "../../../../../apis/groupApi";
+import { createPath } from "../../../../../utils/functions/common";
 
 const GroupCreate = () => {
   const navigate = useNavigate();

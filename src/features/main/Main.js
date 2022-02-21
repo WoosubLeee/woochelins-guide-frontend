@@ -7,6 +7,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 import Map from "./map/Map";
 import Search from "./search/Search";
 import NavBar from './navBar/NavBar';
+import GroupBar from './groupBar/GroupBar';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Main = () => {
     <div className={styles.main}>
       <Map />
       <Search />
+      <GroupBar />
       <Outlet />
       <NavBar />
     </div>

@@ -7,7 +7,6 @@ const NavBar = () => {
 
   return (
     <nav className={styles.navBar}>
-      <Link to={createPath("/main/group/list", location)}>그룹</Link>
       <Link to={createPath("/main/place/list", location)}>장소 목록</Link>
     </nav>
   );

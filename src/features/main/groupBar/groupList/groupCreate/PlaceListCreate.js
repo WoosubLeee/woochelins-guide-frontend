@@ -1,8 +1,8 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
-import { requestCreatePlaceList } from "../../../../apis/placeApi";
-import { createPath } from "../../../../utils/functions/common";
+import { requestCreatePlaceList } from "../../../../../apis/placeApi";
+import { createPath } from "../../../../../utils/functions/common";
 
 const PlaceListCreate = () => {
   const navigate = useNavigate();

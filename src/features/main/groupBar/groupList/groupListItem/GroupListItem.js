@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, createSearchParams } from "react-router-dom";
-import { setListData } from "../../map/mapSlice";
+import { setListData } from "../../../map/mapSlice";
 
 const GroupListItem = ({ group }) => {
   const dispatch = useDispatch();
