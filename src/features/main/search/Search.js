@@ -24,6 +24,10 @@ const Search = () => {
           'name',
           'geometry.location',
           'type',
+          'formatted_address',
+          'photos',
+          'url',
+          'formatted_phone_number'
         ],
         types: [
           'establishment',
@@ -51,7 +55,11 @@ const Search = () => {
         googleMapsId: place.place_id,
         name: place.name,
         latitude: place.geometry.location.lat(),
-        longitude: place.geometry.location.lng()
+        longitude: place.geometry.location.lng(),
+        address: place.formatted_address,
+        phoneNumber: place.formatted_phone_number,
+        photos: place.photos.map(photo => photo.getUrl()),
+        googleMapsUrl: place.url
       };
       dispatch(focusPlace(payload));
       navigate(createPath(`/main/place/${place.place_id}/`, location));
