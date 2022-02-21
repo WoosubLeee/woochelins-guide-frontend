@@ -4,10 +4,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLogin: true,
+    isLoginChecked: false,
   },
   reducers: {
     setIsLogin: (state, action) => {
       state.isLogin = action.payload;
+      state.isLoginChecked = true;
     },
   }
 });

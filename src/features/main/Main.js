@@ -1,6 +1,6 @@
 import styles from './Main.module.css';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { mapApiLoaded } from './map/mapSlice';
 import { Outlet } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
@@ -11,6 +11,8 @@ import GroupBar from './groupBar/GroupBar';
 
 const Main = () => {
   const dispatch = useDispatch();
+
+  const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
 
   useEffect(() => {
     const loader = new Loader({
@@ -26,11 +28,13 @@ const Main = () => {
 
   return (
     <div className={styles.main}>
-      <Map />
-      <Search />
-      <GroupBar />
-      <Outlet />
-      <NavBar />
+      {isLoginChecked && <>
+        <Map />
+        <Search />
+        <GroupBar />
+        <Outlet />
+        <NavBar />
+      </>}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "./features/auth/authSlice";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
 import GroupCreate from './features/main/groupBar/groupList/groupCreate/GroupCreate';
 import PlaceListCreate from './features/main/groupBar/groupList/groupCreate/PlaceListCreate';
@@ -13,10 +13,13 @@ import PlaceAddList from './features/main/placeInfoCard/placeAddList/PlaceAddLis
 import Signup from './features/auth/Signup';
 import Login from './features/auth/Login';
 import { requestIsValid } from './apis/authApi';
+import { createPath } from './utils/functions/common';
 
 function App() {
-  const isLogin = useSelector(state => state.auth.isLogin);
   const dispatch = useDispatch();
+  const location = useLocation();
+  
+  const isLogin = useSelector(state => state.auth.isLogin);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -37,11 +40,13 @@ function App() {
   }, []);
 
   const mainElement = !isLogin ? {
-    element: <Navigate to="/auth/login" replace={true} />
+    element: <Navigate to="/auth/login" replace={true} state={{location: location}} />
   } : {
     element: <Main />
   };
-  const authElement = isLogin && { element: <Navigate to="/main" replace={true} /> };
+  const authElement = isLogin && (
+    { element: <Navigate to={(location.state && 'location' in location.state) ? createPath(location.state.location.pathname, location.state.location) : "/main"} replace={true} /> }
+  );
 
   return (
     <div className={`${styles.App} mx-auto`}>

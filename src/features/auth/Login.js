@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setIsLogin } from "./authSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { requestLogin } from "../../apis/authApi";
+import { createPath } from "../../utils/functions/common";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -28,7 +30,12 @@ const Login = () => {
       .then(res => {
         if (res.status === 200) {
           dispatch(setIsLogin(true));
-          navigate('/main');
+
+          if ('location' in state) {
+            navigate(createPath(state.location.pathname, state.location));
+          } else {
+            navigate('/main');
+          }
         }
       })
       .catch(err => {
