@@ -50,10 +50,8 @@ const Search = () => {
       const payload = {
         googleMapsId: place.place_id,
         name: place.name,
-        location: {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
-        }
+        latitude: place.geometry.location.lat(),
+        longitude: place.geometry.location.lng()
       };
       dispatch(focusPlace(payload));
       navigate(createPath(`/main/place/${place.place_id}/`, location));

@@ -9,15 +9,7 @@ const PlaceListItem = ({ place }) => {
   const location = useLocation();
 
   const handleClick = () => {
-    const payload = {
-      googleMapsId: place.googleMapsId,
-      name: place.name,
-      location: {
-        lat: place.latitude,
-        lng: place.longitude
-      }
-    };
-    dispatch(focusPlace(payload));
+    dispatch(focusPlace(place));
     navigate(createPath(`/main/place/${place.googleMapsId}`, location));
   }
 

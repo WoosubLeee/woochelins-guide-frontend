@@ -79,20 +79,8 @@ const Marker = ({ map }) => {
           });
 
           marker.addListener('click', () => {
-            navigate(
-              createPath(`/main/place/${place.googleMapsId}`, location),
-              { state: { prevPath: location.pathname }}
-            );
-            
-            const payload = {
-              googleMapsId: place.googleMapsId,
-              name: place.name,
-              location: {
-                lat: place.latitude,
-                lng: place.longitude
-              }
-            };
-            dispatch(focusPlace(payload));
+            navigate(createPath(`/main/place/${place.googleMapsId}`, location));            
+            dispatch(focusPlace(place));
           });
 
           newMarkers.push({
@@ -111,11 +99,15 @@ const Marker = ({ map }) => {
         markerFocused.setMap(null);
       }
       if (focusedPlace) {
+        const position = {
+          lat: focusedPlace.latitude,
+          lng: focusedPlace.longitude
+        };
         setMarkerFocused(new window.google.maps.Marker({
-          position: focusedPlace.location,
+          position: position,
           map: map,
         }));
-        map.setCenter(focusedPlace.location);
+        map.setCenter(position);
       }
     }
   }, [map, focusedPlace]);

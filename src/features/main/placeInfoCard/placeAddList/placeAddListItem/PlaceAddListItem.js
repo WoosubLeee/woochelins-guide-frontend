@@ -18,15 +18,10 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
 
     const requestAddRemove = () => {
       if (!isSaved) {
-        const data = {
-          ...focusedPlace,
-          latitude: focusedPlace.location.lat,
-          longitude: focusedPlace.location.lng
-        }
         if (group.isGroup) {
-          return requestAddGroupPlace(group.id, data);
+          return requestAddGroupPlace(group.id, focusedPlace);
         } else {
-          return requestAddPlace(group.id, data);
+          return requestAddPlace(group.id, focusedPlace);
         }
       } else {
         if (group.isGroup) {

@@ -9,6 +9,7 @@ import GroupCreate from './features/main/groupBar/groupList/groupCreate/GroupCre
 import PlaceListCreate from './features/main/groupBar/groupList/groupCreate/PlaceListCreate';
 import PlaceList from './features/main/placeList/PlaceList';
 import PlaceInfoCard from './features/main/placeInfoCard/PlaceInfoCard';
+import PlaceAddList from './features/main/placeInfoCard/placeAddList/PlaceAddList';
 import Signup from './features/auth/Signup';
 import Login from './features/auth/Login';
 import { requestIsValid } from './apis/authApi';
@@ -48,6 +49,7 @@ function App() {
         <Route index element={<Navigate to="/main" replace={true} />} />
         <Route path="main" {...mainElement}>
           <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
+          <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/list" element={<PlaceList />} />
           <Route path="group/create" element={<GroupCreate />} />
           <Route path="placelist/create" element={<PlaceListCreate />} />
