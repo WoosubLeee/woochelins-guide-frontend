@@ -1,13 +1,12 @@
 import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFocusedPlace } from "./mapSlice";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import Marker from "./marker/Marker";
+import ListMarkers from "./listMarkers/ListMarkers";
+import FocusMarker from "./focusMarker/FocusMarker";
 import { createPath } from "../../../utils/functions/common";
 
 const Map = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -28,7 +27,6 @@ const Map = () => {
       setMap(newMap);
       
       newMap.addListener('click', () => {
-        dispatch(removeFocusedPlace());
         navigateToMain();
       });
     }
@@ -56,7 +54,8 @@ const Map = () => {
 
   return (
     <div id="map" className={styles.map}>
-      <Marker map={map} />
+      <ListMarkers map={map} />
+      <FocusMarker map={map} />
     </div>
   );
 }

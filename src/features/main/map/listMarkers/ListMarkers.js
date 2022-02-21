@@ -1,23 +1,21 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { focusPlace, setListData, setListUpdateNeeded } from "../mapSlice";
+import { setListData, setListUpdateNeeded } from "../mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import { requestGetPlaceList, requestGetPlaceListDefault } from "../../../../apis/placeApi";
 import { requestGetGroup } from "../../../../apis/groupApi";
 import { createPath } from "../../../../utils/functions/common";
 
-const Marker = ({ map }) => {
+const ListMarkers = ({ map }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const listData = useSelector(state => state.map.listData);
   const listUpdateNeeded = useSelector(state => state.map.listUpdateNeeded);
-  const focusedPlace = useSelector(state => state.map.focusedPlace);
 
   const [markers, setMarkers] = useState([]);
-  const [markerFocused, setMarkerFocused] = useState(undefined);
 
   useEffect(() => {
     if (listUpdateNeeded) {
@@ -55,6 +53,7 @@ const Marker = ({ map }) => {
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
     if (map && listData) {
+
       const places = listData.isGroup ? listData.placeList.places : listData.places;
 
       // 기존에 표시된 Marker들 중 list에서 삭제된 것들 제거
@@ -79,8 +78,7 @@ const Marker = ({ map }) => {
           });
 
           marker.addListener('click', () => {
-            navigate(createPath(`/main/place/${place.googleMapsId}`, location));            
-            dispatch(focusPlace(place));
+            navigate(createPath(`/main/place/${place.googleMapsId}`, location));
           });
 
           newMarkers.push({
@@ -92,29 +90,10 @@ const Marker = ({ map }) => {
       setMarkers(newMarkers);
     }
   }, [map, listData]);
-  
-  useEffect(() => {
-    if (map) {
-      if (markerFocused) {
-        markerFocused.setMap(null);
-      }
-      if (focusedPlace) {
-        const position = {
-          lat: focusedPlace.latitude,
-          lng: focusedPlace.longitude
-        };
-        setMarkerFocused(new window.google.maps.Marker({
-          position: position,
-          map: map,
-        }));
-        map.setCenter(position);
-      }
-    }
-  }, [map, focusedPlace]);
 
   return (
     <></>
   );
 };
  
-export default Marker;
+export default ListMarkers;
