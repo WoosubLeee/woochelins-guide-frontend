@@ -29,7 +29,7 @@ const Map = () => {
       
       newMap.addListener('click', () => {
         dispatch(removeFocusedPlace());
-        navigate(createPath('/main', location));
+        navigateToMain();
       });
     }
   }, [isMapApiLoaded]);
@@ -46,6 +46,13 @@ const Map = () => {
       });
     }
   }, [map]);
+
+  // newMap.addListener 내부에 작성 시
+  // location을 이벤트를 추가할 때 기준으로 받아오게 되어
+  // query가 정확히 저장되지 않아 함수를 따로 생성함.
+  const navigateToMain = () => {
+    navigate(createPath('/main', location));
+  };
 
   return (
     <div id="map" className={styles.map}>

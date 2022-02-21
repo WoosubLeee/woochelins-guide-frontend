@@ -1,10 +1,13 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setListUpdateNeeded } from "../../../map/mapSlice";
 import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { requestCreateGroup } from "../../../../../apis/groupApi";
 import { createPath } from "../../../../../utils/functions/common";
 
 const GroupCreate = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +36,7 @@ const GroupCreate = () => {
           pathname: '/main',
           search: search
         });
+        dispatch(setListUpdateNeeded(true));
       });
   };
   return (
