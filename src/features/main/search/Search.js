@@ -1,12 +1,14 @@
 import styles from "./Search.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { focusPlace } from "../map/mapSlice";
+import { createPath } from "../../../utils/functions/common";
 
 const Search = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
   const focusedPlace = useSelector(state => state.map.focusedPlace);
@@ -45,8 +47,6 @@ const Search = () => {
     
     const availableTypes = ['food', 'bakery', 'bar', 'cafe', 'meal_delivery', 'meal_takeaway', 'restaurant'];
     if (availableTypes.some(type => place.types.includes(type))) {
-      navigate('/main/place');
-
       const payload = {
         googleMapsId: place.place_id,
         name: place.name,
@@ -56,8 +56,9 @@ const Search = () => {
         }
       };
       dispatch(focusPlace(payload));
+      navigate(createPath(`/main/place/${place.place_id}/`, location));
     } else {
-      console.log('not available type'); 
+      alert('식당, 카페를 선택해주세요.'); 
     }
   }, []);
 

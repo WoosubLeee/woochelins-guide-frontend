@@ -1,3 +1,5 @@
+import { camelToSnake } from "../utils/functions/common";
+
 const requestMETHODToken = async (method, url, data) => {
   const token = localStorage.getItem('token');
   let options = {
@@ -8,7 +10,7 @@ const requestMETHODToken = async (method, url, data) => {
     }
   }
   if (data) {
-    options.body = JSON.stringify(data);
+    options.body = JSON.stringify(camelToSnake(data));
   }
 
   return await fetch(url, options);
@@ -26,7 +28,7 @@ export const requestPOST = async (url, data) => {
     }
   };
   if (data) {
-    options.body = JSON.stringify(data);
+    options.body = JSON.stringify(camelToSnake(data));
   }
 
   return await fetch(url, options);

@@ -2,10 +2,14 @@ import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFocusedPlace } from "./mapSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import Marker from "./marker/Marker";
+import { createPath } from "../../../utils/functions/common";
 
 const Map = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
 
@@ -18,13 +22,14 @@ const Map = () => {
           lat: 37.48,
           lng: 126.95,
         },
-        zoom: 14,
+        zoom: 13,
         disableDefaultUI: true,
       })
       setMap(newMap);
       
       newMap.addListener('click', () => {
         dispatch(removeFocusedPlace());
+        navigate(createPath('/main', location));
       });
     }
   }, [isMapApiLoaded]);
@@ -37,7 +42,7 @@ const Map = () => {
           lng: position.coords.longitude,
         });
       }, () => {
-        console.log('Error: The Geolocation service failed.');
+        console.error('Error: The Geolocation service failed.');
       });
     }
   }, [map]);

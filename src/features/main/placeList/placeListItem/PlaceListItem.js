@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 import { focusPlace } from "../../map/mapSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createPath } from "../../../../utils/functions/common";
 
 const PlaceListItem = ({ place }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClick = () => {
-    navigate('/main/place');
-    
     const payload = {
-      googleMapsId: place.google_maps_id,
+      googleMapsId: place.googleMapsId,
       name: place.name,
       location: {
         lat: place.latitude,
@@ -18,6 +18,7 @@ const PlaceListItem = ({ place }) => {
       }
     };
     dispatch(focusPlace(payload));
+    navigate(createPath(`/main/place/${place.googleMapsId}`, location));
   }
 
   return (

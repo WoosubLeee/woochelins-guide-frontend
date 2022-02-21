@@ -1,10 +1,13 @@
 import styles from "./PlaceList.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PlaceListItem from "./placeListItem/PlaceListItem";
+import { createPath } from "../../../utils/functions/common";
 
 const PlaceList = () => {
+  const location = useLocation();
+
   const listData = useSelector(state => state.map.listData);
 
   const [places, setPlaces] = useState([]);
@@ -12,7 +15,7 @@ const PlaceList = () => {
   useEffect(() => {
     if (listData) {
       if (listData.isGroup) {
-        setPlaces(listData.place_list.places);
+        setPlaces(listData.placeList.places);
       } else {
         setPlaces(listData.places);
       }
@@ -28,7 +31,7 @@ const PlaceList = () => {
           )
         })}
       </ul>
-      <Link to="/main">닫기</Link>
+      <Link to={createPath("/main", location)}>닫기</Link>
     </div>
   );
 }

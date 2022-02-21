@@ -1,10 +1,12 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { requestCreateGroup } from "../../../../apis/groupApi";
+import { createPath } from "../../../../utils/functions/common";
 
 const GroupCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [groupInfo, setGroupInfo] = useState({
     name: ''
@@ -22,8 +24,15 @@ const GroupCreate = () => {
     e.preventDefault();
 
     requestCreateGroup(groupInfo)
-      .then(() => {
-        navigate('/main/place/list/list');
+      .then(data => {
+        const search = `?${createSearchParams({
+          type: 'group',
+          id: data.id
+        })}`;
+        navigate({
+          pathname: '/main',
+          search: search
+        });
       });
   };
   return (
@@ -32,7 +41,7 @@ const GroupCreate = () => {
       <label>이름</label>
       <input value={groupInfo.name} type="text" className="form-control" onChange={e => handleChange("name", e.target.value)} />
       <button>생성</button>
-      <Link to="/main/place/list/list">닫기</Link>
+      <Link to={createPath("/main/group/list", location)}>닫기</Link>
     </form>
   );
 }

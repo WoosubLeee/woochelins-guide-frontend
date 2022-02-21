@@ -1,26 +1,34 @@
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { setListData } from "../../map/mapSlice";
 
-const GroupListItem = ({ placeList }) => {
+const GroupListItem = ({ group }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
     const data = {
-      ...placeList,
+      ...group,
       isGroup: false
     };
-    if ('place_list' in placeList) {
+    if ('placeList' in group) {
       data.isGroup = true;
     }
     dispatch(setListData(data));
-    console.log(data);
-    navigate('/main');
+
+    const type = data.isGroup ? 'group' : 'placelist';
+    const search = `?${createSearchParams({
+      type: type,
+      id: data.id
+    })}`
+    navigate({
+      pathname: '/main',
+      search: search
+    });
   };
 
   return (
-    <li onClick={handleClick}>{placeList.name}</li>
+    <li onClick={handleClick}>{group.name}</li>
   );
 }
  

@@ -7,7 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Main from './features/main/Main';
 import GroupList from './features/main/groupList/GroupList';
 import GroupCreate from './features/main/groupList/groupCreate/GroupCreate';
-import PlaceListCreate from './features/main/groupList/groupCreate/PlceListCreate';
+import PlaceListCreate from './features/main/groupList/groupCreate/PlaceListCreate';
 import PlaceList from './features/main/placeList/PlaceList';
 import PlaceInfoCard from './features/main/placeInfoCard/PlaceInfoCard';
 import Signup from './features/auth/Signup';
@@ -48,11 +48,11 @@ function App() {
       <Routes>
         <Route index element={<Navigate to="/main" replace={true} />} />
         <Route path="main" {...mainElement}>
-          <Route path="place" element={<PlaceInfoCard />} />
+          <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
           <Route path="place/list" element={<PlaceList />} />
-          <Route path="place-list/list" element={<GroupList />} />
+          <Route path="group/list" element={<GroupList />} />
           <Route path="group/create" element={<GroupCreate />} />
-          <Route path="place-list/create" element={<PlaceListCreate />} />
+          <Route path="placelist/create" element={<PlaceListCreate />} />
         </Route>
         <Route path="auth" {...authElement}>
           <Route path="signup" element={<Signup />} />

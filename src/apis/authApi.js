@@ -1,4 +1,5 @@
-import { requestPOST, requestPOSTToken } from "./apiRequest";
+import { snakeToCamel } from "../utils/functions/common";
+import { requestGETToken, requestPOST, requestPOSTToken } from "./apiRequest";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + 'accounts/'
 
@@ -25,4 +26,14 @@ export const requestIsValid = async () => {
   const url = BASE_URL + 'validate/';
   const res = await requestPOSTToken(url);
   return res;
+};
+
+export const requestGetGroupsLists = async () => {
+  const url = BASE_URL + 'groups-lists/';
+  const res = await requestGETToken(url);
+  if (res.status === 200) {
+    let data = await res.json();
+    data = snakeToCamel(data);
+    return data;
+  }
 };
