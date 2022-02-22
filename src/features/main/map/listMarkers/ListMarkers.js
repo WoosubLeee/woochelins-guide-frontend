@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setListData, setListUpdateNeeded } from "../mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -50,6 +50,13 @@ const ListMarkers = ({ map }) => {
     }
   }, [listUpdateNeeded]);
 
+  const icon = map && {
+    url: "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png",
+    scaledSize: new window.google.maps.Size(32, 32),
+    origin: new window.google.maps.Point(0, 0),
+    anchor: new window.google.maps.Point(16, 32)
+  };
+
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
     if (map && listData) {
@@ -74,6 +81,7 @@ const ListMarkers = ({ map }) => {
               lat: place.latitude,
               lng: place.longitude
             },
+            icon: icon,
             map: map
           });
 
