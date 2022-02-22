@@ -22,7 +22,7 @@ const PlaceInfoCard = () => {
           dispatch(focusPlace(data));
         });
     }
-  }, []);
+  }, [location]);
 
   return (
     <>
