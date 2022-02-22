@@ -2,14 +2,12 @@ import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setListUpdateNeeded } from "../../../map/mapSlice";
-import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { requestCreatePlaceList } from "../../../../../apis/placeApi";
-import { createPath } from "../../../../../utils/functions/common";
 
 const PlaceListCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [listInfo, setListInfo] = useState({
     name: ''
@@ -45,8 +43,8 @@ const PlaceListCreate = () => {
       <h1>리스트 추가</h1>
       <label>이름</label>
       <input value={listInfo.name} type="text" className="form-control" onChange={e => handleChange("name", e.target.value)} />
-      <button>생성</button>
-      <Link to={createPath("/main/group/list", location)}>닫기</Link>
+      <button type="submit">생성</button>
+      <button type="button" onClick={() => navigate(-1)}>닫기</button>
     </form>
   );
 }
