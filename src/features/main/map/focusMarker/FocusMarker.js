@@ -24,6 +24,8 @@ const FocusMarker = ({ map }) => {
         setMarkerFocused(new window.google.maps.Marker({
           position: position,
           map: map,
+          // 항상 ListMarker보다 앞쪽에 보이게 하기 위해
+          zIndex: 1
         }));
         map.setCenter(position);
       }
