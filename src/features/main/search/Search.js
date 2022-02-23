@@ -58,7 +58,7 @@ const Search = () => {
         longitude: place.geometry.location.lng(),
         address: place.formatted_address,
         phoneNumber: place.formatted_phone_number,
-        photos: place.photos.map(photo => photo.getUrl()),
+        photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
         googleMapsUrl: place.url
       };
       dispatch(focusPlace(payload));
