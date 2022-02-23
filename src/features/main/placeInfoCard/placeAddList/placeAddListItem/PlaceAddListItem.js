@@ -42,7 +42,7 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
           dispatch(setListUpdateNeeded(true));
         } else if ('type' in queries && 'id' in queries) {
           if ((group.isGroup && queries.type === 'group') || (!group.isGroup && queries.type === 'placelist')) {
-            if (queries.id === group.id) {
+            if (Number(queries.id) === group.id) {
               dispatch(setListUpdateNeeded(true));
             }
           }

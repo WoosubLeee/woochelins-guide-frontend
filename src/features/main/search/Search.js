@@ -46,7 +46,7 @@ const Search = () => {
     }
   }, [focusedPlace]);
 
-  const handlePlaceChanged = useCallback(() => {
+  const handlePlaceChanged = () => {
     const place = autoComplete.current.getPlace();
     
     const availableTypes = ['food', 'bakery', 'bar', 'cafe', 'meal_delivery', 'meal_takeaway', 'restaurant'];
@@ -66,7 +66,7 @@ const Search = () => {
     } else {
       alert('식당, 카페를 선택해주세요.'); 
     }
-  }, []);
+  };
 
   return (
     <div className={styles.search}>
