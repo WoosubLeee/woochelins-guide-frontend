@@ -1,17 +1,17 @@
 import styles from "./GroupList.module.css";
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import GroupListItem from "./groupListItem/GroupListItem";
 import { requestGetPlaceListUser } from "../../../../apis/placeApi";
 import { requestGetGroupListUser } from "../../../../apis/groupApi";
 import { createPath } from "../../../../utils/functions/common";
 
-const GroupList = ({ setListExpanded }) => {
+const GroupList = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [groupList, setGroupList] = useState([]);
   const [placeListList, setPlaceListList] = useState([]);
-  const [eventAdded, setEventAdded] = useState(false);
 
   useEffect(() => {
     requestGetGroupListUser()
@@ -24,22 +24,8 @@ const GroupList = ({ setListExpanded }) => {
       });
   }, []);
 
-  const listRef = useRef();
-  const btnRef = useRef();
-  useEffect(() => {
-    if (listRef.current && !eventAdded) {
-      window.addEventListener('click', handleClick);
-      setEventAdded(true);
-    }
-  }, [listRef.current]);
-
-  const handleClick = () => {
-    window.removeEventListener('click', handleClick);
-    setListExpanded(false);
-  };
-
   return (
-    <div ref={listRef} className={styles.container}>
+    <div className={`full-screen ${styles.container}`}>
       <ul>
         <h5>모임</h5>
         {groupList.map((group, i) => {
@@ -59,7 +45,7 @@ const GroupList = ({ setListExpanded }) => {
       </ul>
       <Link to={createPath("/main/placelist/create", location)}>추가하기</Link>
       <br />
-      <button ref={btnRef}>닫기</button>
+      <button onClick={() => navigate(-1)}>닫기</button>
     </div>
   );
 }

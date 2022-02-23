@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "./features/auth/authSlice";
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
+import GroupList from './features/main/groupBar/groupList/GroupList';
 import GroupCreate from './features/main/groupBar/groupList/groupCreate/GroupCreate';
 import PlaceListCreate from './features/main/groupBar/groupList/groupCreate/PlaceListCreate';
 import PlaceList from './features/main/placeList/PlaceList';
@@ -56,6 +57,7 @@ function App() {
           <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
           <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/list" element={<PlaceList />} />
+          <Route path="group/list" element={<GroupList />} />
           <Route path="group/create" element={<GroupCreate />} />
           <Route path="placelist/create" element={<PlaceListCreate />} />
         </Route>

@@ -39,7 +39,7 @@ const PlaceInfoCard = () => {
             })}
           </div>
           <Link to={createPath(`/main/place/${googleMapsId}/add`, location)}>
-            <i className="bi bi-bookmark-plus" />
+            <i className={`bi bi-bookmark-plus ${styles.bookmarkIcon}`} />
           </Link>
           <a href={focusedPlace.googleMapsUrl} target="_blank" rel="noreferrer">
             <img src={GoogleMapsIcon} alt="" height={"25px"} />

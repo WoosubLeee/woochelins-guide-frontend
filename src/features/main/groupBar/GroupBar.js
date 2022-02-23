@@ -1,25 +1,20 @@
 import styles from "./GroupBar.module.css";
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import GroupList from "./groupList/GroupList";
+import { Link, useLocation } from "react-router-dom";
+import { createPath } from "../../../utils/functions/common";
 
 const GroupBar = () => {
+  const location = useLocation();
+
   const listData = useSelector(state => state.map.listData);
-
-  const [listExpanded, setListExpanded] = useState(false);
-
-  const handleClick = () => {
-    if (!listExpanded) {
-      setListExpanded(true);
-    }
-  };
 
   return (
     <>
-      {listData && <div onClick={handleClick} className={styles.container}>
-        {listData.name}<i className="bi bi-chevron-down"></i>
-        {listExpanded && <GroupList setListExpanded={setListExpanded} />}
-      </div>}
+      {listData &&
+        <Link to={createPath("/main/group/list", location)} className={styles.container}>
+          {listData.name}<i className="bi bi-chevron-down"></i>
+        </Link>
+      }
     </>
   );
 }
