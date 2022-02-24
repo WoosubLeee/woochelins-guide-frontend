@@ -7,7 +7,7 @@ const NavBar = () => {
 
   return (
     <nav className={styles.navBar}>
-      <Link to={createPath("/main/place/list", location)}>장소 목록</Link>
+      <Link to={createPath("/main/menu", location)}><i className="fa-solid fa-bars fa-2xl"></i></Link>
     </nav>
   );
 }

@@ -11,9 +11,18 @@ const GroupBar = () => {
   return (
     <>
       {listData &&
-        <Link to={createPath("/main/group/list", location)} className={styles.container}>
-          {listData.name}<i className="bi bi-chevron-down"></i>
-        </Link>
+        <div className={styles.container}>
+          {listData.isGroup ? (
+            <Link to={createPath("/main/group/info", location)}>
+              <i className="fa-solid fa-users mx-3"></i>
+            </Link>
+          ) : (
+            <></>
+          )}
+          <Link to={createPath("/main/place/list", location)}>
+            {listData.name}<i className="bi bi-chevron-down"></i>
+          </Link>
+        </div>
       }
     </>
   );

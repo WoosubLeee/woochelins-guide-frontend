@@ -5,16 +5,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "./features/auth/authSlice";
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
-import GroupList from './features/main/groupBar/groupList/GroupList';
-import GroupCreate from './features/main/groupBar/groupList/groupCreate/GroupCreate';
-import PlaceListCreate from './features/main/groupBar/groupList/groupCreate/PlaceListCreate';
-import PlaceList from './features/main/placeList/PlaceList';
 import PlaceInfoCard from './features/main/placeInfoCard/PlaceInfoCard';
 import PlaceAddList from './features/main/placeInfoCard/placeAddList/PlaceAddList';
+import PlaceList from './features/main/placeList/PlaceList';
+import Menu from './features/main/menu/Menu';
+import GroupInfo from './features/main/groupInfo/GroupInfo';
+import GroupList from './features/main/menu/groupList/GroupList';
+import GroupCreate from './features/main/menu/groupList/groupCreate/GroupCreate';
+import PlaceListCreate from './features/main/menu/groupList/groupCreate/PlaceListCreate';
 import Signup from './features/auth/Signup';
 import Login from './features/auth/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
+import GroupInvitation from './features/main/groupInfo/groupInvitation/GroupInvitation';
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +60,9 @@ function App() {
           <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
           <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/list" element={<PlaceList />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="group/info" element={<GroupInfo />} />
+          <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />
           <Route path="group/list" element={<GroupList />} />
           <Route path="group/create" element={<GroupCreate />} />
           <Route path="placelist/create" element={<PlaceListCreate />} />
