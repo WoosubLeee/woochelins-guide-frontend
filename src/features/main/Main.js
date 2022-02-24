@@ -30,9 +30,9 @@ const Main = () => {
     <div className={styles.main}>
       {isLoginChecked && <>
         <Map />
+        <Outlet />
         <Search />
         <GroupBar />
-        <Outlet />
         <NavBar />
       </>}
     </div>

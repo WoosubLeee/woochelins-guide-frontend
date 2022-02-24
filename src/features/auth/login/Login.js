@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setIsLogin } from "../authSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import FullWidthBtn from '../../../components/buttons/fullWidthBtn/FullWidthBtn';
 import { requestLogin } from "../../../apis/authApi";
 import { createPath } from "../../../utils/functions/common";
+import BottomBorderInput from '../../../components/inputs/bottomBorderInput/BottomBorderInput';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const Login = () => {
         if (res.status === 200) {
           dispatch(setIsLogin(true));
 
-          if ('location' in state) {
+          if (state && 'location' in state) {
             navigate(createPath(state.location.pathname, state.location));
           } else {
             navigate('/main');
@@ -45,38 +47,30 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.headerContainer}>
+        <h1 className={styles.header}>우슐랭</h1>
+        <h1 className={styles.header}>가이드</h1>
+      </div>
       <form onSubmit={e => handleSubmit(e)} className={styles.form}>
-        <div className={styles.inputDiv}>
-          <input
-            value={userInfo.email}
-            type="email"
-            placeholder="이메일"
-            onChange={e => handleInput("email", e.target.value)}
-            className={styles.input}
-          />
-          {userInfo.email &&
-            <i
-              className={`fa-solid fa-circle-xmark ${styles.clearIcon}`}
-              onClick={() => handleInput('email', '')}
-            />
-          }
-        </div>
-        <div className={styles.inputDiv}>
-          <input
-            value={userInfo.password}
-            type="password"
-            placeholder="비밀번호"
-            onChange={e => handleInput("password", e.target.value)}
-            className={styles.input}
-          />
-          {userInfo.password &&
-            <i
-              className={`fa-solid fa-circle-xmark ${styles.clearIcon}`}
-              onClick={() => handleInput('password', '')}
-            />
-          }
-        </div>
-        <button className={`btn btn-success ${styles.loginBtn}`}>로그인</button>
+        <BottomBorderInput
+          inputProps={{
+            type: "email",
+            value: userInfo.email,
+            placeholder: "이메일",
+            onChange: e => handleInput("email", e.target.value),
+          }}
+          iProps={{onClick: () => handleInput("email", "")}}
+        />
+        <BottomBorderInput
+          inputProps={{
+            type: "password",
+            value: userInfo.password,
+            placeholder: "비밀번호",
+            onChange: e => handleInput("password", e.target.value),
+          }}
+          iProps={{onClick: () => handleInput("password", "")}}
+        />
+        <FullWidthBtn text="로그인" />
       </form>
       <div className={styles.bottomDiv}>
         <span className="me-2">혹시, 우슐랭가이드가 처음이신가요?</span>

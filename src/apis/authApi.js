@@ -6,10 +6,7 @@ const BASE_URL = process.env.REACT_APP_SERVER_URL + 'accounts/'
 export const requestSignup = async userInfo => {
   const url = BASE_URL + 'signup/';
   const res = await requestPOST(url, userInfo);
-  if (res.status === 201) {
-    const loginRes = await requestLogin(userInfo);
-    return loginRes;
-  }
+  return res;
 };
 
 export const requestLogin = async userInfo => {
