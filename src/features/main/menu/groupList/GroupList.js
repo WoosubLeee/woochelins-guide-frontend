@@ -45,7 +45,7 @@ const GroupList = () => {
       </ul>
       <Link to={createPath("/main/placelist/create", location)}>추가하기</Link>
       <br />
-      <button onClick={() => navigate(-1)}>닫기</button>
+      <button onClick={() => navigate(createPath('/main', location))}>닫기</button>
     </div>
   );
 }

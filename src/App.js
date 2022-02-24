@@ -14,7 +14,7 @@ import GroupList from './features/main/menu/groupList/GroupList';
 import GroupCreate from './features/main/menu/groupList/groupCreate/GroupCreate';
 import PlaceListCreate from './features/main/menu/groupList/groupCreate/PlaceListCreate';
 import Signup from './features/auth/Signup';
-import Login from './features/auth/Login';
+import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
 import GroupInvitation from './features/main/groupInfo/groupInvitation/GroupInvitation';
