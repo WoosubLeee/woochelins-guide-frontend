@@ -1,11 +1,11 @@
 import styles from "./PlaceInfoCard.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { focusPlace } from "../map/mapSlice";
+import { focusPlace } from "../../map/mapSlice";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { requestGetPlace } from "../../../apis/placeApi";
-import { createPath } from "../../../utils/functions/common";
-import GoogleMapsIcon from "../../../utils/images/google-maps-icon.svg"
+import { requestGetPlace } from "../../../../apis/placeApi";
+import { createPath } from "../../../../utils/functions/common";
+import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 
 const PlaceInfoCard = () => {
   const { googleMapsId } = useParams();

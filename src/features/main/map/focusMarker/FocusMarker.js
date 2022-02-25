@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFocusedPlace } from "../mapSlice";
 import { useParams } from "react-router-dom";
 
-const FocusMarker = ({ map }) => {
+const FocusMarker = () => {
   const dispatch = useDispatch();
   const params = useParams();
 
+  const map = useSelector(state => state.map.map);
   const focusedPlace = useSelector(state => state.map.focusedPlace);
 
   const [markerFocused, setMarkerFocused] = useState(undefined);

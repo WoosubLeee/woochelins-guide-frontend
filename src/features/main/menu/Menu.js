@@ -1,4 +1,4 @@
-import GroupList from "./groupList/GroupList";
+import GroupList from "../group/groupList/GroupList";
 
 const Menu = () => {
   return (

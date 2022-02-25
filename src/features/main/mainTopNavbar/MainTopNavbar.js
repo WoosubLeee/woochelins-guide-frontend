@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { createPath } from '../../../utils/functions/common';
 
-const MainTopNavbar = () => {
+const MainTopNavbar = ({ setIsSearching }) => {
   const location = useLocation();
 
   const listData = useSelector(state => state.map.listData);
@@ -19,13 +19,13 @@ const MainTopNavbar = () => {
           <></>
         )}
         <div className={styles.listContainer}>
-          <Link to={createPath("/main/place/list", location)} className={styles.header}>
+          <Link to={createPath("/main/group/list", location)} className={styles.header}>
             {listData.name}<i className="bi bi-chevron-down ms-1" />
           </Link>
         </div>
-        <Link to={createPath("/main/search", location)} className={styles.serachIcon}>
+        <div onClick={() => setIsSearching(true)} className={styles.searchIcon}>
           <i className="bi bi-search"></i>
-        </Link>
+        </div>
       </>}
     </nav>
   );

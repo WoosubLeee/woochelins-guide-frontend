@@ -1,7 +1,7 @@
 import styles from "./GroupInfo.module.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { requestCreateGroupInvitationToken, requestIsGroupAdmin } from "../../../apis/groupApi";
+import { requestCreateGroupInvitationToken, requestIsGroupAdmin } from "../../../../apis/groupApi";
 import { useRef } from "react";
 
 const GroupInfo = () => {

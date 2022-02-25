@@ -5,19 +5,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "./features/auth/authSlice";
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
-import PlaceInfoCard from './features/main/placeInfoCard/PlaceInfoCard';
-import PlaceAddList from './features/main/placeInfoCard/placeAddList/PlaceAddList';
-import PlaceList from './features/main/placeList/PlaceList';
+import Search from './features/main/place/search/Search';
+import PlaceInfoCard from './features/main/place/placeInfoCard/PlaceInfoCard';
+import PlaceAddList from './features/main/place/placeAddList/PlaceAddList';
+import PlaceList from './features/main/place/placeList/PlaceList';
 import Menu from './features/main/menu/Menu';
-import GroupInfo from './features/main/groupInfo/GroupInfo';
-import GroupList from './features/main/menu/groupList/GroupList';
-import GroupCreate from './features/main/menu/groupList/groupCreate/GroupCreate';
-import PlaceListCreate from './features/main/menu/groupList/groupCreate/PlaceListCreate';
+import GroupInfo from './features/main/group/groupInfo/GroupInfo';
+import GroupInvitation from './features/main/group/groupInfo/groupInvitation/GroupInvitation';
+import GroupList from './features/main/group/groupList/GroupList';
+import GroupCreate from './features/main/group/groupCreate/GroupCreate';
+import PlaceListCreate from './features/main/group/groupCreate/PlaceListCreate';
 import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
-import GroupInvitation from './features/main/groupInfo/groupInvitation/GroupInvitation';
+import MainTopNavbar from './features/main/mainTopNavbar/MainTopNavbar';
+import Home from './features/main/home/Home';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,9 +58,11 @@ function App() {
   return (
     <div className={`${styles.App} mx-auto`}>
       <Routes>
-        <Route index element={<Navigate to="/main" replace={true} />} />
+        <Route path="/" element={<Navigate to="/main/place" replace={true} />} />
         <Route path="main" {...mainElement}>
-          <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
+          <Route path="place" element={<Home />}>
+            <Route path=":googleMapsId" element={<PlaceInfoCard />} />
+          </Route>
           <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/list" element={<PlaceList />} />
           <Route path="menu" element={<Menu />} />

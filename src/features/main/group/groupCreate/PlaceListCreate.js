@@ -1,9 +1,9 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setListUpdateNeeded } from "../../../map/mapSlice";
+import { setListUpdateNeeded } from "../../map/mapSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { requestCreatePlaceList } from "../../../../../apis/placeApi";
+import { requestCreatePlaceList } from "../../../../apis/placeApi";
 
 const PlaceListCreate = () => {
   const dispatch = useDispatch();

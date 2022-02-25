@@ -1,18 +1,20 @@
 import styles from "./Map.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { setMap as seetMap } from "./mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import ListMarkers from "./listMarkers/ListMarkers";
 import FocusMarker from "./focusMarker/FocusMarker";
 import { createPath } from "../../../utils/functions/common";
+import { useDispatch } from "react-redux";
 
 const Map = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   
   const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
-
-  const [map, setMap] = useState(undefined);
+  const map = useSelector(state => state.map.map);
   
   useEffect(() => {
     if (isMapApiLoaded) {
@@ -24,7 +26,7 @@ const Map = () => {
         zoom: 13,
         disableDefaultUI: true,
       })
-      setMap(newMap);
+      dispatch(seetMap(newMap));
       
       newMap.addListener('click', () => {
         navigateToMain();
@@ -54,8 +56,8 @@ const Map = () => {
 
   return (
     <div id="map" className={styles.map}>
-      <ListMarkers map={map} />
-      <FocusMarker map={map} />
+      <ListMarkers />
+      <FocusMarker />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createSearchParams, Link, useNavigate, useParams } from "react-router-dom";
-import { requestAddMember, requestGroupInvitationIsValid } from "../../../../apis/groupApi";
-import { snakeToCamel } from "../../../../utils/functions/common";
+import { requestAddMember, requestGroupInvitationIsValid } from "../../../../../apis/groupApi";
+import { snakeToCamel } from "../../../../../utils/functions/common";
 
 const GroupInvitation = () => {
   const navigate = useNavigate();

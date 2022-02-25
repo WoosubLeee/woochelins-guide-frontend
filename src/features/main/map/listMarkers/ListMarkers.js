@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setListData, setListUpdateNeeded } from "../mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -7,11 +7,12 @@ import { requestGetPlaceList, requestGetPlaceListDefault } from "../../../../api
 import { requestGetGroup } from "../../../../apis/groupApi";
 import { createPath } from "../../../../utils/functions/common";
 
-const ListMarkers = ({ map }) => {
+const ListMarkers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const map = useSelector(state => state.map.map);
   const listData = useSelector(state => state.map.listData);
   const listUpdateNeeded = useSelector(state => state.map.listUpdateNeeded);
 

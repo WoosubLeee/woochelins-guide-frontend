@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import PlaceListItem from "./placeListItem/PlaceListItem";
-import { createPath } from "../../../utils/functions/common";
+import { createPath } from "../../../../utils/functions/common";
 
 const PlaceList = () => {
   const location = useLocation();

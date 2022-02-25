@@ -1,9 +1,9 @@
 import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setListUpdateNeeded } from "../../../map/mapSlice";
+import { setListUpdateNeeded } from "../../map/mapSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { requestCreateGroup } from "../../../../../apis/groupApi";
+import { requestCreateGroup } from "../../../../apis/groupApi";
 
 const GroupCreate = () => {
   const dispatch = useDispatch();
