@@ -7,9 +7,6 @@ export const snakeToCamel = data => {
       if ([Object, Array].includes(newValue.constructor)) {
         newValue = snakeToCamel(newValue);
       }
-      if (newKey === 'photos') {
-        newValue = newValue.split(', ');
-      }
       newObj[newKey] = newValue;
     }
     return newObj;

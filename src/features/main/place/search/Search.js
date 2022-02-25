@@ -91,7 +91,7 @@ const Search = ({ setIsSearching }) => {
       <div>
         {predictions.map((prediction, i) => {
           return (
-            <PredictionsItem key={i} prediction={prediction} service={placesService} sessionToken={sessionToken} />
+            <PredictionsItem key={i} prediction={prediction} service={placesService} sessionToken={sessionToken} setIsSearching={setIsSearching} />
           )
         })}
       </div>

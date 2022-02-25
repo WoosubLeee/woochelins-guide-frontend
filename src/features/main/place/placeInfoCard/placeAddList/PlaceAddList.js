@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
-import { requestGetGroupsLists } from "../../../../apis/authApi";
-import { requestGetSavedUserPlace } from "../../../../apis/placeApi";
-import { createPath } from "../../../../utils/functions/common";
+import { requestGetGroupsLists } from "../../../../../apis/authApi";
+import { requestGetSavedUserPlace } from "../../../../../apis/placeApi";
+import { createPath } from "../../../../../utils/functions/common";
 
 const PlaceAddList = () => {
   const location = useLocation();

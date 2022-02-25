@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setListUpdateNeeded } from "../../../map/mapSlice";
+import { setListUpdateNeeded } from "../../../../map/mapSlice";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
-import { requestAddGroupPlace, requestAddPlace, requestRemoveGroupPlace, requestRemovePlace } from "../../../../../apis/placeApi";
+import { requestAddGroupPlace, requestAddPlace, requestRemoveGroupPlace, requestRemovePlace } from "../../../../../../apis/placeApi";
 
 const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
   const dispatch = useDispatch();

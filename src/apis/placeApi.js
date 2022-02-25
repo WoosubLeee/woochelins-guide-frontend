@@ -1,4 +1,4 @@
-import { changeGeometryToNum, processPlaceListData, snakeToCamel } from "../utils/functions/common";
+import { processPlaceListData, snakeToCamel } from "../utils/functions/common";
 import { requestDELETEToken, requestGETToken, requestPOSTToken } from "./apiRequest";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + 'places/'
@@ -8,11 +8,7 @@ const BASE_URL = process.env.REACT_APP_SERVER_URL + 'places/'
 export const requestGetPlace = async googleMapsId => {
   const url = BASE_URL + `${googleMapsId}/`;
   const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = snakeToCamel(data);
-    return changeGeometryToNum(data);
-  }
+  return res;
 };
 
 // PlaceList 관련 API들
@@ -88,6 +84,15 @@ export const requestRemoveGroupPlace = async (listId, googleMapsId) => {
   const res = await requestDELETEToken(url, {google_maps_id: googleMapsId});
   if (res.status === 204) {
     return res;
+  }
+};
+
+export const requestGetGroupPlaceRecommendedBy = async (listId, googleMapsId) => {
+  const url = BASE_URL + `group/list/${listId}/${googleMapsId}/`;
+  const res = await requestGETToken(url);
+  if (res.status === 200) {
+    const data = await res.json();
+    return data;
   }
 };
 

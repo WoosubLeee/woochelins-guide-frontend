@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "./features/auth/authSlice";
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
-import Search from './features/main/place/search/Search';
+import Home from './features/main/home/Home';
 import PlaceInfoCard from './features/main/place/placeInfoCard/PlaceInfoCard';
-import PlaceAddList from './features/main/place/placeAddList/PlaceAddList';
+import PlaceAddList from './features/main/place/placeInfoCard/placeAddList/PlaceAddList';
 import PlaceList from './features/main/place/placeList/PlaceList';
 import Menu from './features/main/menu/Menu';
 import GroupInfo from './features/main/group/groupInfo/GroupInfo';
@@ -19,8 +19,6 @@ import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
-import MainTopNavbar from './features/main/mainTopNavbar/MainTopNavbar';
-import Home from './features/main/home/Home';
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +61,6 @@ function App() {
           <Route path="place" element={<Home />}>
             <Route path=":googleMapsId" element={<PlaceInfoCard />} />
           </Route>
-          <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/list" element={<PlaceList />} />
           <Route path="menu" element={<Menu />} />
           <Route path="group/info" element={<GroupInfo />} />

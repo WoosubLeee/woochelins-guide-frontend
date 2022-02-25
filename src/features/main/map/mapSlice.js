@@ -22,7 +22,7 @@ export const mapSlice = createSlice({
     setListUpdateNeeded: (state, action) => {
       state.listUpdateNeeded = action.payload;
     },
-    focusPlace: (state, action) => {
+    setFocusedPlace: (state, action) => {
       state.focusedPlace = action.payload;
     },
     removeFocusedPlace: (state) => {
@@ -36,7 +36,7 @@ export const {
   setMap,
   setListData,
   setListUpdateNeeded,
-  focusPlace,
+  setFocusedPlace,
   removeFocusedPlace
 } = mapSlice.actions;
 

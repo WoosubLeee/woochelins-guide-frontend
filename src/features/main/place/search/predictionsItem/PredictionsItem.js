@@ -1,14 +1,10 @@
 import styles from "./PredictionsItem.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { focusPlace } from "../../../map/mapSlice";
-import { useLocation, useNavigate } from "react-router-dom";
-import { createPath } from "../../../../../utils/functions/common";
+import { setFocusedPlace } from "../../../map/mapSlice";
 
-const PredictionsItem = ({ prediction, service, sessionToken }) => {
+const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const [distance, setDistance] = useState(undefined);
 
@@ -23,7 +19,7 @@ const PredictionsItem = ({ prediction, service, sessionToken }) => {
     }
   }, []);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     service.getDetails({
       placeId: prediction.place_id,
       fields: [
@@ -48,10 +44,10 @@ const PredictionsItem = ({ prediction, service, sessionToken }) => {
         photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
         googleMapsUrl: place.url
       };
-      dispatch(focusPlace(payload));
-      navigate(createPath(`/main/place/${place.place_id}/`, location));
+      dispatch(setFocusedPlace(payload));
+      setIsSearching(false);
     });
-  }
+  };
 
   return (
     <li onClick={handleClick} className={styles.li}>

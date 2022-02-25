@@ -1,13 +1,61 @@
-.card {
+.container {
   position: absolute;
-  bottom: 50px;
+  bottom: 0px;
   background-color: #ffffff;
+  padding: 15px 0 10px 10px;
   width: 100%;
+  border-radius: 7px 7px 0 0;
+}
+.starIcon {
+  color: #f2c24f;
+  margin: 0 5px 0 0;
+}
+.address {
+  margin: 5px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .photoContainer {
-  height: 80px;
+  height: 100px;
   overflow: scroll;
+  margin: 10px 0;
+}
+.img {
+  border-style: hidden !important;
+  border-radius: 10px;
+}
+.buttonsContainer {
+  display: flex;
+  border-style: solid;
+  border-color: gainsboro;
+  border-width: 1px;
+  border-radius: 3px;
+  height: 30px;
+  margin: 0 10px 0 0;
+}
+.buttonWrap {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightBorder {
+  border-style: solid;
+  border-color: gainsboro;
+  border-width: 0 1px 0 0;
+}
+.btnLink {
+  text-decoration: none;
+  color: black;
+}
+.btnText {
+  margin: 0 0 0 3px;
+  font-size: 13px;
 }
 .bookmarkIcon {
   font-size: 35px;
+}
+.phoneNumber {
+  text-decoration: none;
 }

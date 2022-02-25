@@ -5,7 +5,6 @@ import { mapApiLoaded } from './map/mapSlice';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
 import Map from "./map/Map";
-import NavBar from './navBar/NavBar';
 import { createPath } from '../../utils/functions/common';
 
 const Main = () => {
@@ -38,7 +37,6 @@ const Main = () => {
       {isLoginChecked && <>
         <Map />
         <Outlet />
-        <NavBar />
       </>}
     </div>
   );
