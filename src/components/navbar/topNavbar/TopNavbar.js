@@ -6,19 +6,17 @@ const TopNavbar = ({ header, backBtnTo, rightBtn }) => {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.navBody}>
-        {backBtnTo &&
-          <i onClick={() => navigate(backBtnTo)} className={`bi bi-arrow-left ${styles.backIcon}`}></i>
-        }
-        <div className={styles.headerContainer}>
-          <h1 className={styles.header}>{header}</h1>
-        </div>
-        {rightBtn &&
-          <div>
-
-          </div>
-        }
+      {backBtnTo &&
+        <i onClick={() => navigate(backBtnTo)} className={`bi bi-arrow-left ${styles.backIcon}`}></i>
+      }
+      <div className={styles.headerContainer}>
+        <h1 className={styles.header}>{header}</h1>
       </div>
+      {rightBtn &&
+        <div>
+
+        </div>
+      }
     </nav>
   );
 }

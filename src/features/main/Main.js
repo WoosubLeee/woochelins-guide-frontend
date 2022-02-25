@@ -2,15 +2,16 @@ import styles from './Main.module.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapApiLoaded } from './map/mapSlice';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
 import Map from "./map/Map";
 import Search from "./search/Search";
 import NavBar from './navBar/NavBar';
-import GroupBar from './groupBar/GroupBar';
+import MainTopNavbar from './mainTopNavbar/MainTopNavbar';
 
 const Main = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
 
@@ -30,9 +31,11 @@ const Main = () => {
     <div className={styles.main}>
       {isLoginChecked && <>
         <Map />
+        {location.pathname === "/main" &&
+          <MainTopNavbar />
+        }
         <Outlet />
         <Search />
-        <GroupBar />
         <NavBar />
       </>}
     </div>
