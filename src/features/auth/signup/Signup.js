@@ -20,17 +20,20 @@ const Signup = () => {
     passwordConfirmation: ''
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [emailErrorMsg, setEmailErrorMsg] = useState('');
   const [isEmailFocusOut, setIsEmailFocusOut] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isPasswordFocusOut, setIsPasswordFocusOut] = useState(false);
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
   const [isPasswordConfFocusOut, setIsPasswordConfFocusOut] = useState(false);
+  const [isAllValid, setIsAllValid] = useState(true);
 
   useEffect(() => {
     if (isEmailFocusOut) {
       if (!userInfo.email || validator.isEmail(userInfo.email)) {
         setIsEmailValid(true);
+        setEmailErrorMsg('이메일 형식이 아닙니다.');
       } else {
         setIsEmailValid(false);
       }
@@ -66,6 +69,14 @@ const Signup = () => {
     }
   }, [userInfo.passwordConfirmation, isPasswordConfFocusOut]);
 
+  useEffect(() => {
+    if ((isEmailValid && isUsernameValid && isPasswordValid && isPasswordMatch) && (Object.values(userInfo).every(value => value))) {
+        setIsAllValid(true);
+    } else {
+      setIsAllValid(false);
+    }
+  }, [isEmailValid, isUsernameValid, isPasswordValid, isPasswordMatch]);
+
   const handleInput = (field, value) => {
     const info = {
       ...userInfo
@@ -78,15 +89,21 @@ const Signup = () => {
     e.preventDefault();
 
     requestSignup(userInfo)
-      .then(loginRes => {
-        if (loginRes.status === 201) {
+      .then(async signupRes => {
+        if (signupRes.status === 201) {
           requestLogin(userInfo)
             .then(() => {
               dispatch(setIsLogin(true));
               navigate('/');
             });
         } else {
-          alert('회원가입에 실패했습니다.');
+          const data = await signupRes.json();
+          if (data.email_exists) {
+            setIsEmailValid(false);
+            setEmailErrorMsg('이미 가입된 이메일입니다.');
+          } else {
+            alert('회원가입에 실패했습니다.');
+          }
         }
       });
   };
@@ -109,7 +126,7 @@ const Signup = () => {
             iProps={{onClick: () => handleInput("email", "")}}
             containerClass={`${styles.propContainer} ${!isEmailValid && styles.inputDanger}`}
           />
-          <span className={`${styles.span} ${(!isEmailFocusOut || isEmailValid) && styles.spanHidden} text-danger`}>이메일 형식이 아닙니다.</span>
+          <span className={`${styles.span} ${(!isEmailFocusOut || isEmailValid) && styles.spanHidden} text-danger`}>{emailErrorMsg}</span>
         </div>
         {/* 닉네임 */}
         <div className={styles.inputWrap}>
@@ -157,7 +174,13 @@ const Signup = () => {
           />
           <span className={`${styles.span} ${(!isPasswordConfFocusOut || isPasswordMatch) && styles.spanHidden} text-danger`}>비밀번호가 일치하지 않습니다.</span>
         </div>
-        <FullWidthBtn text="가입" props={{onClick: e => handleSubmit(e)}} />
+        <FullWidthBtn
+          text="가입"
+          props={{
+            onClick: e => handleSubmit(e),
+            disabled: !isAllValid
+          }} 
+        />
       </div>
     </div>
   );
