@@ -20,6 +20,7 @@ const MainTopNavbar = ({ setIsSearching }) => {
         )}
         <div className={styles.listContainer}>
           <Link to={createPath("/main/group/list", location)} className={styles.header}>
+            <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
             {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
           </Link>
         </div>
