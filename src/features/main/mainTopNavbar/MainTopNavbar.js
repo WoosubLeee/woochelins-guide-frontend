@@ -20,7 +20,7 @@ const MainTopNavbar = ({ setIsSearching }) => {
         )}
         <div className={styles.listContainer}>
           <Link to={createPath("/main/group/list", location)} className={styles.header}>
-            {listData.name}<i className="bi bi-chevron-down ms-1" />
+            {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
           </Link>
         </div>
         <div onClick={() => setIsSearching(true)} className={styles.searchIcon}>

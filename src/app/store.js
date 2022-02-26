@@ -5,7 +5,7 @@ import mapReducer from '../features/main/map/mapSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    map: mapReducer
+    map: mapReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

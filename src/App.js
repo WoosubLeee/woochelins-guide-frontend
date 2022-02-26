@@ -19,6 +19,7 @@ import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
+import PlaceRecommenders from './features/main/place/placeRecommenders/PlaceRecommenders';
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ function App() {
             <Route path=":googleMapsId" element={<PlaceInfoCard />} />
           </Route>
           <Route path="place/list" element={<PlaceList />} />
+          <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
+          <Route path="place/:googleMapsId/recommenders" element={<PlaceRecommenders />} />
           <Route path="menu" element={<Menu />} />
           <Route path="group/info" element={<GroupInfo />} />
           <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />

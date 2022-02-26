@@ -1,4 +1,4 @@
-import { useState } from "react";
+import styles from "./PlaceAddListItem.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setListUpdateNeeded } from "../../../../map/mapSlice";
 import { useLocation } from "react-router-dom";
@@ -11,11 +11,7 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
 
   const focusedPlace = useSelector(state => state.map.focusedPlace);
   
-  const [isRequesting, setIsRequesting] = useState(false);
-  
   const handleClick = () => {
-    setIsRequesting(true);
-
     const requestAddRemove = () => {
       if (!isSaved) {
         if (group.isGroup) {
@@ -35,7 +31,6 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
     requestAddRemove()
       .then(() => {
         changeSaved(group.isGroup, !isSaved, group.id);
-        setIsRequesting(false);
 
         const queries = queryString.parse(location.search);
         if (!('type' in queries) || !('id' in queries)) {
@@ -51,15 +46,13 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
   };
   
   return (
-    <li>
-      <span>{group.name}</span>
-      <button onClick={handleClick}>
-        {isRequesting ? (
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+    <li className={styles.li}>
+      <span className={styles.span}>{group.name}</span>
+      <button onClick={handleClick} className={styles.button}>
+        {isSaved ? (
+          <i className="bi bi-bookmark-fill" />
         ) : (
-          isSaved ? <i className="bi bi-bookmark-fill" /> : <i className="bi bi-bookmark" />
+          <i className="bi bi-bookmark" />
         )}
       </button>
     </li>

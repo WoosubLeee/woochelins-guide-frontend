@@ -1,6 +1,22 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	border: none;
+	padding: 0;
+}
 .full-screen {
   position: absolute;
   top: 0px;
   width: 100%;
   height: 100%;
+}
+.full-screen-white {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }

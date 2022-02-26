@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setFocusedPlace } from "../../../map/mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createPath } from "../../../../../utils/functions/common";
+import { createPath, processGooglePlaceData } from "../../../../../utils/functions/common";
 
 const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) => {
   const dispatch = useDispatch();
@@ -38,16 +38,7 @@ const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) 
       ],
       sessionToken: sessionToken
     }, (place, status) => {
-      const payload = {
-        googleMapsId: place.place_id,
-        name: place.name,
-        latitude: place.geometry.location.lat(),
-        longitude: place.geometry.location.lng(),
-        address: place.formatted_address,
-        phoneNumber: place.formatted_phone_number,
-        photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
-        googleMapsUrl: place.url
-      };
+      const payload = processGooglePlaceData(place);
       dispatch(setFocusedPlace(payload));
       navigate(createPath(`/main/place/${payload.googleMapsId}`, location));
       setIsSearching(false);

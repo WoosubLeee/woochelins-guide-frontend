@@ -67,6 +67,20 @@ export const processPlaceListData = data => {
     })
   };
 };
+
+// Google Place API를 통해 받아온 Place detail 정보를 처리
+export const processGooglePlaceData = place => {
+  return {
+    googleMapsId: place.place_id,
+    name: place.name,
+    latitude: place.geometry.location.lat(),
+    longitude: place.geometry.location.lng(),
+    address: place.formatted_address,
+    phoneNumber: place.formatted_phone_number,
+    photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
+    googleMapsUrl: place.url
+  };
+};
   
 export const createPath = (path, location) => {
   return {

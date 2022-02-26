@@ -87,7 +87,7 @@ export const requestRemoveGroupPlace = async (listId, googleMapsId) => {
   }
 };
 
-export const requestGetGroupPlaceRecommendedBy = async (listId, googleMapsId) => {
+export const requestGetGroupPlaceRecommenders = async (listId, googleMapsId) => {
   const url = BASE_URL + `group/list/${listId}/${googleMapsId}/`;
   const res = await requestGETToken(url);
   if (res.status === 200) {
