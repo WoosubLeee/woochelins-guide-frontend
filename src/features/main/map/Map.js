@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { setMap as seetMap } from "./mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import ListMarkers from "./listMarkers/ListMarkers";
-import FocusMarker from "./focusMarker/FocusMarker";
 import { createPath } from "../../../utils/functions/common";
 import { useDispatch } from "react-redux";
 
@@ -57,7 +56,6 @@ const Map = () => {
   return (
     <div id="map" className={styles.map}>
       <ListMarkers />
-      <FocusMarker />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setListData, setListUpdateNeeded } from "../mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
+import FocusMarker from "./focusMarker/FocusMarker";
 import { requestGetPlaceList, requestGetPlaceListDefault } from "../../../../apis/placeApi";
 import { requestGetGroup } from "../../../../apis/groupApi";
 import { createPath } from "../../../../utils/functions/common";
@@ -52,10 +53,12 @@ const ListMarkers = () => {
   }, [listUpdateNeeded]);
 
   const icon = map && {
-    url: "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png",
-    scaledSize: new window.google.maps.Size(32, 32),
-    origin: new window.google.maps.Point(0, 0),
-    anchor: new window.google.maps.Point(16, 32)
+    path: "M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z",
+    fillColor: "#198754",
+    fillOpacity: 1,
+    strokeWeight: 0,
+    scale: 1.4,
+    anchor: new window.google.maps.Point(9, 21),
   };
 
   // list에 있는 place들의 Marker들을 표시
@@ -101,7 +104,7 @@ const ListMarkers = () => {
   }, [map, listData]);
 
   return (
-    <></>
+    <FocusMarker markers={markers} listIcon={icon} />
   );
 };
  
