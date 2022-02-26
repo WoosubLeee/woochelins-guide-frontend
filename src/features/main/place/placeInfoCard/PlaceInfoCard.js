@@ -84,15 +84,17 @@ const PlaceInfoCard = () => {
       {focusedPlace && listData &&
         <div className={styles.container}>
           <h5>{focusedPlace.name}</h5>
-          <i className={`bi bi-star-fill ${styles.starIcon}`} />
-          <span>
-            <Link
-              to={createPath(`/main/place/${googleMapsId}/recommenders`, location)}
-              className="fw-bold text-success"
-            >
-              {recommenders.length}명
-            </Link>이 추천합니다
-          </span>
+          {focusedPlace.isGroup && <>
+            <i className={`bi bi-star-fill ${styles.starIcon}`} />
+            <span>
+              <Link
+                to={createPath(`/main/place/${googleMapsId}/recommenders`, location)}
+                className="fw-bold text-success"
+              >
+                {recommenders.length}명
+              </Link>이 추천합니다
+            </span>
+          </>}
           <p className={styles.address}>{focusedPlace.address}</p>
           {focusedPlace.photos &&
             <div className={`d-flex ${styles.photoContainer}`}>
