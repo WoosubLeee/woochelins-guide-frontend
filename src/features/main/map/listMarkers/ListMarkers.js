@@ -90,7 +90,7 @@ const ListMarkers = () => {
           });
 
           marker.addListener('click', () => {
-            navigate(createPath(`/main/place/${place.googleMapsId}`, location));
+            navigate(createPath(`/main/home/${place.googleMapsId}`, location));
           });
 
           newMarkers.push({

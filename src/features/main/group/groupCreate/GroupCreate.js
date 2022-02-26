@@ -31,7 +31,7 @@ const GroupCreate = () => {
           id: data.id
         })}`;
         navigate({
-          pathname: '/main',
+          pathname: '/main/home',
           search: search
         });
         dispatch(setListUpdateNeeded(true));

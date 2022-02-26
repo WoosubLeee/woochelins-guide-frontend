@@ -72,7 +72,7 @@ const PlaceAddList = () => {
 
   return (
     <div className="full-screen-white">
-      <TopNavbar header="장소 저장" backBtnTo={createPath(`/main/place/${googleMapsId}`, location)} />
+      <TopNavbar header="장소 저장" backBtnTo={createPath(`/main/home/${googleMapsId}`, location)} />
       <div className={styles.body}>
         {currentGroup && <>
           <h2 className={styles.h2}>

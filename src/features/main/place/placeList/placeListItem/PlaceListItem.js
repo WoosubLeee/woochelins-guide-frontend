@@ -6,7 +6,7 @@ const PlaceListItem = ({ place }) => {
   const location = useLocation();
 
   const handleClick = () => {
-    navigate(createPath(`/main/place/${place.googleMapsId}`, location));
+    navigate(createPath(`/main/home/${place.googleMapsId}`, location));
   }
 
   return (

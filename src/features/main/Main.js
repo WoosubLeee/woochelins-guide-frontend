@@ -28,7 +28,7 @@ const Main = () => {
 
   useEffect(() => {
     if (location.pathname === '/main') {
-      navigate(createPath('/main/place', location));
+      navigate(createPath('/main/home', location));
     }
   }, [location.pathname]);
 

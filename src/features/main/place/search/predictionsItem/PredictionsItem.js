@@ -40,7 +40,7 @@ const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) 
     }, (place, status) => {
       const payload = processGooglePlaceData(place);
       dispatch(setFocusedPlace(payload));
-      navigate(createPath(`/main/place/${payload.googleMapsId}`, location));
+      navigate(createPath(`/main/home/${payload.googleMapsId}`, location));
       setIsSearching(false);
     });
   };

@@ -59,7 +59,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/main/place" replace={true} />} />
         <Route path="main" {...mainElement}>
-          <Route path="place" element={<Home />}>
+          <Route path="home" element={<Home />}>
             <Route path=":googleMapsId" element={<PlaceInfoCard />} />
           </Route>
           <Route path="place/list" element={<PlaceList />} />

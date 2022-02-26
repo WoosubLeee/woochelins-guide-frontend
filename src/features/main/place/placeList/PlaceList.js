@@ -31,7 +31,7 @@ const PlaceList = () => {
           )
         })}
       </ul>
-      <Link to={createPath("/main", location)}>닫기</Link>
+      <Link to={createPath("/main/home", location)}>닫기</Link>
     </div>
   );
 }

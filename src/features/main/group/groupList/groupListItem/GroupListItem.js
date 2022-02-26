@@ -22,7 +22,7 @@ const GroupListItem = ({ group }) => {
       id: data.id
     })}`
     navigate({
-      pathname: '/main',
+      pathname: '/main/home',
       search: search
     });
   };

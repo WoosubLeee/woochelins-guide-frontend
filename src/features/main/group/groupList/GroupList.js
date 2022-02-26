@@ -5,6 +5,7 @@ import GroupListItem from "./groupListItem/GroupListItem";
 import { requestGetPlaceListUser } from "../../../../apis/placeApi";
 import { requestGetGroupListUser } from "../../../../apis/groupApi";
 import { createPath } from "../../../../utils/functions/common";
+import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 
 const GroupList = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const GroupList = () => {
   }, []);
 
   return (
-    <div className={`full-screen ${styles.container}`}>
+    <div className="full-screen">
       <ul>
         <h5>모임</h5>
         {groupList.map((group, i) => {
@@ -45,7 +46,7 @@ const GroupList = () => {
       </ul>
       <Link to={createPath("/main/placelist/create", location)}>추가하기</Link>
       <br />
-      <button onClick={() => navigate(createPath('/main', location))}>닫기</button>
+      <button onClick={() => navigate(createPath('/main/home', location))}>닫기</button>
     </div>
   );
 }

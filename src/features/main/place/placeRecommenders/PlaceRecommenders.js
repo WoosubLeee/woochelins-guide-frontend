@@ -27,7 +27,7 @@ const PlaceRecommenders = () => {
 
   return (
     <div className="full-screen-white">
-      <TopNavbar header="추천한 사람" backBtnTo={createPath(`/main/place/${googleMapsId}`, location)} />
+      <TopNavbar header="추천한 사람" backBtnTo={createPath(`/main/home/${googleMapsId}`, location)} />
       <ul className={styles.ul}>
         {recommenders.map((recommender, i) => {
           return <RecommendersItems key={i} recommender={recommender} />

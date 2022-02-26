@@ -32,7 +32,7 @@ const GroupInvitation = () => {
             id: groupId
           })}`;
           navigate({
-            pathname: '/main',
+            pathname: '/main/home',
             search: search
           });
         }
@@ -45,7 +45,7 @@ const GroupInvitation = () => {
         <div>
           <p>{groupName} 모임에 참여하시겠습니까?</p>
           <button onClick={handleClick}>네, 참여하겠습니다</button>
-          <Link to="/main">취소</Link>
+          <Link to="/main/home">취소</Link>
         </div>
       }
       {resStatus === 400 &&

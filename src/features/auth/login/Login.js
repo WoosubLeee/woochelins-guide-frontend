@@ -37,7 +37,7 @@ const Login = () => {
           if (state && 'location' in state) {
             navigate(createPath(state.location.pathname, state.location));
           } else {
-            navigate('/main');
+            navigate('/main/home');
           }
         } else {
           alert('계정 정보가 일치하지 않습니다.');
