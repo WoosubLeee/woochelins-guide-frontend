@@ -79,7 +79,7 @@ const Signup = () => {
 
     requestSignup(userInfo)
       .then(loginRes => {
-        if (loginRes.status === 200) {
+        if (loginRes.status === 201) {
           requestLogin(userInfo)
             .then(() => {
               dispatch(setIsLogin(true));

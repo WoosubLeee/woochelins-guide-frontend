@@ -2,9 +2,13 @@ import styles from "./PredictionsItem.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setFocusedPlace } from "../../../map/mapSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createPath } from "../../../../../utils/functions/common";
 
 const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [distance, setDistance] = useState(undefined);
 
@@ -45,6 +49,7 @@ const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) 
         googleMapsUrl: place.url
       };
       dispatch(setFocusedPlace(payload));
+      navigate(createPath(`/main/place/${payload.googleMapsId}`, location));
       setIsSearching(false);
     });
   };
