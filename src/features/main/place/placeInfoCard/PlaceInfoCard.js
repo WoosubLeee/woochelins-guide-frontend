@@ -1,72 +1,20 @@
 import styles from "./PlaceInfoCard.module.css";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setFocusedPlace } from "../../map/mapSlice";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { requestGetGroupPlaceRecommenders, requestGetPlace } from "../../../../apis/placeApi";
-import { changeGeometryToNum, createPath, processGooglePlaceData, snakeToCamel } from "../../../../utils/functions/common";
+import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
+import { createPath } from "../../../../utils/functions/common";
 import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 
 const PlaceInfoCard = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   
   const { googleMapsId } = useParams();
   
-  const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
-  const map = useSelector(state => state.map.map);
   const listData = useSelector(state => state.map.listData);
-  const focusedPlace = useSelector(state => state.map.focusedPlace);
+  const focusedPlace = useSelector(state => state.place.focusedPlace);
 
   const [recommenders, setRecommenders] = useState([]);
-
-  useEffect(() => {
-    if (isMapApiLoaded && map) {
-      if (!focusedPlace || focusedPlace.googleMapsId !== googleMapsId) {
-        requestGetPlace(googleMapsId)
-          .then(async res => {
-            const placesService = new window.google.maps.places.PlacesService(map);
-
-            // DB에 저장된 장소의 경우
-            if (res.status === 200) {
-              let data = await res.json();
-              data = changeGeometryToNum(snakeToCamel(data));
-
-              // 사진 정보는 DB에 없으므로 Google에 다시 요청
-              placesService.getDetails({
-                placeId: googleMapsId,
-                fields: ['photos']
-              }, (place, status) => {
-                const photos = place.photos.map(photo => photo.getUrl());
-                data.photos = photos;
-                dispatch(setFocusedPlace(data));
-              });
-
-            // DB에 저장되지 않은 장소의 경우
-            } else if (res.status === 404) {
-              if (map) {
-                placesService.getDetails({
-                  placeId: googleMapsId,
-                  fields: [
-                    'place_id',
-                    'name',
-                    'geometry.location',
-                    'type',
-                    'formatted_address',
-                    'photos',
-                    'url',
-                    'formatted_phone_number'
-                  ]
-                }, (place, status) => {
-                  const payload = processGooglePlaceData(place);
-                  dispatch(setFocusedPlace(payload));
-                });
-              }
-            }
-          });
-      }
-    }
-  }, [isMapApiLoaded, map, location]);
 
   useEffect(() => {
     if (recommenders.length === 0 && listData) {

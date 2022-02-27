@@ -1,12 +1,9 @@
 import styles from "./PredictionsItem.module.css";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setFocusedPlace } from "../../../map/mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createPath, processGooglePlaceData } from "../../../../../utils/functions/common";
+import { createPath } from "../../../../../utils/functions/common";
 
-const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) => {
-  const dispatch = useDispatch();
+const PredictionsItem = ({ prediction, setIsSearching }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,25 +21,8 @@ const PredictionsItem = ({ prediction, service, sessionToken, setIsSearching }) 
   }, []);
 
   const handleClick = async () => {
-    service.getDetails({
-      placeId: prediction.place_id,
-      fields: [
-        'place_id',
-        'name',
-        'geometry.location',
-        'type',
-        'formatted_address',
-        'photos',
-        'url',
-        'formatted_phone_number'
-      ],
-      sessionToken: sessionToken
-    }, (place, status) => {
-      const payload = processGooglePlaceData(place);
-      dispatch(setFocusedPlace(payload));
-      navigate(createPath(`/main/home/${payload.googleMapsId}`, location));
-      setIsSearching(false);
-    });
+    navigate(createPath(`/main/home/${prediction.place_id}`, location));
+    setIsSearching(false);
   };
 
   return (

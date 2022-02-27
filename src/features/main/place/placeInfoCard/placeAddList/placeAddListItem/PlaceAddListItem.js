@@ -9,7 +9,7 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const focusedPlace = useSelector(state => state.map.focusedPlace);
+  const focusedPlace = useSelector(state => state.place.focusedPlace);
   
   const handleClick = () => {
     const requestAddRemove = () => {

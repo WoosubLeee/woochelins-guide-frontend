@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFocusedPlace } from "../../mapSlice";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const FocusMarker = ({ markers, listIcon }) => {
-  const dispatch = useDispatch();
-  const params = useParams();
-
   const map = useSelector(state => state.map.map);
-  const focusedPlace = useSelector(state => state.map.focusedPlace);
+  const focusedPlace = useSelector(state => state.place.focusedPlace);
 
   const [focusedMarker, setFocusedMarker] = useState(undefined);
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
@@ -53,12 +48,6 @@ const FocusMarker = ({ markers, listIcon }) => {
       }
     }
   }, [map, focusedPlace]);
-  
-  useEffect(() => {
-    if (focusedPlace && !('googleMapsId' in params)) {
-      dispatch(removeFocusedPlace());
-    }
-  }, [params]);
 
   return (
     <></>

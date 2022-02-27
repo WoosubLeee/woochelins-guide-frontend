@@ -6,11 +6,9 @@ import PredictionsItem from "./predictionsItem/PredictionsItem";
 const Search = ({ setIsSearching }) => {
   
   const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
-  const map = useSelector(state => state.map.map);
 
   const [autoComplete, setAutoComplete] = useState(undefined);
   const [sessionToken, setSessionToken] = useState(undefined);
-  const [placesService, setPlacesService] = useState(undefined);
   const [inputVal, setInputVal] = useState('');
   const [predictions, setPredictions] = useState([]);
   const [curretPosition, setCurrentPosition] = useState(undefined);
@@ -32,12 +30,6 @@ const Search = ({ setIsSearching }) => {
       setSessionToken(new window.google.maps.places.AutocompleteSessionToken());
     }
   }, [isMapApiLoaded]);
-
-  useEffect(() => {
-    if (map) {
-      setPlacesService(new window.google.maps.places.PlacesService(map));
-    }
-  }, [map]);
 
   useEffect(() => {
     if (autoComplete) {
@@ -92,7 +84,7 @@ const Search = ({ setIsSearching }) => {
       <div>
         {predictions.map((prediction, i) => {
           return (
-            <PredictionsItem key={i} prediction={prediction} service={placesService} sessionToken={sessionToken} setIsSearching={setIsSearching} />
+            <PredictionsItem key={i} prediction={prediction} setIsSearching={setIsSearching} />
           )
         })}
       </div>
