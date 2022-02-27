@@ -1,3 +1,4 @@
+import styles from "./PlaceListItem.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createPath } from "../../../../../utils/functions/common";
 
@@ -10,7 +11,7 @@ const PlaceListItem = ({ place }) => {
   }
 
   return (
-    <li onClick={handleClick}>
+    <li onClick={handleClick} className={styles.li}>
       {place.name}
     </li>
   );

@@ -1,0 +1,9 @@
+.li {
+    display: flex;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: gainsboro;
+    padding: 0 13px;
+    align-items: center;
+    height: 80px;
+}

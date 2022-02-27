@@ -1,13 +1,10 @@
 import styles from "./PlaceList.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
 import PlaceListItem from "./placeListItem/PlaceListItem";
-import { createPath } from "../../../../utils/functions/common";
+import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 
 const PlaceList = () => {
-  const location = useLocation();
-
   const listData = useSelector(state => state.map.listData);
 
   const [places, setPlaces] = useState([]);
@@ -23,15 +20,18 @@ const PlaceList = () => {
   }, [listData]);
 
   return (
-    <div className={`full-screen ${styles.container}`}>
-      <ul>
+    <div className="full-screen-white">
+      <TopNavbar
+        header="장소 목록"
+        backBtnTo={-1}
+      />
+      <ul className={styles.ul}>
         {listData && places.map((place, i) => {
           return (
             <PlaceListItem key={i} place={place} />
           )
         })}
       </ul>
-      <Link to={createPath("/main/home", location)}>닫기</Link>
     </div>
   );
 }
