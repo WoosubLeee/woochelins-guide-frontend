@@ -1,6 +1,6 @@
 import styles from './GroupInvitation.module.css';
 import { useState, useEffect } from "react";
-import { createSearchParams, Link, useNavigate, useParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import { requestAddMember, requestGroupInvitationIsValid } from "../../../../../apis/groupApi";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
 import { snakeToCamel } from "../../../../../utils/functions/common";

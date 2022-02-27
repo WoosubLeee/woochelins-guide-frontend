@@ -1,14 +1,12 @@
 import styles from './PlaceRecommenders.module.css';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import RecommendersItems from "./recommendersItem/RecommendersItem";
 
 const PlaceRecommenders = () => {
-  const location = useLocation();
-
   const { googleMapsId } = useParams();
 
   const listData = useSelector(state => state.map.listData);

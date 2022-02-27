@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const groupSlice = createSlice({
-  name: 'auth',
+  name: 'group',
   initialState: {
     groups: [],
     placeLists: [],
+    currentGroup: undefined,
   },
   reducers: {
     setGroups: (state, action) => {
@@ -12,6 +13,9 @@ export const groupSlice = createSlice({
     },
     setPlaceLists: (state, action) => {
       state.placeLists = action.payload;
+    },
+    setCurrentGroup: (state, action) => {
+      state.currentGroup = action.payload;
     },
   }
 });

@@ -39,6 +39,7 @@ const FocusMarker = ({ markers, listIcon }) => {
           setFocusedMarker(new window.google.maps.Marker({
             position: position,
             map: map,
+            icon: icon,
             // 항상 ListMarker보다 앞쪽에 보이게 하기 위해
             zIndex: 1
           }));
