@@ -1,0 +1,39 @@
+.nav {
+    position: absolute;
+    bottom: 0px;
+    height: 70px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+}
+.link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+.link:focus {
+    color: gray;
+}
+.nav span {
+    font-size: 13px;
+}
+.mapIcon {
+    font-size: 30px;
+}
+.mapSpan {
+    position: relative;
+    top: 4px;
+}
+.locationIcon {
+    font-size: 26px;
+}
+.listIcon {
+    font-size: 36px;
+}
+.listSpan {
+    position: relative;
+    bottom: 7px;
+}

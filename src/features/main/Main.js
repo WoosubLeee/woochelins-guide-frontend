@@ -6,6 +6,7 @@ import { removeFocusedPlace, setFocusedPlace } from './place/placeSlice';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
 import Map from "./map/Map";
+import BottomNavbar from './bottomNavbar/BottomNavbar';
 import { requestGetPlace } from '../../apis/placeApi';
 import { changeGeometryToNum, createPath, processGooglePlaceData, snakeToCamel } from '../../utils/functions/common';
 
@@ -102,6 +103,7 @@ const Main = () => {
       {isLoginChecked && <>
         <Map />
         <Outlet />
+        <BottomNavbar />
       </>}
     </div>
   );
