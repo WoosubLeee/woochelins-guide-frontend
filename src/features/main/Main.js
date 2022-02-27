@@ -70,7 +70,7 @@ const Main = () => {
                 });
   
               // DB에 저장되지 않은 장소의 경우
-              } else if (res.status === 404) {
+              } else if (res.status === 204) {
                 if (map) {
                   placesService.getDetails({
                     placeId: googleMapsId,
