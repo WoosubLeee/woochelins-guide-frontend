@@ -80,6 +80,7 @@ const Search = ({ setIsSearching }) => {
             value={inputVal}
             onChange={e => setInputVal(e.target.value)}
             className={styles.autoComplete}
+            autoComplete="off"
           />
           <i onClick={() => {
             setInputVal("");
