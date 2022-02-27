@@ -84,7 +84,7 @@ const PlaceInfoCard = () => {
       {focusedPlace && listData &&
         <div className={styles.container}>
           <h5>{focusedPlace.name}</h5>
-          {focusedPlace.isGroup && <>
+          {listData.isGroup && <>
             <i className={`bi bi-star-fill ${styles.starIcon}`} />
             <span>
               <Link

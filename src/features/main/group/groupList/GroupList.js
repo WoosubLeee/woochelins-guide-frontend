@@ -1,52 +1,76 @@
 import styles from "./GroupList.module.css";
-import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setGroups, setPlaceLists } from "../groupSlice";
+import { Link, useLocation } from "react-router-dom";
 import GroupListItem from "./groupListItem/GroupListItem";
-import { requestGetPlaceListUser } from "../../../../apis/placeApi";
-import { requestGetGroupListUser } from "../../../../apis/groupApi";
-import { createPath } from "../../../../utils/functions/common";
+import { addIsGroupProperty, createPath } from "../../../../utils/functions/common";
+import { requestGetGroupsLists } from "../../../../apis/authApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 
 const GroupList = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
 
-  const [groupList, setGroupList] = useState([]);
-  const [placeListList, setPlaceListList] = useState([]);
+  const listData = useSelector(state => state.map.listData);
+  const groups = useSelector(state => state.group.groups);
+  const placeLists = useSelector(state => state.group.placeLists);
 
   useEffect(() => {
-    requestGetGroupListUser()
+    requestGetGroupsLists()
       .then(data => {
-        setGroupList(data);
-      });
-    requestGetPlaceListUser()
-      .then(data => {
-        setPlaceListList(data);
+        let newGroups = addIsGroupProperty(data.groups);
+        dispatch(setGroups(newGroups));
+        let newPlaceLists = addIsGroupProperty(data.placeLists);
+        dispatch(setPlaceLists(newPlaceLists));
       });
   }, []);
 
   return (
-    <div className="full-screen">
-      <ul>
-        <h5>모임</h5>
-        {groupList.map((group, i) => {
-          return (
-            <GroupListItem key={i} group={group} />
-          )
-        })}
-      </ul>
-      <Link to={createPath("/main/group/create", location)}>추가하기</Link>
-      <ul>
-        <h5>내 리스트</h5>
-        {placeListList.map((placeList, i) => {
-          return (
-            <GroupListItem key={i} group={placeList} />
-          )
-        })}
-      </ul>
-      <Link to={createPath("/main/placelist/create", location)}>추가하기</Link>
-      <br />
-      <button onClick={() => navigate(createPath('/main/home', location))}>닫기</button>
+    <div className="full-screen-white">
+      {/* TopNavbar */}
+      <TopNavbar
+        header={
+          <div className={styles.listContainer}>
+            <Link to={createPath("/main/home", location)} className={styles.header}>
+              <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
+              {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
+            </Link>
+          </div>
+        }
+        backBtnTo={createPath("/main/home", location)}
+      />
+
+      {/* 모임 목록 */}
+      <div className={styles.body}>
+        <h2 className={styles.h2}>
+          모임
+          <Link to={createPath("/main/group/create", location)}>
+            <i className="bi bi-plus-circle-fill"></i>
+          </Link>
+        </h2>
+        <ul className={styles.ul}>
+          {groups.map((group, i) => {
+            return (
+              <GroupListItem key={i} group={group} />
+            )
+          })}
+        </ul>
+        {/* 내 리스트 목록 */}
+        <h2 className={styles.h2}>
+          내 리스트
+          <Link to={createPath("/main/placelist/create", location)}>
+            <i className="bi bi-plus-circle-fill"></i>
+          </Link>
+        </h2>
+        <ul className={styles.ul}>
+          {placeLists.map((placeList, i) => {
+            return (
+              <GroupListItem key={i} group={placeList} />
+            )
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

@@ -1,53 +1,54 @@
 import styles from "./PlaceAddList.module.css";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setGroups, setPlaceLists } from "../../../group/groupSlice"
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
 import { requestGetGroupsLists } from "../../../../../apis/authApi";
 import { requestGetSavedUserPlace } from "../../../../../apis/placeApi";
-import { createPath } from "../../../../../utils/functions/common";
+import { addIsGroupProperty, createPath } from "../../../../../utils/functions/common";
 
 const PlaceAddList = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const { googleMapsId } = useParams();
 
-  const [groups, setGroups] = useState([]);
-  const [placeLists, setPlaceLists] = useState([]);
+  const groups = useSelector(state => state.group.groups);
+  const placeLists = useSelector(state => state.group.placeLists);
+
+  const [otherGroups, setOtherGroups] = useState([]);
+  const [otherPlaceLists, setOtherPlaceLists] = useState([]);
   const [currentGroup, setCurrentGroup] = useState(undefined);
   const [saved, setSaved] = useState(undefined);
 
   useEffect(() => {
-    // 현재 선택된 그룹/리스트 찾기
-
     requestGetGroupsLists()
-      .then(async data => {
-        let newGroups = data.groups.map(group => {
-          return {
-            ...group,
-            isGroup: true
-          };
-        });
-        let newPlaceLists = data.placeLists.map(placeList => {
-          return {
-            ...placeList,
-            isGroup: false
-          };
-        });
-        
-        const queries = queryString.parse(location.search);
-        if (queries.type === 'group') {
-          setCurrentGroup(newGroups.find(group => group.id == queries.id));
-          setGroups(newGroups.filter(group => group.id != queries.id));
-          setPlaceLists(newPlaceLists);
-        } else {
-          setCurrentGroup(newPlaceLists.find(placeList => placeList.id == queries.id));
-          setPlaceLists(newPlaceLists.filter(placeList => placeList.id != queries.id));
-          setGroups(newGroups);
-        }
+      .then(data => {
+        let newGroups = addIsGroupProperty(data.groups);
+        dispatch(setGroups(newGroups));
+        let newPlaceLists = addIsGroupProperty(data.placeLists);
+        dispatch(setPlaceLists(newPlaceLists));
       });
   }, []);
+
+  useEffect(() => {
+    if (groups && placeLists) {
+      // 현재 선택된 그룹/리스트 찾기
+      const queries = queryString.parse(location.search);
+      if (queries.type === 'group') {
+        setCurrentGroup(groups.find(group => group.id == queries.id));
+        setOtherGroups(groups.filter(group => group.id != queries.id));
+        setOtherPlaceLists(placeLists);
+      } else {
+        setCurrentGroup(placeLists.find(placeList => placeList.id == queries.id));
+        setOtherPlaceLists(placeLists.filter(placeList => placeList.id != queries.id));
+        setOtherGroups(groups);
+      }
+    }
+  }, [groups, placeLists]);
 
   useEffect(() => {
     requestGetSavedUserPlace(googleMapsId)
@@ -90,7 +91,7 @@ const PlaceAddList = () => {
         </>}
         <h2 className={styles.h2}>모임</h2>
         <ul className={styles.ul}>
-          {saved && groups.map((group, i) => {
+          {saved && otherGroups.map((group, i) => {
             return (
               <PlaceAddListItem
                 key={i}
@@ -103,7 +104,7 @@ const PlaceAddList = () => {
         </ul>
         <h2 className={styles.h2}>내 리스트</h2>
         <ul className={styles.ul}>
-          {saved && placeLists.map((placeList, i) => {
+          {saved && otherPlaceLists.map((placeList, i) => {
             return (
               <PlaceAddListItem
                 key={i}

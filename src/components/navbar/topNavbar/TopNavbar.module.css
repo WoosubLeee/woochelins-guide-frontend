@@ -16,4 +16,5 @@
   color: black;
   position: relative;
   top: 6px;
+  z-index: 1;
 }

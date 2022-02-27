@@ -1,25 +1,20 @@
+import styles from "./GroupListItem.module.css";
 import { useDispatch } from "react-redux";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { setListData } from "../../../map/mapSlice";
+import peopleImg from "./people.png";
 
 const GroupListItem = ({ group }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    const data = {
-      ...group,
-      isGroup: false
-    };
-    if ('placeList' in group) {
-      data.isGroup = true;
-    }
-    dispatch(setListData(data));
+    dispatch(setListData(group));
 
-    const type = data.isGroup ? 'group' : 'placelist';
+    const type = group.isGroup ? 'group' : 'placelist';
     const search = `?${createSearchParams({
       type: type,
-      id: data.id
+      id: group.id
     })}`
     navigate({
       pathname: '/main/home',
@@ -28,7 +23,10 @@ const GroupListItem = ({ group }) => {
   };
 
   return (
-    <li onClick={handleClick}>{group.name}</li>
+    <li onClick={handleClick} className={styles.li}>
+      {group.isGroup && <img src={peopleImg} alt="" className={styles.img} />}
+      <span className={styles.span}>{group.name}</span>
+    </li>
   );
 }
  

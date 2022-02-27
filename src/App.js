@@ -7,6 +7,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Main from './features/main/Main';
 import Home from './features/main/home/Home';
 import PlaceInfoCard from './features/main/place/placeInfoCard/PlaceInfoCard';
+import PlaceRecommenders from './features/main/place/placeRecommenders/PlaceRecommenders';
 import PlaceAddList from './features/main/place/placeInfoCard/placeAddList/PlaceAddList';
 import PlaceList from './features/main/place/placeList/PlaceList';
 import Menu from './features/main/menu/Menu';
@@ -19,7 +20,6 @@ import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
 import { createPath } from './utils/functions/common';
-import PlaceRecommenders from './features/main/place/placeRecommenders/PlaceRecommenders';
 
 function App() {
   const dispatch = useDispatch();
@@ -67,8 +67,8 @@ function App() {
           <Route path="place/:googleMapsId/recommenders" element={<PlaceRecommenders />} />
           <Route path="menu" element={<Menu />} />
           <Route path="group/info" element={<GroupInfo />} />
-          <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />
           <Route path="group/list" element={<GroupList />} />
+          <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />
           <Route path="group/create" element={<GroupCreate />} />
           <Route path="placelist/create" element={<PlaceListCreate />} />
         </Route>

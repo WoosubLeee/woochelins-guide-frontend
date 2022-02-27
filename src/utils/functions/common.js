@@ -81,6 +81,15 @@ export const processGooglePlaceData = place => {
     googleMapsUrl: place.url
   };
 };
+
+export const addIsGroupProperty = lists => {
+  return lists.map(list => {
+    return {
+      ...list,
+      isGroup: 'members' in list
+    }
+  });
+};
   
 export const createPath = (path, location) => {
   return {
