@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { requestCreateGroupInvitationToken, requestIsGroupAdmin } from "../../../../apis/groupApi";
 import { useRef } from "react";
+import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
+import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
+import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
 
 const GroupInfo = () => {
   const listData = useSelector(state => state.map.listData);
@@ -38,26 +41,41 @@ const GroupInfo = () => {
   };
 
   return (
-    <div className={`full-screen ${styles.container}`}>
-      {isAdmin &&
-        <div>
-          <h6>초대하기</h6>
-          <div>
-            <input
-              type="text"
-              value={invitationUrl}
-              readOnly
-              placeholder="초대링크를 생성하세요"
-              ref={inputRef}
-            />
-            {isUrlCreated ? (
-              <button onClick={handleClickCopy}>복사</button>
-            ) : (
-              <button onClick={handleClickCreate}>링크 생성</button>
-            )}
+    <div className="full-screen-white">
+      <TopNavbar
+        header={
+          <div className={`topnavbar-header ${styles.header}`}>
+            <span className={styles.headerLabel}>{listData.isGroup ? "모임" : "내 리스트"}</span>
+            {listData.name}
           </div>
-        </div>
-      }
+        }
+        backBtnTo={-1}
+      />
+      <div className={styles.body}>
+        {isAdmin &&
+          <div>
+            <label className="ms-1">초대하기</label>
+            <div>
+              <BottomBorderInput
+                inputProps={{
+                  type: "text",
+                  value: invitationUrl,
+                  readOnly: true,
+                  placeholder: "초대링크를 생성하세요.",
+                  ref: inputRef
+                }}
+                containerClass={styles.linkInput}
+              />
+              <FullWidthBtn
+                text={isUrlCreated ? "복사" : "초대링크 생성"}
+                props={{
+                  onClick: isUrlCreated ? handleClickCopy : handleClickCreate
+                }}
+              />
+            </div>
+          </div>
+        }
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
 import { requestGetGroupsLists } from "../../../../../apis/authApi";
 import { requestGetSavedUserPlace } from "../../../../../apis/placeApi";
-import { addIsGroupProperty, createPath } from "../../../../../utils/functions/common";
+import { addIsGroupProperty } from "../../../../../utils/functions/common";
 
 const PlaceAddList = () => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const PlaceAddList = () => {
 
   return (
     <div className="full-screen-white">
-      <TopNavbar header="장소 저장" backBtnTo={createPath(`/main/home/${googleMapsId}`, location)} />
+      <TopNavbar header="장소 저장" backBtnTo={-1} />
       <div className={styles.body}>
         {currentGroup && <>
           <h2 className={styles.h2}>

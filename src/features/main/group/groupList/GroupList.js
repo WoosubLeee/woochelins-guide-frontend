@@ -31,14 +31,14 @@ const GroupList = () => {
       {/* TopNavbar */}
       <TopNavbar
         header={
-          <div className={styles.listContainer}>
+          <div className="topnavbar-header">
             <Link to={createPath("/main/home", location)} className={styles.header}>
               <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
               {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
             </Link>
           </div>
         }
-        backBtnTo={createPath("/main/home", location)}
+        backBtnTo={-1}
       />
 
       {/* 모임 목록 */}

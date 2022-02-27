@@ -10,7 +10,6 @@ import PlaceInfoCard from './features/main/place/placeInfoCard/PlaceInfoCard';
 import PlaceRecommenders from './features/main/place/placeRecommenders/PlaceRecommenders';
 import PlaceAddList from './features/main/place/placeInfoCard/placeAddList/PlaceAddList';
 import PlaceList from './features/main/place/placeList/PlaceList';
-import Menu from './features/main/menu/Menu';
 import GroupInfo from './features/main/group/groupInfo/GroupInfo';
 import GroupInvitation from './features/main/group/groupInfo/groupInvitation/GroupInvitation';
 import GroupList from './features/main/group/groupList/GroupList';
@@ -62,10 +61,9 @@ function App() {
           <Route path="home" element={<Home />}>
             <Route path=":googleMapsId" element={<PlaceInfoCard />} />
           </Route>
-          <Route path="place/list" element={<PlaceList />} />
           <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/:googleMapsId/recommenders" element={<PlaceRecommenders />} />
-          <Route path="menu" element={<Menu />} />
+          <Route path="place/list" element={<PlaceList />} />
           <Route path="group/info" element={<GroupInfo />} />
           <Route path="group/list" element={<GroupList />} />
           <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />

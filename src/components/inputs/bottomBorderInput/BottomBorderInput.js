@@ -1,5 +1,4 @@
 import styles from './BottomBorderInput.module.css';
-import { useState, useEffect } from 'react';
 
 const BottomBorderInput = ({ inputProps, iProps, containerClass, iconClass }) => {
   return (

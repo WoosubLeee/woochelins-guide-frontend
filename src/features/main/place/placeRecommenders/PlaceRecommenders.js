@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
-import { createPath } from "../../../../utils/functions/common";
 import RecommendersItems from "./recommendersItem/RecommendersItem";
 
 const PlaceRecommenders = () => {
@@ -27,7 +26,7 @@ const PlaceRecommenders = () => {
 
   return (
     <div className="full-screen-white">
-      <TopNavbar header="추천한 사람" backBtnTo={createPath(`/main/home/${googleMapsId}`, location)} />
+      <TopNavbar header="추천한 사람" backBtnTo={-1} />
       <ul className={styles.ul}>
         {recommenders.map((recommender, i) => {
           return <RecommendersItems key={i} recommender={recommender} />

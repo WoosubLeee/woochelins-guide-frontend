@@ -1,3 +1,22 @@
-.container {
-  background-color: white;
+.headerLabel {
+  font-size: 5px;
+  color: white;
+  background-color: #198754;
+  padding: 3px 8px;
+  margin: 0 5px 0 0;
+  border-radius: 10px;
+}
+.header {
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+.body {
+  margin: 10px;
+}
+.linkInput {
+  margin: 0 0 15px 0 !important;
 }

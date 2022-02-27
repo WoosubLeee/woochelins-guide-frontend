@@ -1,0 +1,11 @@
+.body {
+    margin: 10px;
+    text-align: center;
+}
+.groupName {
+    font-size: 25px;
+}
+.noBtn {
+    background-color: gray;
+    margin: 10px 0;
+}

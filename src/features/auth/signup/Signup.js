@@ -20,7 +20,7 @@ const Signup = () => {
     passwordConfirmation: ''
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
-  const [emailErrorMsg, setEmailErrorMsg] = useState('');
+  const [emailErrorMsg, setEmailErrorMsg] = useState('이메일 형식이 아닙니다.');
   const [isEmailFocusOut, setIsEmailFocusOut] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -75,7 +75,7 @@ const Signup = () => {
     } else {
       setIsAllValid(false);
     }
-  }, [isEmailValid, isUsernameValid, isPasswordValid, isPasswordMatch]);
+  }, [userInfo, isEmailValid, isUsernameValid, isPasswordValid, isPasswordMatch]);
 
   const handleInput = (field, value) => {
     const info = {
@@ -110,7 +110,7 @@ const Signup = () => {
 
   return (
     <div>
-      <TopNavbar header="회원가입" backBtnTo="/auth/login" />
+      <TopNavbar header="회원가입" backBtnTo={-1} />
       <div className={styles.container}>
         {/* 이메일 */}
         <div className={styles.inputWrap}>
