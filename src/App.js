@@ -56,7 +56,7 @@ function App() {
   return (
     <div className={`${styles.App} mx-auto`}>
       <Routes>
-        <Route path="/" element={<Navigate to="/main/place" replace={true} />} />
+        <Route path="/" element={<Navigate to="/main/home" replace={true} />} />
         <Route path="main" {...mainElement}>
           <Route path="home" element={<Home />}>
             <Route path=":googleMapsId" element={<PlaceInfoCard />} />
