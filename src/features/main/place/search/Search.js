@@ -43,6 +43,10 @@ const Search = ({ setIsSearching }) => {
         sessionToken: sessionToken
       };
       if (curretPosition) {
+        // location을 기준으로 radius(m 단위) 만큼의 구역에 대해 biased 된 predictons을 내놓음
+        autoCompleteProps.location = new window.google.maps.LatLng(curretPosition.lat, curretPosition.lng);
+        autoCompleteProps.radius = 10000;
+        // distance_meters를 계산하는 기준점
         autoCompleteProps.origin = curretPosition;
       }
       autoComplete.getPlacePredictions(autoCompleteProps, displaySuggestions);
