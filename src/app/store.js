@@ -17,10 +17,12 @@ export const store = configureStore({
         ignoredActions: [
           'map/setMap',
           'map/setFocusedMarker',
+          'place/setSessionToken',
         ],
         ignoredPaths: [
           'map.map',
           'map.focusedMarker',
+          'place.sessionToken',
         ]
       }
     })

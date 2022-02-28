@@ -1,14 +1,16 @@
 import styles from "./Search.module.css";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PredictionsItem from "./predictionsItem/PredictionsItem";
+import { setSessionToken } from "../placeSlice";
 
 const Search = ({ setIsSearching }) => {
+  const dispatch = useDispatch();
   
   const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
+  const sessionToken = useSelector(state => state.place.sessionToken);
 
   const [autoComplete, setAutoComplete] = useState(undefined);
-  const [sessionToken, setSessionToken] = useState(undefined);
   const [inputVal, setInputVal] = useState('');
   const [predictions, setPredictions] = useState([]);
   const [curretPosition, setCurrentPosition] = useState(undefined);
@@ -27,7 +29,7 @@ const Search = ({ setIsSearching }) => {
   useEffect(() => {
     if (isMapApiLoaded) {
       setAutoComplete(new window.google.maps.places.AutocompleteService());
-      setSessionToken(new window.google.maps.places.AutocompleteSessionToken());
+      dispatch(setSessionToken(new window.google.maps.places.AutocompleteSessionToken()));
     }
   }, [isMapApiLoaded]);
 
@@ -84,7 +86,12 @@ const Search = ({ setIsSearching }) => {
       <div>
         {predictions.map((prediction, i) => {
           return (
-            <PredictionsItem key={i} prediction={prediction} setIsSearching={setIsSearching} />
+            <PredictionsItem
+              key={i}
+              prediction={prediction}
+              setIsSearching={setIsSearching}
+              sessionToken={sessionToken}
+            />
           )
         })}
       </div>

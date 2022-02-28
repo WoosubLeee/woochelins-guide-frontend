@@ -20,6 +20,7 @@ const Main = () => {
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
   const map = useSelector(state => state.map.map);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
+  const sessionToken = useSelector(state => state.place.sessionToken);
 
   const [placesService, setPlacesService] = useState(undefined);
 
@@ -74,7 +75,7 @@ const Main = () => {
             // DB에 저장되지 않은 장소의 경우
             } else if (res.status === 204) {
               if (map) {
-                placesService.getDetails({
+                const options = {
                   placeId: googleMapsId,
                   fields: [
                     'place_id',
@@ -87,7 +88,13 @@ const Main = () => {
                     'url',
                     'formatted_phone_number'
                   ]
-                }, (place, status) => {
+                };
+
+                if (sessionToken) {
+                  options['sessionToken'] = sessionToken;
+                }
+
+                placesService.getDetails(options, (place, status) => {
                   const payload = processGooglePlaceData(place);
                   dispatch(setFocusedPlace(payload));
                 });
