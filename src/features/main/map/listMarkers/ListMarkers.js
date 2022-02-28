@@ -66,45 +66,40 @@ const ListMarkers = () => {
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
     if (map && currentPlaces) {
-      const googleMapsIds = currentPlaces.map(place => place.googleMapsId);
-
-      // 기존에 표시된 Marker들 중 list에서 삭제된 것들 제거
-      const newMarkers = markers.filter(marker => {
-        if (googleMapsIds.includes(marker.googleMapsId)) {
-          return true;
-        }
+      // 기존 markers 삭제
+      markers.forEach(marker => {
         marker.marker.setMap(null);
-        return false;
-      });
+      })
 
-      // 기존 Marker들과 비교해 새로운 것들은 추가
-      currentPlaces.forEach(place => {
-        if (!markers.map(marker => marker.googleMapsId).includes(place.googleMapsId)) {
-          let marker;
-          if (focusedMarker && focusedMarker.googleMapsId === place.googleMapsId) {
-            marker = focusedMarker.marker;
-            setIsMarkerInList(true);
-          } else {
-            marker = new window.google.maps.Marker({
-              position: {
-                lat: place.latitude,
-                lng: place.longitude
-              },
-              icon: icon,
-              map: map
-            });
-          }
-
-          marker.addListener('click', () => {
-            navigate(createPath(`/main/home/${place.googleMapsId}`, location));
-          });
-
-          newMarkers.push({
-            googleMapsId: place.googleMapsId,
-            marker: marker
+      // 새 markers 추가
+      const newMarkers = currentPlaces.map(place => {
+        let marker;
+        // foucsedMarker로 이미 해당 장소에 대한 marker가 있다면
+        if (focusedMarker && focusedMarker.googleMapsId === place.googleMapsId) {
+          marker = focusedMarker.marker;
+          setIsMarkerInList(true);
+        // focusedMarker로 없어 새로이 추가하는 경우
+        } else {
+          marker = new window.google.maps.Marker({
+            position: {
+              lat: place.latitude,
+              lng: place.longitude
+            },
+            icon: icon,
+            map: map
           });
         }
+
+        marker.addListener('click', () => {
+          navigate(createPath(`/main/home/${place.googleMapsId}`, location));
+        });
+
+        return {
+          googleMapsId: place.googleMapsId,
+          marker: marker
+        };
       });
+
       setMarkers(newMarkers);
     }
   }, [map, currentPlaces]);
