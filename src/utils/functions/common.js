@@ -78,7 +78,8 @@ export const processGooglePlaceData = place => {
     latitude: place.geometry.location.lat(),
     longitude: place.geometry.location.lng(),
     address: place.formatted_address,
-    photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
+    // 사진은 임시 comment 조치(WG-32)
+    // photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
     googleMapsUrl: place.url
   };
   if (place.phoneNumber) newData.phonNumber = place.formatted_phone_number;

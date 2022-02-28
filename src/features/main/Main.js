@@ -58,15 +58,18 @@ const Main = () => {
               let data = await res.json();
               data = changeGeometryToNum(snakeToCamel(data));
 
-              // 사진 정보는 DB에 없으므로 Google에 다시 요청
-              placesService.getDetails({
-                placeId: googleMapsId,
-                fields: ['photos']
-              }, (place, status) => {
-                const photos = place.photos.map(photo => photo.getUrl());
-                data.photos = photos;
-                dispatch(setFocusedPlace(data));
-              });
+              // 사진은 임시 comment 조치(WG-32)
+              // // 사진 정보는 DB에 없으므로 Google에 다시 요청
+              // placesService.getDetails({
+              //   placeId: googleMapsId,
+              //   fields: ['photos']
+              // }, (place, status) => {
+              //   const photos = place.photos.map(photo => photo.getUrl());
+              //   data.photos = photos;
+              //   dispatch(setFocusedPlace(data));
+              // });
+
+              dispatch(setFocusedPlace(data));
 
             // DB에 저장되지 않은 장소의 경우
             } else if (res.status === 204) {
@@ -79,7 +82,8 @@ const Main = () => {
                     'geometry.location',
                     'type',
                     'formatted_address',
-                    'photos',
+                    // 사진은 임시 comment 조치(WG-32)
+                    // 'photos',
                     'url',
                     'formatted_phone_number'
                   ]

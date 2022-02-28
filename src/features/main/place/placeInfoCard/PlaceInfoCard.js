@@ -43,7 +43,9 @@ const PlaceInfoCard = () => {
           </span>
         </>}
         <p className={styles.address}>{focusedPlace.address}</p>
-        {focusedPlace.photos &&
+        
+        {/* 사진은 임시 comment 조치(WG-32) */}
+        {/* {focusedPlace.photos &&
           <div className={`d-flex ${styles.photoContainer}`}>
             {focusedPlace.photos.map((photo, i) => {
               return (
@@ -51,7 +53,7 @@ const PlaceInfoCard = () => {
               )
             })}
           </div>
-        }
+        } */}
 
         {/* 하단 버튼들 */}
         <div className={styles.buttonsContainer}>
