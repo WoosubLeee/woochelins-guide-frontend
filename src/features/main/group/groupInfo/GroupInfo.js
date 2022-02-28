@@ -54,25 +54,23 @@ const GroupInfo = () => {
       <div className={styles.body}>
         {isAdmin &&
           <div>
-            <label className="ms-1">초대하기</label>
-            <div>
-              <BottomBorderInput
-                inputProps={{
-                  type: "text",
-                  value: invitationUrl,
-                  readOnly: true,
-                  placeholder: "초대링크를 생성하세요.",
-                  ref: inputRef
-                }}
-                containerClass={styles.linkInput}
-              />
-              <FullWidthBtn
-                text={isUrlCreated ? "복사" : "초대링크 생성"}
-                props={{
-                  onClick: isUrlCreated ? handleClickCopy : handleClickCreate
-                }}
-              />
-            </div>
+            <BottomBorderInput
+              labelText={"초대하기"}
+              inputProps={{
+                type: "text",
+                value: invitationUrl,
+                readOnly: true,
+                placeholder: "초대링크를 생성하세요.",
+                ref: inputRef
+              }}
+              containerClass={styles.linkInput}
+            />
+            <FullWidthBtn
+              text={isUrlCreated ? "복사" : "초대링크 생성"}
+              props={{
+                onClick: isUrlCreated ? handleClickCopy : handleClickCreate
+              }}
+            />
           </div>
         }
       </div>

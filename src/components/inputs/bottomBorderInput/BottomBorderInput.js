@@ -1,12 +1,15 @@
 import styles from './BottomBorderInput.module.css';
 
-const BottomBorderInput = ({ inputProps, iProps, containerClass, iconClass }) => {
+const BottomBorderInput = ({ labelText, inputProps, iProps, containerClass, iconClass }) => {
   return (
-    <div className={`${styles.container} ${containerClass}`}>
-      <input {...inputProps} className={`${styles.input}`} />
-      {inputProps.value &&
-        <i {...iProps} className={`fa-solid fa-circle-xmark ${styles.icon} ${iconClass}`} />
-      }
+    <div>
+      {labelText && <label className="ms-1">{labelText}</label>}
+      <div className={`${styles.container} ${containerClass}`}>
+        <input {...inputProps} className={`${styles.input}`} />
+        {inputProps.value &&
+          <i {...iProps} className={`fa-solid fa-circle-xmark ${styles.icon} ${iconClass}`} />
+        }
+      </div>
     </div>
   );
 }

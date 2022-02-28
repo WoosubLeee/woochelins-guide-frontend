@@ -114,8 +114,8 @@ const Signup = () => {
       <div className={styles.container}>
         {/* 이메일 */}
         <div className={styles.inputWrap}>
-          <label className="ms-1">이메일</label>
           <BottomBorderInput
+            labelText={"이메일"}
             inputProps={{
               type: "email",
               value: userInfo.email,
@@ -130,8 +130,8 @@ const Signup = () => {
         </div>
         {/* 닉네임 */}
         <div className={styles.inputWrap}>
-          <label className="ms-1">닉네임</label>
           <BottomBorderInput
+            labelText={"닉네임"}
             inputProps={{
               type: "text",
               value: userInfo.username,
@@ -145,8 +145,8 @@ const Signup = () => {
         </div>
         {/* 비밀번호 */}
         <div className={styles.inputWrap}>
-          <label className="ms-1">비밀번호</label>
           <BottomBorderInput
+            labelText={"비밀번호"}
             inputProps={{
               type: "password",
               value: userInfo.password,
@@ -161,8 +161,8 @@ const Signup = () => {
         </div>
         {/* 비밀번호 확인 */}
         <div className={styles.inputWrap}>
-          <label className="ms-1">비밀번호 확인</label>
           <BottomBorderInput
+            labelText={"비밀번호 확인"}
             inputProps={{
               type: "password",
               value: userInfo.passwordConfirmation,
