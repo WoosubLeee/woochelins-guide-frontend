@@ -1,7 +1,7 @@
 import styles from './Main.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapApiLoaded } from './map/mapSlice';
+import { mapApiLoaded, setListData } from './map/mapSlice';
 import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
@@ -9,8 +9,8 @@ import queryString from "query-string";
 import Map from "./map/Map";
 import BottomNavbar from './bottomNavbar/BottomNavbar';
 import { requestGetPlace, requestGetPlaceList, requestGetPlaceListDefault } from '../../apis/placeApi';
-import { changeGeometryToNum, createPath, extractPlacesFromGroupData, extractPlacesFromPlaceListData, processGooglePlaceData, snakeToCamel } from '../../utils/functions/common';
 import { requestGetGroup } from '../../apis/groupApi';
+import { changeGeometryToNum, createPath, extractPlacesFromGroupData, extractPlacesFromPlaceListData, processGooglePlaceData, snakeToCamel } from '../../utils/functions/common';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -130,6 +130,10 @@ const Main = () => {
       if ('type' in queries && 'id' in queries) {
         if (queries.type === 'group') {
           data = await requestGetGroup(queries.id);
+          dispatch(setListData({
+            ...data,
+            isGroup: true
+          }));
           return extractPlacesFromGroupData(data);
         } else if (queries.type === 'placelist') {
           data = await requestGetPlaceList(queries.id);
@@ -137,6 +141,10 @@ const Main = () => {
       } else {
         data = await requestGetPlaceListDefault();
       }
+      dispatch(setListData({
+        ...data,
+        isGroup: false
+      }));
       return extractPlacesFromPlaceListData(data);
     };
 
