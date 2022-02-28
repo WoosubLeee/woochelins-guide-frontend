@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFocusedMarker } from "../../mapSlice";
 
-const FocusMarker = ({ markers, listIcon }) => {
+const FocusMarker = ({ markers, listIcon, isMarkerInList, setIsMarkerInList }) => {
+  const dispatch = useDispatch();
+
   const map = useSelector(state => state.map.map);
+  const focusedMarker = useSelector(state => state.map.focusedMarker);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
-
-  const [focusedMarker, setFocusedMarker] = useState(undefined);
-  const [isMarkerInList, setIsMarkerInList] = useState(undefined);
 
   const icon = map && {
     path: "M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z",
@@ -20,32 +21,37 @@ const FocusMarker = ({ markers, listIcon }) => {
   useEffect(() => {
     if (map) {
       if (focusedMarker) {
-        if (isMarkerInList) focusedMarker.setIcon(listIcon);
-        else if (isMarkerInList === false) focusedMarker.setMap(null);
-        setFocusedMarker(undefined);
+        if (isMarkerInList) focusedMarker.marker.setIcon(listIcon);
+        else if (isMarkerInList === false) focusedMarker.marker.setMap(null);
+        dispatch(setFocusedMarker(undefined));
       }
 
       if (focusedPlace) {
         const focusedPlaceMarker = markers.find(marker => marker.googleMapsId === focusedPlace.googleMapsId);
+        let marker;
         if (focusedPlaceMarker) {
-          focusedPlaceMarker.marker.setIcon(icon);
-          setFocusedMarker(focusedPlaceMarker.marker);
+          marker = focusedPlaceMarker.marker;
+          marker.setIcon(icon);
           setIsMarkerInList(true);
         } else {
           const position = {
             lat: focusedPlace.latitude,
             lng: focusedPlace.longitude
           };
-          setFocusedMarker(new window.google.maps.Marker({
+          marker = new window.google.maps.Marker({
             position: position,
             map: map,
             icon: icon,
             // 항상 ListMarker보다 앞쪽에 보이게 하기 위해
             zIndex: 1
-          }));
+          });
           setIsMarkerInList(false);
-          map.setCenter(position);
         }
+        dispatch(setFocusedMarker({
+          googleMapsId: focusedPlace.googleMapsId,
+          marker: marker
+        }));
+        map.panTo(marker.position);
       }
     }
   }, [map, focusedPlace]);

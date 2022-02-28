@@ -14,8 +14,14 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['map/setMap'],
-        ignoredPaths: ['map.map']
+        ignoredActions: [
+          'map/setMap',
+          'map/setFocusedMarker',
+        ],
+        ignoredPaths: [
+          'map.map',
+          'map.focusedMarker',
+        ]
       }
     })
 });

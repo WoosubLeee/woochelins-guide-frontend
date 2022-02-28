@@ -16,8 +16,10 @@ const ListMarkers = () => {
   const map = useSelector(state => state.map.map);
   const listData = useSelector(state => state.map.listData);
   const listUpdateNeeded = useSelector(state => state.map.listUpdateNeeded);
+  const focusedMarker = useSelector(state => state.map.focusedMarker);
 
   const [markers, setMarkers] = useState([]);
+  const [isMarkerInList, setIsMarkerInList] = useState(undefined);
 
   useEffect(() => {
     if (listUpdateNeeded) {
@@ -66,9 +68,9 @@ const ListMarkers = () => {
     if (map && listData) {
 
       const places = listData.isGroup ? listData.placeList.places : listData.places;
+      const googleMapsIds = places.map(place => listData.isgroup ? place.place.googleMapsId : place.googleMapsId);
 
       // 기존에 표시된 Marker들 중 list에서 삭제된 것들 제거
-      const googleMapsIds = places.map(place => listData.isgroup ? place.place.googleMapsId : place.googleMapsId);
       const newMarkers = markers.filter(marker => {
         if (googleMapsIds.includes(marker.googleMapsId)) {
           return true;
@@ -80,14 +82,20 @@ const ListMarkers = () => {
       // 기존 Marker들과 비교해 새로운 것들은 추가
       places.forEach(place => {
         if (!markers.map(marker => marker.googleMapsId).includes(place.googleMapsId)) {
-          const marker = new window.google.maps.Marker({
-            position: {
-              lat: place.latitude,
-              lng: place.longitude
-            },
-            icon: icon,
-            map: map
-          });
+          let marker;
+          if (focusedMarker && focusedMarker.googleMapsId === place.googleMapsId) {
+            marker = focusedMarker.marker;
+            setIsMarkerInList(true);
+          } else {
+            marker = new window.google.maps.Marker({
+              position: {
+                lat: place.latitude,
+                lng: place.longitude
+              },
+              icon: icon,
+              map: map
+            });
+          }
 
           marker.addListener('click', () => {
             navigate(createPath(`/main/home/${place.googleMapsId}`, location));
@@ -104,7 +112,7 @@ const ListMarkers = () => {
   }, [map, listData]);
 
   return (
-    <FocusMarker markers={markers} listIcon={icon} />
+    <FocusMarker markers={markers} listIcon={icon} isMarkerInList={isMarkerInList} setIsMarkerInList={setIsMarkerInList} />
   );
 };
  

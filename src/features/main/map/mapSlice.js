@@ -7,6 +7,7 @@ export const mapSlice = createSlice({
     map: undefined,
     listData: undefined,
     listUpdateNeeded: true,
+    focusedMarker: undefined,
   },
   reducers: {
     mapApiLoaded: state => {
@@ -21,6 +22,9 @@ export const mapSlice = createSlice({
     setListUpdateNeeded: (state, action) => {
       state.listUpdateNeeded = action.payload;
     },
+    setFocusedMarker: (state, action) => {
+      state.focusedMarker = action.payload;
+    },
   }
 });
 
@@ -29,6 +33,7 @@ export const {
   setMap,
   setListData,
   setListUpdateNeeded,
+  setFocusedMarker,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;
