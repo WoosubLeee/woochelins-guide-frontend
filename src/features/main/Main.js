@@ -2,13 +2,15 @@ import styles from './Main.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapApiLoaded } from './map/mapSlice';
-import { removeFocusedPlace, setFocusedPlace } from './place/placeSlice';
+import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
+import queryString from "query-string";
 import Map from "./map/Map";
 import BottomNavbar from './bottomNavbar/BottomNavbar';
-import { requestGetPlace } from '../../apis/placeApi';
-import { changeGeometryToNum, createPath, processGooglePlaceData, snakeToCamel } from '../../utils/functions/common';
+import { requestGetPlace, requestGetPlaceList, requestGetPlaceListDefault } from '../../apis/placeApi';
+import { changeGeometryToNum, createPath, extractPlacesFromGroupData, extractPlacesFromPlaceListData, processGooglePlaceData, snakeToCamel } from '../../utils/functions/common';
+import { requestGetGroup } from '../../apis/groupApi';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const Main = () => {
 
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
   const map = useSelector(state => state.map.map);
+  const placesUpdateNeeded = useSelector(state => state.place.placesUpdateNeeded);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
   const sessionToken = useSelector(state => state.place.sessionToken);
 
@@ -106,6 +109,42 @@ const Main = () => {
       dispatch(removeFocusedPlace());
     }
   }, [googleMapsId, placesService]);
+
+  useEffect(() => {
+    updateCurrentPlaces();
+  }, [location.search]);
+
+  useEffect(() => {
+    if (placesUpdateNeeded) {
+      updateCurrentPlaces();
+      dispatch(setPlacesUpdateNeeded(false));
+    }
+  }, [placesUpdateNeeded]);
+
+  const updateCurrentPlaces = () => {
+    const fetchData = async () => {
+      // query로 list type(Group인지, PlaceList)과 id를 확인하고
+      // 없으면 user의 default PlaceList 표시
+      const queries = queryString.parse(location.search);
+      let data;
+      if ('type' in queries && 'id' in queries) {
+        if (queries.type === 'group') {
+          data = await requestGetGroup(queries.id);
+          return extractPlacesFromGroupData(data);
+        } else if (queries.type === 'placelist') {
+          data = await requestGetPlaceList(queries.id);
+        }
+      } else {
+        data = await requestGetPlaceListDefault();
+      }
+      return extractPlacesFromPlaceListData(data);
+    };
+
+    fetchData() 
+      .then(data => {
+        dispatch(setCurrentPlaces(data));
+      });
+  };
 
   return (
     <div className={styles.main}>

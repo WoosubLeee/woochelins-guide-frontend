@@ -42,6 +42,19 @@ export const changeGeometryToNum = place => {
   };
 };
 
+export const extractPlacesFromGroupData = group => {
+  return group.placeList.places.map(place => {
+    const placeData = {
+      ...place,
+      ...place.place,
+      latitude: Number(place.place.latitude),
+      longitude: Number(place.place.longitude)
+    };
+    delete placeData.place;
+    return placeData;
+  });
+};
+
 export const processGroupData = data => {
   return {
     ...data,
@@ -59,6 +72,12 @@ export const processGroupData = data => {
       })
     }
   };
+};
+
+export const extractPlacesFromPlaceListData = placeList => {
+  return placeList.places.map(place => {
+    return changeGeometryToNum(place);
+  });
 };
 
 export const processPlaceListData = data => {

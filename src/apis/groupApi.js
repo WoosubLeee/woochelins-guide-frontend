@@ -29,7 +29,7 @@ export const requestGetGroup = async groupId => {
   if (res.status === 200) {
     let data = await res.json();
     data = snakeToCamel(data);
-    return processGroupData(data);
+    return data;
   }
 };
 

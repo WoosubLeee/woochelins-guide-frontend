@@ -14,9 +14,9 @@ const ListMarkers = () => {
   const location = useLocation();
 
   const map = useSelector(state => state.map.map);
-  const listData = useSelector(state => state.map.listData);
-  const listUpdateNeeded = useSelector(state => state.map.listUpdateNeeded);
   const focusedMarker = useSelector(state => state.map.focusedMarker);
+  const listUpdateNeeded = useSelector(state => state.map.listUpdateNeeded);
+  const currentPlaces = useSelector(state => state.place.currentPlaces);
 
   const [markers, setMarkers] = useState([]);
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
@@ -65,10 +65,8 @@ const ListMarkers = () => {
 
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
-    if (map && listData) {
-
-      const places = listData.isGroup ? listData.placeList.places : listData.places;
-      const googleMapsIds = places.map(place => listData.isgroup ? place.place.googleMapsId : place.googleMapsId);
+    if (map && currentPlaces) {
+      const googleMapsIds = currentPlaces.map(place => place.googleMapsId);
 
       // 기존에 표시된 Marker들 중 list에서 삭제된 것들 제거
       const newMarkers = markers.filter(marker => {
@@ -80,7 +78,7 @@ const ListMarkers = () => {
       });
 
       // 기존 Marker들과 비교해 새로운 것들은 추가
-      places.forEach(place => {
+      currentPlaces.forEach(place => {
         if (!markers.map(marker => marker.googleMapsId).includes(place.googleMapsId)) {
           let marker;
           if (focusedMarker && focusedMarker.googleMapsId === place.googleMapsId) {
@@ -109,7 +107,7 @@ const ListMarkers = () => {
       });
       setMarkers(newMarkers);
     }
-  }, [map, listData]);
+  }, [map, currentPlaces]);
 
   return (
     <FocusMarker markers={markers} listIcon={icon} isMarkerInList={isMarkerInList} setIsMarkerInList={setIsMarkerInList} />
