@@ -1,9 +1,11 @@
-import styles from "./GroupCreate.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setListUpdateNeeded } from "../../map/mapSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { requestCreateGroup } from "../../../../apis/groupApi";
+import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
+import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
+import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
 
 const GroupCreate = () => {
   const dispatch = useDispatch();
@@ -38,13 +40,26 @@ const GroupCreate = () => {
       });
   };
   return (
-    <form onSubmit={e => handleSubmit(e)} className={`full-screen ${styles.container}`}>
-      <h1>모임 추가</h1>
-      <label>이름</label>
-      <input value={groupInfo.name} type="text" className="form-control" onChange={e => handleChange("name", e.target.value)} />
-      <button>생성</button>
-      <button type="button" onClick={() => navigate(-1)}>닫기</button>
-    </form>
+    <div className="full-screen-white">
+      <TopNavbar
+        header="모임 생성"
+        backBtnTo={-1}
+      />
+      <form onSubmit={e => handleSubmit(e)} className="m-2">
+        <BottomBorderInput
+          labelText={"모임 이름"}
+          inputProps={{
+            type: "text",
+            value: groupInfo.name,
+            onChange: e => handleChange("name", e.target.value)
+          }}
+          iProps={{onClick: () => handleChange("name", "")}}
+        />
+        <FullWidthBtn
+          text="생성"
+        />
+      </form>
+    </div>
   );
 }
  
