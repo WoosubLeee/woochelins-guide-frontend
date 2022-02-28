@@ -1,7 +1,7 @@
 import styles from "./PlaceInfoCard.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
 import { createPath } from "../../../../utils/functions/common";
 import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
@@ -9,33 +9,37 @@ import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 const PlaceInfoCard = () => {
   const location = useLocation();
   
-  const { googleMapsId } = useParams();
-  
   const listData = useSelector(state => state.map.listData);
+  const currentPlaces = useSelector(state => state.place.currentPlaces);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
 
+  const [isInPlaces, setIsInPlaces] = useState(false);
   const [recommenders, setRecommenders] = useState([]);
 
   useEffect(() => {
-    if (recommenders.length === 0 && listData) {
-      if (listData.isGroup) {
-        requestGetGroupPlaceRecommenders(listData.id, googleMapsId)
+    if (focusedPlace && currentPlaces && listData && listData.isGroup) {
+      const googleMapsIds = currentPlaces.map(place => place.googleMapsId);
+      if (googleMapsIds.includes(focusedPlace.googleMapsId)) {
+        requestGetGroupPlaceRecommenders(listData.id, focusedPlace.googleMapsId)
           .then(data => {
             setRecommenders(data);
+            setIsInPlaces(true);
           });
+      } else {
+        setIsInPlaces(false);
       }
     }
-  }, [listData]);
+  }, [focusedPlace, currentPlaces, listData]);
 
   return (
     <div className={styles.container}>
       {(focusedPlace && listData) ? (<>
         <h5>{focusedPlace.name}</h5>
-        {listData.isGroup && <>
+        {isInPlaces && <>
           <i className={`bi bi-star-fill ${styles.starIcon}`} />
           <span>
             <Link
-              to={createPath(`/main/place/${googleMapsId}/recommenders`, location)}
+              to={createPath(`/main/place/${focusedPlace.googleMapsId}/recommenders`, location)}
               className="fw-bold text-success"
             >
               {recommenders.length}명
@@ -58,9 +62,9 @@ const PlaceInfoCard = () => {
         {/* 하단 버튼들 */}
         <div className={styles.buttonsContainer}>
           {/* 추천인 */}
-          {listData.isGroup &&
+          {isInPlaces &&
             <Link
-              to={createPath(`/main/place/${googleMapsId}/recommenders`, location)}
+              to={createPath(`/main/place/${focusedPlace.googleMapsId}/recommenders`, location)}
               className={`link-black ${styles.buttonWrap} ${styles.rightBorder}`}
             >
               <i className="bi bi-people text-success" />
@@ -69,7 +73,7 @@ const PlaceInfoCard = () => {
           }
           {/* 장소 추천 */}
           <Link
-            to={createPath(`/main/place/${googleMapsId}/add`, location)}
+            to={createPath(`/main/place/${focusedPlace.googleMapsId}/add`, location)}
             className={`${styles.buttonWrap} ${styles.rightBorder}`}
           >
             <i className="bi bi-bookmark-plus text-success" />
