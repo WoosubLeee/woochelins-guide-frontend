@@ -49,49 +49,47 @@ const Main = () => {
 
   // FocusedPlace 처리
   useEffect(() => {
-    if (googleMapsId) {
-      if (placesService) {
-        if (!focusedPlace || focusedPlace.googleMapsId !== googleMapsId) {
-          requestGetPlace(googleMapsId)
-            .then(async res => {  
-              // DB에 저장된 장소의 경우
-              if (res.status === 200) {
-                let data = await res.json();
-                data = changeGeometryToNum(snakeToCamel(data));
-  
-                // 사진 정보는 DB에 없으므로 Google에 다시 요청
+    if (googleMapsId && placesService) {
+      if (!focusedPlace || focusedPlace.googleMapsId !== googleMapsId) {
+        requestGetPlace(googleMapsId)
+          .then(async res => {  
+            // DB에 저장된 장소의 경우
+            if (res.status === 200) {
+              let data = await res.json();
+              data = changeGeometryToNum(snakeToCamel(data));
+
+              // 사진 정보는 DB에 없으므로 Google에 다시 요청
+              placesService.getDetails({
+                placeId: googleMapsId,
+                fields: ['photos']
+              }, (place, status) => {
+                const photos = place.photos.map(photo => photo.getUrl());
+                data.photos = photos;
+                dispatch(setFocusedPlace(data));
+              });
+
+            // DB에 저장되지 않은 장소의 경우
+            } else if (res.status === 204) {
+              if (map) {
                 placesService.getDetails({
                   placeId: googleMapsId,
-                  fields: ['photos']
+                  fields: [
+                    'place_id',
+                    'name',
+                    'geometry.location',
+                    'type',
+                    'formatted_address',
+                    'photos',
+                    'url',
+                    'formatted_phone_number'
+                  ]
                 }, (place, status) => {
-                  const photos = place.photos.map(photo => photo.getUrl());
-                  data.photos = photos;
-                  dispatch(setFocusedPlace(data));
+                  const payload = processGooglePlaceData(place);
+                  dispatch(setFocusedPlace(payload));
                 });
-  
-              // DB에 저장되지 않은 장소의 경우
-              } else if (res.status === 204) {
-                if (map) {
-                  placesService.getDetails({
-                    placeId: googleMapsId,
-                    fields: [
-                      'place_id',
-                      'name',
-                      'geometry.location',
-                      'type',
-                      'formatted_address',
-                      'photos',
-                      'url',
-                      'formatted_phone_number'
-                    ]
-                  }, (place, status) => {
-                    const payload = processGooglePlaceData(place);
-                    dispatch(setFocusedPlace(payload));
-                  });
-                }
               }
-            });
-        }
+            }
+          });
       }
     } else {
       dispatch(removeFocusedPlace());
