@@ -18,7 +18,7 @@ const PredictionsItem = ({ prediction, setIsSearching }) => {
         setDistance(newDistance + 'm');
       }
     }
-  }, []);
+  }, [prediction.distance_meters]);
 
   const handleClick = async () => {
     navigate(createPath(`/main/home/${prediction.place_id}`, location));
