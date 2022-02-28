@@ -4,10 +4,12 @@ export const snakeToCamel = data => {
     for (const key in data) {
       const newKey = key.replace(/_[a-z]/g, c => c[1].toUpperCase());
       let newValue = data[key];
-      if ([Object, Array].includes(newValue.constructor)) {
-        newValue = snakeToCamel(newValue);
+      if (newValue) {
+        if ([Object, Array].includes(newValue.constructor)) {
+          newValue = snakeToCamel(newValue);
+        }
+        newObj[newKey] = newValue;
       }
-      newObj[newKey] = newValue;
     }
     return newObj;
   } else if (data.constructor === Array) {
@@ -70,16 +72,17 @@ export const processPlaceListData = data => {
 
 // Google Place API를 통해 받아온 Place detail 정보를 처리
 export const processGooglePlaceData = place => {
-  return {
+  const newData = {
     googleMapsId: place.place_id,
     name: place.name,
     latitude: place.geometry.location.lat(),
     longitude: place.geometry.location.lng(),
     address: place.formatted_address,
-    phoneNumber: place.formatted_phone_number,
     photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
     googleMapsUrl: place.url
   };
+  if (place.phoneNumber) newData.phonNumber = place.formatted_phone_number;
+  return newData;
 };
 
 export const addIsGroupProperty = lists => {

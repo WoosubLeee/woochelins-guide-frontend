@@ -1,10 +1,13 @@
 .nav {
     position: absolute;
     bottom: 0px;
-    height: 70px;
+    height: 60px;
     width: 100%;
     background-color: white;
     display: flex;
+    border-style: solid;
+    border-width: 1px 0 0;
+    border-color: gainsboro;
 }
 .link {
     flex: 1;

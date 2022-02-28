@@ -15,9 +15,9 @@ const BottomNavbar = () => {
         <i className={`bi bi-geo-alt-fill ${styles.locationIcon}`}></i>
         <span>장소 목록</span>
       </Link>
-      <Link to={createPath("/main/home", location)} className={styles.link}>
-        <i className={`bi bi-list ${styles.icon} ${styles.listIcon}`}></i>
-        <span className={styles.listSpan}>메뉴</span>
+      <Link to={createPath("/main/menu", location)} className={styles.link}>
+        <i className={`bi bi-three-dots ${styles.icon} ${styles.listIcon}`}></i>
+        <span className={styles.listSpan}>더보기</span>
       </Link>
     </nav>
   );

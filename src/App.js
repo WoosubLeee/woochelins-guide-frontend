@@ -15,6 +15,7 @@ import GroupInvitation from './features/main/group/groupInfo/groupInvitation/Gro
 import GroupList from './features/main/group/groupList/GroupList';
 import GroupCreate from './features/main/group/groupCreate/GroupCreate';
 import PlaceListCreate from './features/main/group/groupCreate/PlaceListCreate';
+import Menu from './features/main/menu/Menu';
 import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
@@ -69,6 +70,7 @@ function App() {
           <Route path="group/:groupId/invitation/:token" element={<GroupInvitation />} />
           <Route path="group/create" element={<GroupCreate />} />
           <Route path="placelist/create" element={<PlaceListCreate />} />
+          <Route path="menu" element={<Menu />} />
         </Route>
         <Route path="auth" {...authElement}>
           <Route path="signup" element={<Signup />} />

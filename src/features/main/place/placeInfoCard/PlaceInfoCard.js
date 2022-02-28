@@ -75,13 +75,15 @@ const PlaceInfoCard = () => {
               <span className={styles.btnText}>저장</span>
             </Link>
             {/* 전화 */}
-            <a
-              href={`tel:${focusedPlace.phoneNumber}`}
-              className={`link-black ${styles.buttonWrap} ${styles.rightBorder}`}
-            >
-              <i className="bi bi-telephone-outbound text-success" />
-              <span className={styles.btnText}>전화</span>
-            </a>
+            {focusedPlace.phoneNumber &&
+              <a
+                href={`tel:${focusedPlace.phoneNumber}`}
+                className={`link-black ${styles.buttonWrap} ${styles.rightBorder}`}
+              >
+                <i className="bi bi-telephone-outbound text-success" />
+                <span className={styles.btnText}>전화</span>
+              </a>
+            }
             {/* 구글 지도에서 보기 */}
             <a
               href={focusedPlace.googleMapsUrl}
