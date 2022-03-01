@@ -1,30 +1,16 @@
 import styles from "./GroupList.module.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setGroups, setPlaceLists } from "../groupSlice";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import GroupListItem from "./groupListItem/GroupListItem";
-import { addIsGroupProperty, createPath } from "../../../../utils/functions/common";
-import { requestGetGroupsLists } from "../../../../apis/authApi";
+import { createPath } from "../../../../utils/functions/common";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 
 const GroupList = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
 
   const listData = useSelector(state => state.map.listData);
   const groups = useSelector(state => state.group.groups);
   const placeLists = useSelector(state => state.group.placeLists);
-
-  useEffect(() => {
-    requestGetGroupsLists()
-      .then(data => {
-        let newGroups = addIsGroupProperty(data.groups);
-        dispatch(setGroups(newGroups));
-        let newPlaceLists = addIsGroupProperty(data.placeLists);
-        dispatch(setPlaceLists(newPlaceLists));
-      });
-  }, []);
 
   return (
     <div className="full-screen-white">

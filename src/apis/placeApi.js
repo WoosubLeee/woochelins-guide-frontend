@@ -23,8 +23,8 @@ export const requestGetPlaceListDefault = async () => {
   }
 };
 
-export const requestGetPlaceListUser = async () => {
-  const url = BASE_URL + 'list/';
+export const requestGetPlaceListsUser = async () => {
+  const url = BASE_URL + 'list/user';
   const res = await requestGETToken(url);
   if (res.status === 200) {
     let data = await res.json();

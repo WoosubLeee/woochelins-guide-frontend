@@ -1,17 +1,13 @@
 import styles from "./PlaceAddList.module.css";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setGroups, setPlaceLists } from "../../../group/groupSlice"
+import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
-import { requestGetGroupsLists } from "../../../../../apis/authApi";
 import { requestGetSavedUserPlace } from "../../../../../apis/placeApi";
-import { addIsGroupProperty } from "../../../../../utils/functions/common";
 
 const PlaceAddList = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
 
   const { googleMapsId } = useParams();
@@ -23,16 +19,6 @@ const PlaceAddList = () => {
   const [otherPlaceLists, setOtherPlaceLists] = useState([]);
   const [currentGroup, setCurrentGroup] = useState(undefined);
   const [saved, setSaved] = useState(undefined);
-
-  useEffect(() => {
-    requestGetGroupsLists()
-      .then(data => {
-        let newGroups = addIsGroupProperty(data.groups);
-        dispatch(setGroups(newGroups));
-        let newPlaceLists = addIsGroupProperty(data.placeLists);
-        dispatch(setPlaceLists(newPlaceLists));
-      });
-  }, []);
 
   useEffect(() => {
     if (groups && placeLists) {

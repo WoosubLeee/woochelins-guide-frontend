@@ -5,6 +5,7 @@ export const groupSlice = createSlice({
   initialState: {
     groups: [],
     placeLists: [],
+    groupsUpdateNeeded: false,
     currentGroup: undefined,
   },
   reducers: {
@@ -13,6 +14,9 @@ export const groupSlice = createSlice({
     },
     setPlaceLists: (state, action) => {
       state.placeLists = action.payload;
+    },
+    setGroupsUpdateNeeded: (state, action) => {
+      state.groupsUpdateNeeded = action.payload;
     },
     setCurrentGroup: (state, action) => {
       state.currentGroup = action.payload;
@@ -23,6 +27,7 @@ export const groupSlice = createSlice({
 export const {
   setGroups,
   setPlaceLists,
+  setGroupsUpdateNeeded,
 } = groupSlice.actions;
 
 export default groupSlice.reducer;

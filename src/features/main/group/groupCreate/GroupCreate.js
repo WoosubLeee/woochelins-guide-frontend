@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setListUpdateNeeded } from "../../map/mapSlice";
+import { setGroupsUpdateNeeded } from "../groupSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { requestCreateGroup } from "../../../../apis/groupApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
@@ -36,6 +37,7 @@ const GroupCreate = () => {
           pathname: '/main/home',
           search: search
         });
+        dispatch(setGroupsUpdateNeeded(true));
         dispatch(setListUpdateNeeded(true));
       });
   };
