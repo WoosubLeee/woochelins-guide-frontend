@@ -46,7 +46,7 @@ const PlaceListCreate = () => {
         header="내 리스트 생성"
         backBtnTo={-1}
       />
-      <form onSubmit={e => handleSubmit(e)} className="m-2">
+      <form onSubmit={e => handleSubmit(e)} className="body-without-topnavbar pt-2">
         <BottomBorderInput
           labelText={"내 리스트 이름"}
           inputProps={{

@@ -2,7 +2,6 @@ import styles from "./GroupList.module.css";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import GroupListItem from "./groupListItem/GroupListItem";
-import { createPath } from "../../../../utils/functions/common";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import { routeTo } from "../../../../utils/functions/routes";
 
@@ -31,7 +30,7 @@ const GroupList = () => {
       }
 
       {/* 모임 목록 */}
-      <div className={styles.body}>
+      <div className="body-without-topnavbar pt-2">
         <h2 className={styles.h2}>
           모임
           <Link to={routeTo('GroupCreate', null, location)}>

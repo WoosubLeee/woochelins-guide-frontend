@@ -16,6 +16,12 @@ button, input[type="submit"], input[type="reset"] {
   overflow-y: scroll;
   padding: 0;
 }
+.body-without-topnavbar {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  margin-left: 15px;
+  margin-right: 15px;
+}
 .topnavbar-header {
   position: absolute;
   width: 100%;

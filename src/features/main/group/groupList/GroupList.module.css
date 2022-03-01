@@ -1,3 +1,4 @@
+/* TopNavbar */
 .header {
   font-size: 18px;
   font-weight: 500;
@@ -14,9 +15,7 @@
   margin: 0 5px 0 0;
   border-radius: 10px;
 }
-.body {
-  margin: 15px 20px 0px;
-}
+
 .h2 {
   border-style: solid;
   border-width: 0 0 1px 0;

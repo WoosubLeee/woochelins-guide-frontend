@@ -51,7 +51,7 @@ const GroupInfo = () => {
         }
         backBtnTo={-1}
       />
-      <div className={styles.body}>
+      <div className="body-without-topnavbar pt-2">
         {isAdmin &&
           <div>
             <BottomBorderInput

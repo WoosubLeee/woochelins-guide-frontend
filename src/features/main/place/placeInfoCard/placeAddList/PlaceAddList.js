@@ -60,7 +60,7 @@ const PlaceAddList = () => {
   return (
     <div className="full-screen-white">
       <TopNavbar header="장소 저장" backBtnTo={-1} />
-      <div className={styles.body}>
+      <div className="body-without-topnavbar pt-2">
         {currentGroup && <>
           <h2 className={styles.h2}>
             현재 {currentGroup.isGroup ? "모임" : "리스트"}

@@ -20,7 +20,7 @@ const Menu = () => {
         header="더보기"
         backBtnTo={-1}
       />
-      <div>
+      <div className="body-without-topnavbar pt-2">
         <button onClick={handleClick}>로그아웃</button>
       </div>
     </div>

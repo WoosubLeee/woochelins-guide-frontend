@@ -45,7 +45,7 @@ const GroupCreate = () => {
         header="모임 생성"
         backBtnTo={-1}
       />
-      <form onSubmit={e => handleSubmit(e)} className="m-2">
+      <form onSubmit={e => handleSubmit(e)} className="body-without-topnavbar pt-2">
         <BottomBorderInput
           labelText={"모임 이름"}
           inputProps={{

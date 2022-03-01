@@ -112,7 +112,7 @@ const Signup = () => {
   return (
     <div>
       <TopNavbar header="회원가입" backBtnTo={-1} />
-      <div className={styles.container}>
+      <div className="body-without-topnavbar mt-4">
         {/* 이메일 */}
         <div className={styles.inputWrap}>
           <BottomBorderInput

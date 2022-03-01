@@ -49,7 +49,7 @@ const GroupInvitation = () => {
       <TopNavbar
         header="모임 초대"
       />
-      <div className={styles.body}>
+      <div className="body-without-topnavbar pt-2 text-center">
         {resStatus === 202 &&
           <>
             <p className={styles.groupName}>{groupName}</p>

@@ -1,4 +1,3 @@
-import styles from "./PlaceList.module.css";
 import { useSelector } from "react-redux";
 import PlaceListItem from "./placeListItem/PlaceListItem";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
@@ -12,7 +11,7 @@ const PlaceList = () => {
         header="장소 목록"
         backBtnTo={-1}
       />
-      <ul className={styles.ul}>
+      <ul className="body-without-topnavbar p-0">
         {currentPlaces && currentPlaces.map((place, i) => {
           return (
             <PlaceListItem key={i} place={place} />

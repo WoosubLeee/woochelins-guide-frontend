@@ -1,4 +1,3 @@
-import styles from './PlaceRecommenders.module.css';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -25,7 +24,7 @@ const PlaceRecommenders = () => {
   return (
     <div className="full-screen-white">
       <TopNavbar header="추천한 사람" backBtnTo={-1} />
-      <ul className={styles.ul}>
+      <ul className="body-without-topnavbar p-0">
         {recommenders.map((recommender, i) => {
           return <RecommendersItems key={i} recommender={recommender} />
         })}
