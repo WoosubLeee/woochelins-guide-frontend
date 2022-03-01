@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mapApiLoaded, setListData } from './map/mapSlice';
 import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
 import { setGroups, setGroupsUpdateNeeded, setPlaceLists } from "./group/groupSlice";
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
 import queryString from "query-string";
 import Map from "./map/Map";
@@ -19,7 +19,6 @@ import { requestGetGroup, requestGetGroupsUser } from '../../apis/groupApi';
 import {
   addIsGroupProperty,
   changeGeometryToNum,
-  createPath,
   extractPlacesFromGroupData,
   extractPlacesFromPlaceListData,
   processGooglePlaceData,
@@ -28,7 +27,6 @@ import {
 
 const Main = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const { googleMapsId } = useParams();
@@ -59,12 +57,6 @@ const Main = () => {
       setPlacesService(new window.google.maps.places.PlacesService(map));
     }
   }, [map]);
-
-  useEffect(() => {
-    if (location.pathname === '/main') {
-      navigate(createPath('/main/home', location));
-    }
-  }, [location.pathname]);
 
   // FocusedPlace 처리
   useEffect(() => {

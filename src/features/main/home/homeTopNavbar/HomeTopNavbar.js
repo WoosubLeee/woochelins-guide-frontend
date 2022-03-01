@@ -1,7 +1,7 @@
 import styles from './HomeTopNavbar.module.css';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { createPath } from '../../../../utils/functions/common';
+import { routeTo } from '../../../../utils/functions/routes';
 
 const HomeTopNavbar = ({ setIsSearching }) => {
   const location = useLocation();
@@ -12,14 +12,14 @@ const HomeTopNavbar = ({ setIsSearching }) => {
     <nav className={styles.nav}>
       {listData && <>
         {listData.isGroup ? (
-          <Link to={createPath("/main/group/info", location)} className={styles.groupIcon}>
+          <Link to={routeTo('GroupInfo', null, location)} className={styles.groupIcon}>
             <i className="bi bi-people mx-3" />
           </Link>
         ) : (
           <></>
         )}
         <div className="topnavbar-header">
-          <Link to={createPath("/main/group/list", location)} className={styles.header}>
+          <Link to={routeTo('GroupList', null, location)} className={styles.header}>
             <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
             {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
           </Link>

@@ -8,6 +8,7 @@ import TopNavbar from "../../../components/navbar/topNavbar/TopNavbar";
 import FullWidthBtn from "../../../components/buttons/fullWidthBtn/FullWidthBtn";
 import BottomBorderInput from '../../../components/inputs/bottomBorderInput/BottomBorderInput';
 import { requestLogin, requestSignup } from "../../../apis/authApi";
+import { routeTo } from '../../../utils/functions/routes';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ const Signup = () => {
           requestLogin(userInfo)
             .then(() => {
               dispatch(setIsLogin(true));
-              navigate('/');
+              navigate(routeTo('Home'));
             });
         } else {
           const data = await signupRes.json();

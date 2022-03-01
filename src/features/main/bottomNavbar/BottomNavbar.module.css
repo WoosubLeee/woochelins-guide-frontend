@@ -1,8 +1,9 @@
 .nav {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
-    height: 60px;
+    height: 50px;
     width: 100%;
+    max-width: 480px;
     background-color: white;
     display: flex;
     border-style: solid;
@@ -24,20 +25,20 @@
     color: #198754;
 }
 .nav span {
-    font-size: 13px;
+    font-size: 10px;
 }
 .mapIcon {
-    font-size: 30px;
+    font-size: 25px;
 }
 .mapSpan {
     position: relative;
     top: 4px;
 }
 .locationIcon {
-    font-size: 26px;
+    font-size: 22px;
 }
 .listIcon {
-    font-size: 36px;
+    font-size: 32px;
 }
 .listSpan {
     position: relative;

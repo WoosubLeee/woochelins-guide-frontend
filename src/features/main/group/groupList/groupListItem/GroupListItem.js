@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { setListData } from "../../../map/mapSlice";
 import peopleImg from "./people.png";
+import { routeTo } from "../../../../../utils/functions/routes";
 
 const GroupListItem = ({ group }) => {
   const dispatch = useDispatch();
@@ -16,10 +17,7 @@ const GroupListItem = ({ group }) => {
       type: type,
       id: group.id
     })}`
-    navigate({
-      pathname: '/main/home',
-      search: search
-    });
+    navigate(routeTo('Home', null, { search: search }));
   };
 
   return (

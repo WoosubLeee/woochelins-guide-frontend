@@ -1,7 +1,7 @@
 import styles from "./PredictionsItem.module.css";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createPath } from "../../../../../utils/functions/common";
+import { routeTo } from "../../../../../utils/functions/routes";
 
 const PredictionsItem = ({ prediction, setIsSearching }) => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const PredictionsItem = ({ prediction, setIsSearching }) => {
   }, [prediction.distance_meters]);
 
   const handleClick = async () => {
-    navigate(createPath(`/main/home/${prediction.place_id}`, location));
+    navigate(routeTo('PlaceInfoCard', { googleMapsId: prediction.place_id }, location));
     setIsSearching(false);
   };
 

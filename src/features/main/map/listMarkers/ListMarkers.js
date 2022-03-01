@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import FocusMarker from "./focusMarker/FocusMarker";
-import { createPath } from "../../../../utils/functions/common";
+import { routeTo } from "../../../../utils/functions/routes";
 
 const ListMarkers = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const ListMarkers = () => {
         }
 
         marker.addListener('click', () => {
-          navigate(createPath(`/main/home/${place.googleMapsId}`, location));
+          navigate(routeTo('PlaceInfoCard', { googleMapsId: place.googleMapsId }, location));
         });
 
         return {

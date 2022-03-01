@@ -1,13 +1,13 @@
 import styles from "./PlaceListItem.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createPath } from "../../../../../utils/functions/common";
+import { routeTo } from "../../../../../utils/functions/routes";
 
 const PlaceListItem = ({ place }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleClick = () => {
-    navigate(createPath(`/main/home/${place.googleMapsId}`, location));
+    navigate(routeTo('PlaceInfoCard', { googleMapsId: place.googleMapsId }, location));
   }
 
   return (

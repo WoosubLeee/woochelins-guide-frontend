@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
-import { createPath } from "../../../../utils/functions/common";
+import { routeTo } from "../../../../utils/functions/routes";
 import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 
 const PlaceInfoCard = () => {
@@ -39,7 +39,7 @@ const PlaceInfoCard = () => {
           <i className={`bi bi-star-fill ${styles.starIcon}`} />
           <span>
             <Link
-              to={createPath(`/main/place/${focusedPlace.googleMapsId}/recommenders`, location)}
+              to={routeTo('PlaceRecommenders', { googleMapsId: focusedPlace.googleMapsId}, location)}
               className="fw-bold text-success"
             >
               {recommenders.length}명
@@ -64,7 +64,7 @@ const PlaceInfoCard = () => {
           {/* 추천인 */}
           {isInPlaces &&
             <Link
-              to={createPath(`/main/place/${focusedPlace.googleMapsId}/recommenders`, location)}
+              to={routeTo('PlaceRecommenders', { googleMapsId: focusedPlace.googleMapsId}, location)}
               className={`link-black ${styles.buttonWrap} ${styles.rightBorder}`}
             >
               <i className="bi bi-people text-success" />
@@ -73,7 +73,7 @@ const PlaceInfoCard = () => {
           }
           {/* 장소 추천 */}
           <Link
-            to={createPath(`/main/place/${focusedPlace.googleMapsId}/add`, location)}
+            to={routeTo('PlaceAddList', { googleMapsId: focusedPlace.googleMapsId}, location)}
             className={`${styles.buttonWrap} ${styles.rightBorder}`}
           >
             <i className="bi bi-bookmark-plus text-success" />

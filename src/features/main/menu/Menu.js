@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
+import { setIsLogin } from "../../auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import TopNavbar from "../../../components/navbar/topNavbar/TopNavbar";
-import { setIsLogin } from "../../auth/authSlice";
+import { routeTo } from "../../../utils/functions/routes";
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Menu = () => {
   const handleClick = () => {
     localStorage.removeItem('token');
     dispatch(setIsLogin(false));
-    navigate("/auth/login");
+    navigate(routeTo('Login'));
   };
 
   return (

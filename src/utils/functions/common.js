@@ -113,10 +113,3 @@ export const addIsGroupProperty = lists => {
     }
   });
 };
-  
-export const createPath = (path, location) => {
-  return {
-    pathname: path,
-    search: location.search
-  };
-};

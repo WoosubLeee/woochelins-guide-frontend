@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { setIsLogin } from "../authSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FullWidthBtn from '../../../components/buttons/fullWidthBtn/FullWidthBtn';
-import { requestLogin } from "../../../apis/authApi";
-import { createPath } from "../../../utils/functions/common";
 import BottomBorderInput from '../../../components/inputs/bottomBorderInput/BottomBorderInput';
+import { requestLogin } from "../../../apis/authApi";
+import { routeTo, createPath } from '../../../utils/functions/routes';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Login = () => {
           if (state && 'location' in state) {
             navigate(createPath(state.location.pathname, state.location));
           } else {
-            navigate('/main/home');
+            navigate(routeTo('Home'));
           }
         } else {
           alert('계정 정보가 일치하지 않습니다.');
@@ -74,7 +74,7 @@ const Login = () => {
       </form>
       <div className={styles.bottomDiv}>
         <span className="me-2">혹시, 우슐랭가이드가 처음이신가요?</span>
-        <Link to="/auth/signup" className={`text-success ${styles.signupLink}`}>회원가입</Link>
+        <Link to={routeTo('Signup')} className={`text-success ${styles.signupLink}`}>회원가입</Link>
       </div>
     </div>
   );

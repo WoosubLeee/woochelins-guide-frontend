@@ -5,6 +5,7 @@ import { requestAddMember, requestGroupInvitationIsValid } from "../../../../../
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
 import { snakeToCamel } from "../../../../../utils/functions/common";
 import FullWidthBtn from '../../../../../components/buttons/fullWidthBtn/FullWidthBtn';
+import { routeTo } from '../../../../../utils/functions/routes';
 
 const GroupInvitation = () => {
   const navigate = useNavigate();
@@ -34,16 +35,13 @@ const GroupInvitation = () => {
             type: 'group',
             id: groupId
           })}`;
-          navigate({
-            pathname: '/main/home',
-            search: search
-          });
+          navigate(routeTo('Home', {}, { search: search }));
         }
       });
   };
 
   const handleClickNo = () => {
-    navigate('/main/home');
+    navigate('Home');
   };
 
   return (

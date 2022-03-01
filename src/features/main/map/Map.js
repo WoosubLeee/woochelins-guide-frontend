@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setMap } from "./mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import ListMarkers from "./listMarkers/ListMarkers";
-import { createPath } from "../../../utils/functions/common";
+import { routeTo } from "../../../utils/functions/routes";
 
 const Map = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const Map = () => {
 
   useEffect(() => {
     if (navigateToHome) {
-      navigate(createPath('/main/home', location));
+      navigate(routeTo('Home', null, location));
       setNavigateToHome(false);
     }
   }, [navigateToHome]);

@@ -7,6 +7,7 @@ import { requestCreateGroup } from "../../../../apis/groupApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
 import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
+import { routeTo } from "../../../../utils/functions/routes";
 
 const GroupCreate = () => {
   const dispatch = useDispatch();
@@ -33,10 +34,7 @@ const GroupCreate = () => {
           type: 'group',
           id: data.id
         })}`;
-        navigate({
-          pathname: '/main/home',
-          search: search
-        });
+        navigate(routeTo('Home', {}, { search: search }));
         dispatch(setGroupsUpdateNeeded(true));
         dispatch(setListUpdateNeeded(true));
       });

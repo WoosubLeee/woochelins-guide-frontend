@@ -19,7 +19,7 @@ import Menu from './features/main/menu/Menu';
 import Signup from './features/auth/signup/Signup';
 import Login from './features/auth/login/Login';
 import { requestIsValid } from './apis/authApi';
-import { createPath } from './utils/functions/common';
+import { routeTo, createPath } from './utils/functions/routes';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,21 +46,24 @@ function App() {
   }, []);
 
   const mainElement = !isLogin ? {
-    element: <Navigate to="/auth/login" replace={true} state={{location: location}} />
+    element: <Navigate to={routeTo('Login')} replace={true} state={{location: location}} />
   } : {
     element: <Main />
   };
   const authElement = isLogin && (
-    { element: <Navigate to={(location.state && 'location' in location.state) ? createPath(location.state.location.pathname, location.state.location) : "/main"} replace={true} /> }
+    { element: <Navigate to={
+      (location.state && 'location' in location.state) ? 
+      createPath(location.state.location.pathname, location.state.location) : 
+      routeTo('Home')} 
+      replace={true} /> }
   );
 
   return (
-    <div className={`${styles.App} mx-auto`}>
+    <div className={styles.App}>
       <Routes>
-        <Route path="/" element={<Navigate to="/main/home" replace={true} />} />
-        <Route path="main" {...mainElement}>
-          <Route path="home" element={<Home />}>
-            <Route path=":googleMapsId" element={<PlaceInfoCard />} />
+        <Route path="" {...mainElement}>
+          <Route path="" element={<Home />}>
+            <Route path="place/:googleMapsId" element={<PlaceInfoCard />} />
           </Route>
           <Route path="place/:googleMapsId/add" element={<PlaceAddList />} />
           <Route path="place/:googleMapsId/recommenders" element={<PlaceRecommenders />} />
