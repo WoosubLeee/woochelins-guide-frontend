@@ -43,7 +43,7 @@ const Main = () => {
   useEffect(() => {
     const loader = new Loader({
       apiKey: 'AIzaSyADso4JNS7rJCc2DqF7dj5CJXBFaUXj61A',
-      libraries: ['places', 'visualization'],
+      libraries: ['places', 'visualization', 'geometry'],
     });
     
     loader.load()

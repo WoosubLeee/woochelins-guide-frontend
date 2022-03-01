@@ -1,9 +1,27 @@
 .li {
     display: flex;
+    align-items: center;
     border-style: solid;
     border-width: 0 0 1px 0;
     border-color: gainsboro;
-    padding: 0 13px;
-    align-items: center;
     height: 80px;
+}
+.icon {
+    font-size: 20px;
+    margin: 0 15px 0 10px;
+}
+.mainInfo {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0 18px 0 0;
+}
+.mainInfo > h3 {
+    font-size: 16px;
+    margin: 0 0 0px;
+}
+.mainInfo span {
+    font-size: 13px;
+    color: gray;
 }
