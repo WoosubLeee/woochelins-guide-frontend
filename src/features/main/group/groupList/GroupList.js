@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import GroupListItem from "./groupListItem/GroupListItem";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
+import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
 import { routeTo } from "../../../../utils/functions/routes";
 
 const GroupList = () => {
@@ -20,7 +21,7 @@ const GroupList = () => {
           header={
             <div className="topnavbar-header">
               <Link to={routeTo('Home', null, location)} className={styles.header}>
-                <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
+                <SmallLabel text={listData.isGroup ? "모임" : "내 리스트"} />
                 {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
               </Link>
             </div>

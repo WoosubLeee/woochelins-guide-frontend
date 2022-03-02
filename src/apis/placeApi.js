@@ -95,15 +95,3 @@ export const requestGetGroupPlaceRecommenders = async (listId, googleMapsId) => 
     return data;
   }
 };
-
-// 기타 API들
-
-export const requestGetSavedUserPlace = async googleMapsId => {
-  const url = BASE_URL + `saved/user/${googleMapsId}/`;
-  const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = snakeToCamel(data);
-    return data;
-  }
-};

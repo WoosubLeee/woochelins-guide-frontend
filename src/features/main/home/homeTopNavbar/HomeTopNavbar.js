@@ -1,6 +1,7 @@
 import styles from './HomeTopNavbar.module.css';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import SmallLabel from '../../../../components/labels/smallLabel/SmallLabel';
 import { routeTo } from '../../../../utils/functions/routes';
 
 const HomeTopNavbar = ({ setIsSearching }) => {
@@ -20,7 +21,7 @@ const HomeTopNavbar = ({ setIsSearching }) => {
         )}
         <div className="topnavbar-header">
           <Link to={routeTo('GroupList', null, location)} className={styles.header}>
-            <span>{listData.isGroup ? "모임" : "내 리스트"}</span>
+            <SmallLabel text={listData.isGroup ? "모임" : "내 리스트"} />
             {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
           </Link>
         </div>

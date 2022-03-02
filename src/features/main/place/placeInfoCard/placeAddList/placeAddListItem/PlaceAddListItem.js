@@ -1,17 +1,50 @@
 import styles from "./PlaceAddListItem.module.css";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setListUpdateNeeded } from "../../../../map/mapSlice";
-import { useLocation } from "react-router-dom";
-import queryString from "query-string";
+import { setPlacesUpdateNeeded } from "../../../placeSlice";
+import { setGroupsUpdateNeeded } from "../../../../group/groupSlice";
 import { requestAddGroupPlace, requestAddPlace, requestRemoveGroupPlace, requestRemovePlace } from "../../../../../../apis/placeApi";
+import SmallLabel from "../../../../../../components/labels/smallLabel/SmallLabel";
 
-const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
+const PlaceAddListItem = ({ group }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const focusedPlace = useSelector(state => state.place.focusedPlace);
+  const listData = useSelector(state => state.map.listData);
+
+  const [isSaved, setIsSaved] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
+  const [isCurrent, setIsCurrent] = useState(false);
+
+  useEffect(() => {
+    if (focusedPlace) {
+      if (group.isGroup) {
+        if (group.placeList.places.map(place => place.place.googleMapsId).includes(focusedPlace.googleMapsId)) {
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+        }
+      } else {
+        if (group.places.map(place => place.googleMapsId).includes(focusedPlace.googleMapsId)) {
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+        }
+      }
+    }
+  }, [group, focusedPlace]);
+
+  useEffect(() => {
+    if (listData) {
+      if (group.isGroup === listData.isGroup && group.id === listData.id) {
+        setIsCurrent(true);
+      }
+    }
+  }, [listData]);
   
   const handleClick = () => {
+    setIsRequesting(true);
+
     const requestAddRemove = () => {
       if (!isSaved) {
         if (group.isGroup) {
@@ -30,31 +63,35 @@ const PlaceAddListItem = ({ group, isSaved, changeSaved }) => {
 
     requestAddRemove()
       .then(() => {
-        changeSaved(group.isGroup, !isSaved, group.id);
-
-        const queries = queryString.parse(location.search);
-        if (!('type' in queries) || !('id' in queries)) {
-          dispatch(setListUpdateNeeded(true));
-        } else if ('type' in queries && 'id' in queries) {
-          if ((group.isGroup && queries.type === 'group') || (!group.isGroup && queries.type === 'placelist')) {
-            if (Number(queries.id) === group.id) {
-              dispatch(setListUpdateNeeded(true));
-            }
-          }
+        dispatch(setGroupsUpdateNeeded(true));
+        if (group.isGroup === listData.isGroup) {
+          dispatch(setPlacesUpdateNeeded(true));
         }
+        setIsRequesting(false);
       });
   };
   
   return (
     <li className={styles.li}>
-      <span className={styles.span}>{group.name}</span>
-      <button onClick={handleClick} className={styles.button}>
-        {isSaved ? (
-          <i className="bi bi-bookmark-fill" />
+      <div className={styles.nameDiv}>
+        {isCurrent && <SmallLabel text="현재" />}
+        <span className={styles.span}>{group.name}</span>
+      </div>
+      <div>
+        {isRequesting ? (
+          <div className="spinner-border spinner-border-sm text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         ) : (
-          <i className="bi bi-bookmark" />
+          <button onClick={handleClick} className={styles.button}>
+            {isSaved ? (
+              <i className="bi bi-bookmark-fill" />
+            ) : (
+              <i className="bi bi-bookmark" />
+            )}
+          </button>
         )}
-      </button>
+      </div>
     </li>
   );
 }

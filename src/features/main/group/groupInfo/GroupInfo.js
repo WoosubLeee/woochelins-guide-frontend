@@ -6,6 +6,7 @@ import { useRef } from "react";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
 import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
+import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
 
 const GroupInfo = () => {
   const listData = useSelector(state => state.map.listData);
@@ -45,7 +46,7 @@ const GroupInfo = () => {
       <TopNavbar
         header={
           <div className={`topnavbar-header ${styles.header}`}>
-            <span className={styles.headerLabel}>{listData.isGroup ? "모임" : "내 리스트"}</span>
+            <SmallLabel text="모임" />
             {listData.name}
           </div>
         }
