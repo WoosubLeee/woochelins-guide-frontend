@@ -7,6 +7,8 @@ import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
 import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
 import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
+import GroupMemberItem from "./groupMemberItem/GroupMemberItem";
+import ListHeader from "../../../../components/etc/listHeader/ListHeader";
 
 const GroupInfo = () => {
   const currentGroup = useSelector(state => state.group.currentGroup);
@@ -29,7 +31,7 @@ const GroupInfo = () => {
   const handleClickCreate = () => {
     requestCreateGroupInvitationToken(currentGroup.id)
       .then(data => {
-        const url = `${window.location.origin}/main/group/${currentGroup.id}/invitation/${data.token}/`;
+        const url = `${window.location.origin}/group/${currentGroup.id}/invitation/${data.token}/`;
         setInvitationUrl(url);
         setIsUrlCreated(true);
       });
@@ -47,16 +49,17 @@ const GroupInfo = () => {
         header={
           <div className={`topnavbar-header ${styles.header}`}>
             <SmallLabel text="모임" />
-            {currentGroup.name}
+            {currentGroup?.name}
           </div>
         }
         backBtnTo={-1}
       />
-      <div className="body-without-topnavbar pt-2">
+
+      <div className={`body-without-topnavbar pt-2 ${styles.body}`}>
         {isAdmin &&
           <div>
+            <h6>초대하기</h6>
             <BottomBorderInput
-              labelText={"초대하기"}
               inputProps={{
                 type: "text",
                 value: invitationUrl,
@@ -74,6 +77,13 @@ const GroupInfo = () => {
             />
           </div>
         }
+        
+        <div className="mt-4">
+          <h6>멤버</h6>
+          <ul className={styles.ul}>
+            {currentGroup?.members.map((member, i) => <GroupMemberItem key={i} member={member} />)}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ const GroupInvitation = () => {
   };
 
   const handleClickNo = () => {
-    navigate('Home');
+    navigate(routeTo('Home'));
   };
 
   return (
