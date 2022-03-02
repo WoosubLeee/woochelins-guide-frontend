@@ -10,12 +10,13 @@ const FocusMarker = ({ markers, listIcon, isMarkerInList, setIsMarkerInList }) =
   const focusedPlace = useSelector(state => state.place.focusedPlace);
 
   const icon = map && {
-    path: "M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z",
-    fillColor: "#dc3545",
+    path: "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z",
     fillOpacity: 1,
-    strokeWeight: 0,
-    scale: 2.3,
-    anchor: new window.google.maps.Point(9, 21)
+    fillColor: "#d85140",
+    strokeWeight: 2,
+    strokeColor: "#a3291e",
+    scale: 1.6,
+    anchor: new window.google.maps.Point(12,22),
   };
 
   useEffect(() => {

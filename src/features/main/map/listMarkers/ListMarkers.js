@@ -16,12 +16,13 @@ const ListMarkers = () => {
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
 
   const icon = map && {
-    path: "M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z",
-    fillColor: "#198754",
+    path: "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z",
     fillOpacity: 1,
-    strokeWeight: 0,
-    scale: 1.4,
-    anchor: new window.google.maps.Point(9, 21),
+    fillColor: "#00833c",
+    strokeWeight: 1,
+    strokeColor: "#004d26",
+    scale: 1.1,
+    anchor: new window.google.maps.Point(12,22),
   };
 
   // list에 있는 place들의 Marker들을 표시
