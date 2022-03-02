@@ -28,6 +28,7 @@ export const {
   setGroups,
   setPlaceLists,
   setGroupsUpdateNeeded,
+  setCurrentGroup,
 } = groupSlice.actions;
 
 export default groupSlice.reducer;

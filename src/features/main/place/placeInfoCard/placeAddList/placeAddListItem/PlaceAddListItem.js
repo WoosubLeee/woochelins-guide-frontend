@@ -10,7 +10,7 @@ const PlaceAddListItem = ({ group }) => {
   const dispatch = useDispatch();
 
   const focusedPlace = useSelector(state => state.place.focusedPlace);
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.group.currentGroup);
 
   const [isSaved, setIsSaved] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
@@ -35,12 +35,12 @@ const PlaceAddListItem = ({ group }) => {
   }, [group, focusedPlace]);
 
   useEffect(() => {
-    if (listData) {
-      if (group.isGroup === listData.isGroup && group.id === listData.id) {
+    if (currentGroup) {
+      if (group.isGroup === currentGroup.isGroup && group.id === currentGroup.id) {
         setIsCurrent(true);
       }
     }
-  }, [listData]);
+  }, [currentGroup]);
   
   const handleClick = () => {
     setIsRequesting(true);
@@ -64,7 +64,7 @@ const PlaceAddListItem = ({ group }) => {
     requestAddRemove()
       .then(() => {
         dispatch(setGroupsUpdateNeeded(true));
-        if (group.isGroup === listData.isGroup) {
+        if (group.isGroup === currentGroup.isGroup) {
           dispatch(setPlacesUpdateNeeded(true));
         }
         setIsRequesting(false);

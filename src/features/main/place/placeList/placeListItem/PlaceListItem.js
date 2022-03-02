@@ -9,7 +9,7 @@ const PlaceListItem = ({ place }) => {
   const location = useLocation();
 
   const map = useSelector(state => state.map.map);
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.map.currentGroup);
 
   const [distance, setDistance] = useState(0);
 
@@ -50,7 +50,7 @@ const PlaceListItem = ({ place }) => {
         <br />
         <span>{distance}</span>
       </div>
-      {listData?.isGroup &&
+      {currentGroup?.isGroup &&
         <span>
           추천 <span className="text-success">{place.recommendedBy.length}</span>
         </span>

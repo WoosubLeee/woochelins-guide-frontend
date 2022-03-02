@@ -8,7 +8,7 @@ import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 const PlaceInfoCard = () => {
   const location = useLocation();
   
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.group.currentGroup);
   const currentPlaces = useSelector(state => state.place.currentPlaces);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
 
@@ -16,7 +16,7 @@ const PlaceInfoCard = () => {
   const [recommenders, setRecommenders] = useState([]);
 
   useEffect(() => {
-    if (focusedPlace && currentPlaces && listData && listData.isGroup) {
+    if (focusedPlace && currentPlaces && currentGroup && currentGroup.isGroup) {
       const place = currentPlaces.find(place => place.googleMapsId === focusedPlace.googleMapsId);
       if (place) {
           setRecommenders(place.recommendedBy);
@@ -25,11 +25,11 @@ const PlaceInfoCard = () => {
         setIsInPlaces(false);
       }
     }
-  }, [focusedPlace, currentPlaces, listData]);
+  }, [focusedPlace, currentPlaces, currentGroup]);
 
   return (
     <div className={styles.container}>
-      {(focusedPlace && listData) ? (<>
+      {(focusedPlace && currentGroup) ? (<>
         <h5>{focusedPlace.name}</h5>
         {isInPlaces && <>
           <i className={`bi bi-star-fill ${styles.starIcon}`} />

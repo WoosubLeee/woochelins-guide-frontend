@@ -9,27 +9,27 @@ import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthB
 import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
 
 const GroupInfo = () => {
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.group.currentGroup);
   
   const [isAdmin, setIsAdmin] = useState(false);
   const [invitationUrl, setInvitationUrl] = useState('');
   const [isUrlCreated, setIsUrlCreated] = useState(false);
 
   useEffect(() => {
-    if (listData) {
-      requestIsGroupAdmin(listData.id)
+    if (currentGroup) {
+      requestIsGroupAdmin(currentGroup.id)
         .then(res => {
           if (res.status === 202) {
             setIsAdmin(true);
           }
         });
     }
-  }, [listData]);
+  }, [currentGroup]);
   
   const handleClickCreate = () => {
-    requestCreateGroupInvitationToken(listData.id)
+    requestCreateGroupInvitationToken(currentGroup.id)
       .then(data => {
-        const url = `${window.location.origin}/main/group/${listData.id}/invitation/${data.token}/`;
+        const url = `${window.location.origin}/main/group/${currentGroup.id}/invitation/${data.token}/`;
         setInvitationUrl(url);
         setIsUrlCreated(true);
       });
@@ -47,7 +47,7 @@ const GroupInfo = () => {
         header={
           <div className={`topnavbar-header ${styles.header}`}>
             <SmallLabel text="모임" />
-            {listData.name}
+            {currentGroup.name}
           </div>
         }
         backBtnTo={-1}

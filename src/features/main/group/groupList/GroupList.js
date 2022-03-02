@@ -9,20 +9,20 @@ import { routeTo } from "../../../../utils/functions/routes";
 const GroupList = () => {
   const location = useLocation();
 
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.group.currentGroup);
   const groups = useSelector(state => state.group.groups);
   const placeLists = useSelector(state => state.group.placeLists);
 
   return (
     <div className="full-screen-white">
       {/* TopNavbar */}
-      {listData &&
+      {currentGroup &&
         <TopNavbar
           header={
             <div className="topnavbar-header">
               <Link to={routeTo('Home', null, location)} className={styles.header}>
-                <SmallLabel text={listData.isGroup ? "모임" : "내 리스트"} />
-                {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
+                <SmallLabel text={currentGroup.isGroup ? "모임" : "내 리스트"} />
+                {currentGroup.name}<i className="bi bi-chevron-down text-success ms-1" />
               </Link>
             </div>
           }

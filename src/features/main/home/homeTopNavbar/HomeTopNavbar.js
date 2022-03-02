@@ -7,12 +7,12 @@ import { routeTo } from '../../../../utils/functions/routes';
 const HomeTopNavbar = ({ setIsSearching }) => {
   const location = useLocation();
 
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.group.currentGroup);
 
   return (
     <nav className={styles.nav}>
-      {listData && <>
-        {listData.isGroup ? (
+      {currentGroup && <>
+        {currentGroup.isGroup ? (
           <Link to={routeTo('GroupInfo', null, location)} className={styles.groupIcon}>
             <i className="bi bi-people mx-3" />
           </Link>
@@ -21,8 +21,8 @@ const HomeTopNavbar = ({ setIsSearching }) => {
         )}
         <div className="topnavbar-header">
           <Link to={routeTo('GroupList', null, location)} className={styles.header}>
-            <SmallLabel text={listData.isGroup ? "모임" : "내 리스트"} />
-            {listData.name}<i className="bi bi-chevron-down text-success ms-1" />
+            <SmallLabel text={currentGroup.isGroup ? "모임" : "내 리스트"} />
+            {currentGroup.name}<i className="bi bi-chevron-down text-success ms-1" />
           </Link>
         </div>
         <div onClick={() => setIsSearching(true)} className={styles.searchIcon}>

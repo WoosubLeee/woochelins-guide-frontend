@@ -1,9 +1,9 @@
 import styles from './Main.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapApiLoaded, setListData } from './map/mapSlice';
+import { mapApiLoaded } from './map/mapSlice';
 import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
-import { setGroups, setGroupsUpdateNeeded, setPlaceLists } from "./group/groupSlice";
+import { setCurrentGroup, setGroups, setGroupsUpdateNeeded, setPlaceLists } from "./group/groupSlice";
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Loader } from "@googlemaps/js-api-loader";
 import queryString from "query-string";
@@ -137,7 +137,7 @@ const Main = () => {
       if ('type' in queries && 'id' in queries) {
         if (queries.type === 'group') {
           data = await requestGetGroup(queries.id);
-          dispatch(setListData({
+          dispatch(setCurrentGroup({
             ...data,
             isGroup: true
           }));
@@ -148,7 +148,7 @@ const Main = () => {
       } else {
         data = await requestGetPlaceListDefault();
       }
-      dispatch(setListData({
+      dispatch(setCurrentGroup({
         ...data,
         isGroup: false
       }));

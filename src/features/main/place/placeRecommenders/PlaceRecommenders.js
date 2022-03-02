@@ -8,18 +8,18 @@ import RecommendersItems from "./recommendersItem/RecommendersItem";
 const PlaceRecommenders = () => {
   const { googleMapsId } = useParams();
 
-  const listData = useSelector(state => state.map.listData);
+  const currentGroup = useSelector(state => state.map.currentGroup);
 
   const [recommenders, setRecommenders] = useState([]);
 
   useEffect(() => {
-    if (listData) {
-      requestGetGroupPlaceRecommenders(listData.id, googleMapsId)
+    if (currentGroup) {
+      requestGetGroupPlaceRecommenders(currentGroup.id, googleMapsId)
         .then(data => {
           setRecommenders(data);
         });
     }
-  }, [listData]);
+  }, [currentGroup]);
 
   return (
     <div className="full-screen-white">

@@ -1,7 +1,7 @@
 import styles from "./GroupListItem.module.css";
 import { useDispatch } from "react-redux";
+import { setCurrentGroup } from "../../groupSlice";
 import { useNavigate, createSearchParams } from "react-router-dom";
-import { setListData } from "../../../map/mapSlice";
 import peopleImg from "./people.png";
 import { routeTo } from "../../../../../utils/functions/routes";
 
@@ -10,7 +10,7 @@ const GroupListItem = ({ group }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    dispatch(setListData(group));
+    dispatch(setCurrentGroup(group));
 
     const type = group.isGroup ? 'group' : 'placelist';
     const search = `?${createSearchParams({
