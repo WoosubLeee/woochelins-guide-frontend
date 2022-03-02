@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import RecommendersItems from "./recommendersItem/RecommendersItem";
 
 const PlaceRecommenders = () => {
-  const { googleMapsId } = useParams();
-
-  const currentGroup = useSelector(state => state.map.currentGroup);
+  const focusedPlace = useSelector(state => state.place.focusedPlace);
+  const currentGroup = useSelector(state => state.group.currentGroup);
 
   const [recommenders, setRecommenders] = useState([]);
 
   useEffect(() => {
     if (currentGroup) {
-      requestGetGroupPlaceRecommenders(currentGroup.id, googleMapsId)
+      requestGetGroupPlaceRecommenders(currentGroup.id, focusedPlace.googleMapsId)
         .then(data => {
           setRecommenders(data);
         });
