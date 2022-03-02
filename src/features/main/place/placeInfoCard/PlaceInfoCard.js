@@ -2,7 +2,6 @@ import styles from "./PlaceInfoCard.module.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { requestGetGroupPlaceRecommenders } from "../../../../apis/placeApi";
 import { routeTo } from "../../../../utils/functions/routes";
 import GoogleMapsIcon from "../../../../utils/images/google-maps-icon.svg"
 
@@ -18,13 +17,10 @@ const PlaceInfoCard = () => {
 
   useEffect(() => {
     if (focusedPlace && currentPlaces && listData && listData.isGroup) {
-      const googleMapsIds = currentPlaces.map(place => place.googleMapsId);
-      if (googleMapsIds.includes(focusedPlace.googleMapsId)) {
-        requestGetGroupPlaceRecommenders(listData.id, focusedPlace.googleMapsId)
-          .then(data => {
-            setRecommenders(data);
-            setIsInPlaces(true);
-          });
+      const place = currentPlaces.find(place => place.googleMapsId === focusedPlace.googleMapsId);
+      if (place) {
+          setRecommenders(place.recommendedBy);
+          setIsInPlaces(true);
       } else {
         setIsInPlaces(false);
       }
