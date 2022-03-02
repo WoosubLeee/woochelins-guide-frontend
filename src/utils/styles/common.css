@@ -2,6 +2,12 @@ a {
   text-decoration: none;
   color: black;
 }
+a:hover, a:focus, a:active {
+  color: inherit;
+}
+input, textarea, button, select, a {
+  -webkit-tap-highlight-color: transparent;
+}
 button, input[type="submit"], input[type="reset"] {
 	background: none;
 	border: none;
