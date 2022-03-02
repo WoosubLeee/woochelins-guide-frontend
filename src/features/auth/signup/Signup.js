@@ -2,17 +2,19 @@ import styles from './Signup.module.css';
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setIsLogin } from "../authSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import validator from "validator";
 import TopNavbar from "../../../components/navbar/topNavbar/TopNavbar";
 import FullWidthBtn from "../../../components/buttons/fullWidthBtn/FullWidthBtn";
 import BottomBorderInput from '../../../components/inputs/bottomBorderInput/BottomBorderInput';
 import { requestLogin, requestSignup } from "../../../apis/authApi";
-import { routeTo } from '../../../utils/functions/routes';
+import { createPath, routeTo } from '../../../utils/functions/routes';
 
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location)
 
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -95,7 +97,12 @@ const Signup = () => {
           requestLogin(userInfo)
             .then(() => {
               dispatch(setIsLogin(true));
-              navigate(routeTo('Home'));
+
+              if (location.state?.location) {
+                navigate(createPath(location.state.location.pathname, location.state.location));
+              } else {
+                navigate(routeTo('Home'));
+              }
             });
         } else {
           const data = await signupRes.json();

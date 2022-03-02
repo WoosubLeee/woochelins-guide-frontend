@@ -74,7 +74,7 @@ const Login = () => {
       </form>
       <div className={styles.bottomDiv}>
         <span className="me-2">혹시, 우슐랭가이드가 처음이신가요?</span>
-        <Link to={routeTo('Signup')} className={`text-success ${styles.signupLink}`}>회원가입</Link>
+        <Link to={routeTo('Signup')} state={state} className={`text-success ${styles.signupLink}`}>회원가입</Link>
       </div>
     </div>
   );
