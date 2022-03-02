@@ -16,6 +16,9 @@
   position: relative;
   top: 150px;
 }
+.inputContainer {
+  margin: 0 0 40px;
+}
 .bottomDiv {
   position: absolute;
   bottom: 25px;

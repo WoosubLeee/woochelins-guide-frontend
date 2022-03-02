@@ -1,0 +1,9 @@
+.inputDiv {
+    margin: 0 0 20px 0;
+}
+.span {
+    font-size: 14px;
+}
+.spanHidden {
+    visibility: hidden;
+}

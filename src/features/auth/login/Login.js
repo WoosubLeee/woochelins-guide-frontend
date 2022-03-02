@@ -60,6 +60,7 @@ const Login = () => {
             onChange: e => handleInput("email", e.target.value),
           }}
           iProps={{onClick: () => handleInput("email", "")}}
+          containerClass={styles.inputContainer}
         />
         <BottomBorderInput
           inputProps={{
@@ -69,6 +70,7 @@ const Login = () => {
             onChange: e => handleInput("password", e.target.value),
           }}
           iProps={{onClick: () => handleInput("password", "")}}
+          containerClass={styles.inputContainer}
         />
         <FullWidthBtn text="로그인" />
       </form>

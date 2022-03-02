@@ -1,3 +1,4 @@
+import styles from './GroupCreate.module.css';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setGroupsUpdateNeeded } from "../groupSlice";
@@ -44,17 +45,24 @@ const GroupCreate = () => {
         backBtnTo={-1}
       />
       <form onSubmit={e => handleSubmit(e)} className="body-without-topnavbar pt-2">
-        <BottomBorderInput
-          labelText={"모임 이름"}
-          inputProps={{
-            type: "text",
-            value: groupInfo.name,
-            onChange: e => handleChange("name", e.target.value)
-          }}
-          iProps={{onClick: () => handleChange("name", "")}}
-        />
+        <div className={styles.inputDiv}>
+          <BottomBorderInput
+            labelText={"모임 이름"}
+            inputProps={{
+              type: "text",
+              value: groupInfo.name,
+              onChange: e => handleChange("name", e.target.value),
+              placeholder: "12자 이하로 작성해주세요."
+            }}
+            iProps={{onClick: () => handleChange("name", "")}}
+          />
+          <span className={`${styles.span} ${groupInfo.name.length <= 12 && styles.spanHidden} text-danger`}>
+            12자 이하로 작성해주세요.
+          </span>
+        </div>
         <FullWidthBtn
           text="생성"
+          props={{ disabled: groupInfo.name.length <= 12 ? false : true }}
         />
       </form>
     </div>

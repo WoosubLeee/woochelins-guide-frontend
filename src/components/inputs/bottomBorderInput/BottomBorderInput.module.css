@@ -1,23 +1,22 @@
 .container {
-    width: 100%;
-    border-style: solid;
-    border-width: 0 0 1px 0;
-    border-color: silver;
-    margin: 0 0 40px 0;
-    display: flex;
-    align-items: center;
-    padding: 6px;
-  }
-  .input {
-    border: none;
-    flex-grow: 1;
-  }
-  .input::placeholder {
-    color: silver;
-  }
-  .input:focus {
-    outline: none;
-  }
-  .icon {
-    color: gray
-  }
+  width: 100%;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: silver;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+}
+.input {
+  border: none;
+  flex-grow: 1;
+}
+.input::placeholder {
+  color: silver;
+}
+.input:focus {
+  outline: none;
+}
+.icon {
+  color: gray
+}

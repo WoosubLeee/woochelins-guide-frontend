@@ -8,7 +8,6 @@ import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/B
 import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
 import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
 import GroupMemberItem from "./groupMemberItem/GroupMemberItem";
-import ListHeader from "../../../../components/etc/listHeader/ListHeader";
 
 const GroupInfo = () => {
   const currentGroup = useSelector(state => state.group.currentGroup);
