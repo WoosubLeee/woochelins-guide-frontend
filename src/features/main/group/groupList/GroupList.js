@@ -5,6 +5,7 @@ import GroupListItem from "./groupListItem/GroupListItem";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import SmallLabel from "../../../../components/labels/smallLabel/SmallLabel";
 import { routeTo } from "../../../../utils/functions/routes";
+import ListHeader from "../../../../components/etc/listHeader/ListHeader";
 
 const GroupList = () => {
   const location = useLocation();
@@ -32,12 +33,14 @@ const GroupList = () => {
 
       {/* 모임 목록 */}
       <div className="body-without-topnavbar pt-2">
-        <h2 className={styles.h2}>
-          모임
-          <Link to={routeTo('GroupCreate', null, location)}>
-            <i className="bi bi-plus-circle-fill"></i>
-          </Link>
-        </h2>
+        <ListHeader
+          headerText="모임"
+          rightElement={
+            <Link to={routeTo('GroupCreate', null, location)}>
+              <i className={`bi bi-plus-circle-fill ${styles.icon}`}></i>
+            </Link>
+          }
+        />
         <ul className={styles.ul}>
           {groups.map((group, i) => {
             return (
@@ -46,12 +49,14 @@ const GroupList = () => {
           })}
         </ul>
         {/* 내 리스트 목록 */}
-        <h2 className={styles.h2}>
-          내 리스트
-          <Link to={routeTo('PlaceListCreate', null, location)}>
-            <i className="bi bi-plus-circle-fill"></i>
-          </Link>
-        </h2>
+        <ListHeader
+          headerText="내 리스트"
+          rightElement={
+            <Link to={routeTo('PlaceListCreate', null, location)}>
+              <i className={`bi bi-plus-circle-fill ${styles.icon}`}></i>
+            </Link>
+          }
+        />
         <ul className={styles.ul}>
           {placeLists.map((placeList, i) => {
             return (

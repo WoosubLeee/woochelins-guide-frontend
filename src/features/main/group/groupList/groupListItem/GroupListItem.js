@@ -2,7 +2,6 @@ import styles from "./GroupListItem.module.css";
 import { useDispatch } from "react-redux";
 import { setCurrentGroup } from "../../groupSlice";
 import { useNavigate, createSearchParams } from "react-router-dom";
-import peopleImg from "./people.png";
 import { routeTo } from "../../../../../utils/functions/routes";
 
 const GroupListItem = ({ group }) => {
@@ -22,8 +21,15 @@ const GroupListItem = ({ group }) => {
 
   return (
     <li onClick={handleClick} className={styles.li}>
-      {group.isGroup && <img src={peopleImg} alt="" className={styles.img} />}
-      <span className={styles.span}>{group.name}</span>
+      <div>
+        <h3 className={styles.h3}>
+          {group.name}
+          <span>{group.isGroup && <><i className="bi bi-people-fill" />{group.members.length}</>}</span>
+        </h3>
+        <span className={styles.span}>
+          장소 {group.isGroup ? group.placeList.places.length : group.places.length}곳
+        </span>
+      </div>
     </li>
   );
 }

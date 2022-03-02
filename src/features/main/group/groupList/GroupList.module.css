@@ -7,23 +7,11 @@
   display: flex;
   align-items: center;
 }
-.h2 {
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: #198754;
-  padding: 0 0 5px 0;
-  font-size: 13px;
-  color: gray;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.h2 > a > i {
+.icon {
   font-size: 25px;
   color: #198754;
 }
 .ul {
   list-style: none;
   padding: 0;
-  /* margin: 0 8px 15px; */
 }

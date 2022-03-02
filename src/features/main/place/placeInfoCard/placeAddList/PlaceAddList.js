@@ -2,6 +2,7 @@ import styles from "./PlaceAddList.module.css";
 import { useSelector } from "react-redux";
 import PlaceAddListItem from "./placeAddListItem/PlaceAddListItem";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
+import ListHeader from "../../../../../components/etc/listHeader/ListHeader";
 
 const PlaceAddList = () => {
   const groups = useSelector(state => state.group.groups);
@@ -11,7 +12,7 @@ const PlaceAddList = () => {
     <div className="full-screen-white">
       <TopNavbar header="장소 저장" backBtnTo={-1} />
       <div className="body-without-topnavbar pt-2">
-        <h2 className={styles.h2}>모임</h2>
+        <ListHeader headerText="모임" />
         <ul className={styles.ul}>
           {groups.map((group, i) => {
             return (
@@ -22,7 +23,7 @@ const PlaceAddList = () => {
             )
           })}
         </ul>
-        <h2 className={styles.h2}>내 리스트</h2>
+        <ListHeader headerText="내 리스트" />
         <ul className={styles.ul}>
           {placeLists.map((placeList, i) => {
             return (
