@@ -1,0 +1,15 @@
+.icon {
+    position: absolute;
+    right: 10px;
+    font-size: 30px;
+    color: gray;
+    background-color: white;
+    border-radius: 100%;
+    padding: 8px;
+}
+.iconNormal {
+    bottom: 60px;
+}
+.iconCardExpanded {
+    bottom: 205px;
+}
