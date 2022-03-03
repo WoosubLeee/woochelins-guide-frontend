@@ -1,11 +1,9 @@
 import styles from './Main.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapApiLoaded } from './map/mapSlice';
 import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
 import { setCurrentGroup, setGroups, setGroupsUpdateNeeded, setPlaceLists } from "./group/groupSlice";
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { Loader } from "@googlemaps/js-api-loader";
 import queryString from "query-string";
 import Map from "./map/Map";
 import BottomNavbar from './bottomNavbar/BottomNavbar';
@@ -32,7 +30,7 @@ const Main = () => {
   const { googleMapsId } = useParams();
 
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
-  const map = useSelector(state => state.map.map);
+  const googleMap = useSelector(state => state.map.googleMap);
   const placesUpdateNeeded = useSelector(state => state.place.placesUpdateNeeded);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
   const sessionToken = useSelector(state => state.place.sessionToken);
@@ -41,23 +39,10 @@ const Main = () => {
   const [placesService, setPlacesService] = useState(undefined);
 
   useEffect(() => {
-    const loader = new Loader({
-      apiKey: 'AIzaSyADso4JNS7rJCc2DqF7dj5CJXBFaUXj61A',
-      libraries: ['places', 'visualization', 'geometry'],
-      version: "beta"
-    });
-    
-    loader.load()
-      .then(() => {
-        dispatch(mapApiLoaded());
-      });
-  }, []);
-
-  useEffect(() => {
-    if (map) {
-      setPlacesService(new window.google.maps.places.PlacesService(map));
+    if (googleMap) {
+      setPlacesService(new window.google.maps.places.PlacesService(googleMap));
     }
-  }, [map]);
+  }, [googleMap]);
 
   // FocusedPlace 처리
   useEffect(() => {
@@ -85,7 +70,7 @@ const Main = () => {
 
             // DB에 저장되지 않은 장소의 경우
             } else if (res.status === 204) {
-              if (map) {
+              if (placesService) {
                 const options = {
                   placeId: googleMapsId,
                   fields: [

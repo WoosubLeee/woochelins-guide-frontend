@@ -14,7 +14,6 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location)
 
   const [userInfo, setUserInfo] = useState({
     email: '',

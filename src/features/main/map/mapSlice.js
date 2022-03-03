@@ -4,15 +4,19 @@ export const mapSlice = createSlice({
   name: 'map',
   initialState: {
     isMapApiLoaded: false,
-    map: undefined,
+    googleMap: undefined,
+    naverMap: undefined,
     focusedMarker: undefined,
   },
   reducers: {
     mapApiLoaded: state => {
       state.isMapApiLoaded = true;
     },
-    setMap: (state, action) => {
-      state.map = action.payload;
+    setGoogleMap: (state, action) => {
+      state.googleMap = action.payload;
+    },
+    setNaverMap: (state, action) => {
+      state.naverMap = action.payload;
     },
     setFocusedMarker: (state, action) => {
       state.focusedMarker = action.payload;
@@ -22,7 +26,8 @@ export const mapSlice = createSlice({
 
 export const {
   mapApiLoaded,
-  setMap,
+  setGoogleMap,
+  setNaverMap,
   setFocusedMarker,
 } = mapSlice.actions;
 

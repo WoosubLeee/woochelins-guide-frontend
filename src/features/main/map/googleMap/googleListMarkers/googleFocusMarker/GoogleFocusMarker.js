@@ -1,9 +1,8 @@
-import styles from '../ListMarkers.module.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFocusedMarker } from "../../mapSlice";
+import { setFocusedMarker } from "../../../mapSlice";
 
-const FocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMarkerInList }) => {
+const GoogleFocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMarkerInList }) => {
   const dispatch = useDispatch();
 
   const map = useSelector(state => state.map.map);
@@ -68,4 +67,4 @@ const FocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMarkerInLi
   );
 }
  
-export default FocusMarker;
+export default GoogleFocusMarker;

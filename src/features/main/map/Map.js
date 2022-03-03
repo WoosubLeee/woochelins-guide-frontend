@@ -1,24 +1,39 @@
 import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setMap } from "./mapSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { mapApiLoaded, setGoogleMap } from "./mapSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import ListMarkers from "./listMarkers/ListMarkers";
+import { Loader } from "@googlemaps/js-api-loader";
+import NaverMap from "./naverMap/NaverMap";
+import GoogleMap from "./googleMap/GoogleMap";
 import { routeTo } from "../../../utils/functions/routes";
 
 const Map = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
-  const map = useSelector(state => state.map.map);
 
+  const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
+
+  const [currentMap, setCurrentMap] = useState('naver');
   const [navigateToHome, setNavigateToHome] = useState(false);
+
+  useEffect(() => {
+    const loader = new Loader({
+      apiKey: 'AIzaSyADso4JNS7rJCc2DqF7dj5CJXBFaUXj61A',
+      libraries: ['places', 'visualization', 'geometry'],
+      version: "beta"
+    });
+    
+    loader.load()
+      .then(() => {
+        dispatch(mapApiLoaded());
+      });
+  }, []);
   
   useEffect(() => {
     if (isMapApiLoaded) {
-      const newMap = new window.google.maps.Map(document.getElementById('map'), {
+      const newMap = new window.google.maps.Map(document.getElementById('googleMap'), {
         center: {
           lat: 37.48,
           lng: 126.95,
@@ -26,24 +41,9 @@ const Map = () => {
         zoom: 13,
         disableDefaultUI: true,
       })
-      dispatch(setMap(newMap));
-      
-      newMap.addListener('click', () => {
-        setNavigateToHome(true);
-      });
+      dispatch(setGoogleMap(newMap));
     }
   }, [isMapApiLoaded]);
-
-  useEffect(() => {
-    if (map && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        map.setCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
-    }
-  }, [map]);
 
   useEffect(() => {
     if (navigateToHome) {
@@ -53,8 +53,15 @@ const Map = () => {
   }, [navigateToHome]);
 
   return (
-    <div id="map" className={styles.map}>
-      <ListMarkers />
+    <div className="h-100">
+      {currentMap === 'naver' &&
+        <div id="naverMap" className="h-100">
+          <NaverMap setNavigateToHome={setNavigateToHome} />
+        </div>
+      }
+      <div id="googleMap" className={`h-100 ${currentMap === 'naver' && styles.googleMap}`}>
+        {currentMap === 'google' && <GoogleMap setNavigateToHome={setNavigateToHome} />}
+      </div>
     </div>
   );
 }

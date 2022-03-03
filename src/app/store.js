@@ -15,12 +15,14 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
-          'map/setMap',
+          'map/setGoogleMap',
+          'map/setNaverMap',
           'map/setFocusedMarker',
           'place/setSessionToken',
         ],
         ignoredPaths: [
-          'map.map',
+          'map.googleMap',
+          'map.naverMap',
           'map.focusedMarker',
           'place.sessionToken',
         ]

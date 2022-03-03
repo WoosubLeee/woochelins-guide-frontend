@@ -1,22 +1,22 @@
-import styles from './ListMarkers.module.css';
+import styles from './GoogleListMarkers.module.css';
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import FocusMarker from "./focusMarker/FocusMarker";
-import { routeTo } from "../../../../utils/functions/routes";
+import GoogleFocusMarker from "./googleFocusMarker/GoogleFocusMarker";
+import { routeTo } from "../../../../../utils/functions/routes";
 
-const ListMarkers = () => {
+const GoogleListMarkers = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const map = useSelector(state => state.map.map);
+  const googleMap = useSelector(state => state.map.googleMap);
   const focusedMarker = useSelector(state => state.map.focusedMarker);
   const currentPlaces = useSelector(state => state.place.currentPlaces);
 
   const [markers, setMarkers] = useState([]);
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
 
-  const icon = map && {
+  const icon = googleMap && {
     path: "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z",
     fillOpacity: 1,
     fillColor: "#00833c",
@@ -36,7 +36,7 @@ const ListMarkers = () => {
 
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
-    if (map && currentPlaces) {
+    if (googleMap && currentPlaces) {
       // 기존 markers 삭제
       markers.forEach(marker => {
         marker.marker.setMap(null);
@@ -57,7 +57,7 @@ const ListMarkers = () => {
               lng: place.longitude
             },
             icon: icon,
-            map: map,
+            map: googleMap,
             label: {
               ...label,
               text: place.name
@@ -77,10 +77,10 @@ const ListMarkers = () => {
 
       setMarkers(newMarkers);
     }
-  }, [map, currentPlaces]);
+  }, [googleMap, currentPlaces]);
 
   return (
-    <FocusMarker
+    <GoogleFocusMarker
       markers={markers}
       listIcon={icon}
       label={label}
@@ -90,4 +90,4 @@ const ListMarkers = () => {
   );
 };
  
-export default ListMarkers;
+export default GoogleListMarkers;

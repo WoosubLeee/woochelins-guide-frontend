@@ -8,13 +8,13 @@ const PlaceListItem = ({ place }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const map = useSelector(state => state.map.map);
+  const googleMap = useSelector(state => state.map.googleMap);
   const currentGroup = useSelector(state => state.map.currentGroup);
 
   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
-    if (map) {
+    if (googleMap) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
           const currentPosition = {
@@ -35,7 +35,7 @@ const PlaceListItem = ({ place }) => {
         });
       }
     }
-  }, [map]);
+  }, [googleMap]);
 
   const handleClick = () => {
     navigate(routeTo('PlaceInfoCard', { googleMapsId: place.googleMapsId }, location));

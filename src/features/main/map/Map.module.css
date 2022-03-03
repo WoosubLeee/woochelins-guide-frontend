@@ -1,3 +1,4 @@
-.map {
+.googleMap {
   height: 100%;
+  visibility: hidden;
 }
