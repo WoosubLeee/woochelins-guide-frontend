@@ -1,8 +1,9 @@
+import styles from '../ListMarkers.module.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFocusedMarker } from "../../mapSlice";
 
-const FocusMarker = ({ markers, listIcon, isMarkerInList, setIsMarkerInList }) => {
+const FocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMarkerInList }) => {
   const dispatch = useDispatch();
 
   const map = useSelector(state => state.map.map);
@@ -17,6 +18,12 @@ const FocusMarker = ({ markers, listIcon, isMarkerInList, setIsMarkerInList }) =
     strokeColor: "#a3291e",
     scale: 1.6,
     anchor: new window.google.maps.Point(12,22),
+    labelOrigin: new window.google.maps.Point(12,30)
+  };
+
+  const focusLabel = focusedPlace && {
+    ...label,
+    text: focusedPlace.name
   };
 
   useEffect(() => {
@@ -41,10 +48,9 @@ const FocusMarker = ({ markers, listIcon, isMarkerInList, setIsMarkerInList }) =
           };
           marker = new window.google.maps.Marker({
             position: position,
-            map: map,
             icon: icon,
-            // 항상 ListMarker보다 앞쪽에 보이게 하기 위해
-            zIndex: 1
+            map: map,
+            label: focusLabel
           });
           setIsMarkerInList(false);
         }

@@ -44,6 +44,7 @@ const Main = () => {
     const loader = new Loader({
       apiKey: 'AIzaSyADso4JNS7rJCc2DqF7dj5CJXBFaUXj61A',
       libraries: ['places', 'visualization', 'geometry'],
+      version: "beta"
     });
     
     loader.load()

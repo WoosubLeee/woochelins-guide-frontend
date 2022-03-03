@@ -1,3 +1,4 @@
+import styles from './ListMarkers.module.css';
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,6 +24,14 @@ const ListMarkers = () => {
     strokeColor: "#004d26",
     scale: 1.1,
     anchor: new window.google.maps.Point(12,22),
+    labelOrigin: new window.google.maps.Point(12,30),
+  };
+  const label = {
+    color: "black",
+    fontSize: "12px",
+    fontFamily: "'Noto Sans KR', sans-serif",
+    fontWeight: "500",
+    className: styles.markerLabel
   };
 
   // list에 있는 place들의 Marker들을 표시
@@ -48,7 +57,11 @@ const ListMarkers = () => {
               lng: place.longitude
             },
             icon: icon,
-            map: map
+            map: map,
+            label: {
+              ...label,
+              text: place.name
+            }
           });
         }
 
@@ -67,7 +80,13 @@ const ListMarkers = () => {
   }, [map, currentPlaces]);
 
   return (
-    <FocusMarker markers={markers} listIcon={icon} isMarkerInList={isMarkerInList} setIsMarkerInList={setIsMarkerInList} />
+    <FocusMarker
+      markers={markers}
+      listIcon={icon}
+      label={label}
+      isMarkerInList={isMarkerInList}
+      setIsMarkerInList={setIsMarkerInList}
+    />
   );
 };
  
