@@ -5,8 +5,11 @@ export const mapSlice = createSlice({
   initialState: {
     isMapApiLoaded: false,
     googleMap: undefined,
-    naverMap: undefined,
-    focusedMarker: undefined,
+    kakaoMap: undefined,
+    googleFocusedMarker: undefined,
+    kakaoFocusedMarker: undefined,
+    mapCenter: undefined,
+    zoomLevel: undefined,
   },
   reducers: {
     mapApiLoaded: state => {
@@ -15,11 +18,20 @@ export const mapSlice = createSlice({
     setGoogleMap: (state, action) => {
       state.googleMap = action.payload;
     },
-    setNaverMap: (state, action) => {
-      state.naverMap = action.payload;
+    setKakaoMap: (state, action) => {
+      state.kakaoMap = action.payload;
     },
-    setFocusedMarker: (state, action) => {
-      state.focusedMarker = action.payload;
+    setGoogleFocusedMarker: (state, action) => {
+      state.googleFocusedMarker = action.payload;
+    },
+    setKakaoFocusedMarker: (state, action) => {
+      state.kakaoFocusedMarker = action.payload;
+    },
+    setMapCenter: (state, action) => {
+      state.mapCenter = action.payload;
+    },
+    setZoomLevel: (state, action) => {
+      state.zoomLevel = action.payload;
     },
   }
 });
@@ -27,8 +39,11 @@ export const mapSlice = createSlice({
 export const {
   mapApiLoaded,
   setGoogleMap,
-  setNaverMap,
-  setFocusedMarker,
+  setKakaoMap,
+  setGoogleFocusedMarker,
+  setKakaoFocusedMarker,
+  setMapCenter,
+  setZoomLevel,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

@@ -8,12 +8,12 @@ const Home = () => {
   const [isSearching, setIsSearching] = useState(false);
   
   return (
-    <div>
+    <>
       {!isSearching && <HomeTopNavbar setIsSearching={setIsSearching} />}
       {isSearching && <Search setIsSearching={setIsSearching} />}
       <LocationButton />
       <Outlet />
-    </div>
+    </>
   );
 }
  

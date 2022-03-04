@@ -1,3 +1,7 @@
 .markerLabel {
+    padding-left: 4px;
+    font-size: 14px;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    color: black;
+    font-weight: 500;
 }

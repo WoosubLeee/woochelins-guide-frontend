@@ -16,14 +16,16 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [
           'map/setGoogleMap',
-          'map/setNaverMap',
-          'map/setFocusedMarker',
+          'map/setKakaoMap',
+          'map/setGoogleFocusedMarker',
+          'map/setKakaoFocusedMarker',
           'place/setSessionToken',
         ],
         ignoredPaths: [
           'map.googleMap',
-          'map.naverMap',
-          'map.focusedMarker',
+          'map.kakaoMap',
+          'map.googleFocusedMarker',
+          'map.kakaoFocusedMarker',
           'place.sessionToken',
         ]
       }

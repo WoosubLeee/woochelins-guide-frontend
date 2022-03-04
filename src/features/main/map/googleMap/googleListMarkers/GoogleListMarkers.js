@@ -10,7 +10,7 @@ const GoogleListMarkers = () => {
   const location = useLocation();
 
   const googleMap = useSelector(state => state.map.googleMap);
-  const focusedMarker = useSelector(state => state.map.focusedMarker);
+  const googleFocusedMarker = useSelector(state => state.map.googleFocusedMarker);
   const currentPlaces = useSelector(state => state.place.currentPlaces);
 
   const [markers, setMarkers] = useState([]);
@@ -28,7 +28,7 @@ const GoogleListMarkers = () => {
   };
   const label = {
     color: "black",
-    fontSize: "12px",
+    fontSize: "14px",
     fontFamily: "'Noto Sans KR', sans-serif",
     fontWeight: "500",
     className: styles.markerLabel
@@ -46,8 +46,8 @@ const GoogleListMarkers = () => {
       const newMarkers = currentPlaces.map(place => {
         let marker;
         // foucsedMarker로 이미 해당 장소에 대한 marker가 있다면
-        if (focusedMarker && focusedMarker.googleMapsId === place.googleMapsId) {
-          marker = focusedMarker.marker;
+        if (googleFocusedMarker && googleFocusedMarker.googleMapsId === place.googleMapsId) {
+          marker = googleFocusedMarker.marker;
           setIsMarkerInList(true);
         // focusedMarker로 없어 새로이 추가하는 경우
         } else {

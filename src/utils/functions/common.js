@@ -113,3 +113,10 @@ export const addIsGroupProperty = lists => {
     }
   });
 };
+
+export const isInKorea = (lat, lng) => {
+  if (lat < 33.11 || lat > 38.64 || lng < 125.08 || lng > 129.5) {
+    return false;
+  }
+  return true;
+};
