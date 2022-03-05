@@ -1,11 +1,14 @@
 import styles from './GoogleListMarkers.module.css';
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setGoogleFocusedMarker } from '../../mapSlice';
 import { useLocation, useNavigate } from "react-router-dom";
 import GoogleFocusMarker from "./googleFocusMarker/GoogleFocusMarker";
 import { routeTo } from "../../../../../utils/functions/routes";
+import greenMarker from "../../../../../utils/images/green-marker.png";
 
-const GoogleListMarkers = () => {
+const GoogleListMarkers = ({ switchToKakao }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,17 +18,13 @@ const GoogleListMarkers = () => {
 
   const [markers, setMarkers] = useState([]);
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
+  const [navigateTo, setNavigateTo] = useState(undefined);
 
-  const icon = googleMap && {
-    path: "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z",
-    fillOpacity: 1,
-    fillColor: "#00833c",
-    strokeWeight: 1,
-    strokeColor: "#004d26",
-    scale: 1.1,
-    anchor: new window.google.maps.Point(12,22),
-    labelOrigin: new window.google.maps.Point(12,30),
-  };
+  const icon = useRef({
+    url: greenMarker,
+    scaledSize: new window.google.maps.Size(20, 34),
+    labelOrigin: new window.google.maps.Point(12, 45),
+  });
   const label = {
     color: "black",
     fontSize: "14px",
@@ -36,53 +35,70 @@ const GoogleListMarkers = () => {
 
   // list에 있는 place들의 Marker들을 표시
   useEffect(() => {
-    if (googleMap && currentPlaces) {
-      // 기존 markers 삭제
-      markers.forEach(marker => {
-        marker.marker.setMap(null);
-      })
+    // 기존 markers 삭제
+    markers.forEach(marker => {
+      marker.marker.setMap(null);
+    })
 
-      // 새 markers 추가
-      const newMarkers = currentPlaces.map(place => {
-        let marker;
-        // foucsedMarker로 이미 해당 장소에 대한 marker가 있다면
-        if (googleFocusedMarker && googleFocusedMarker.googleMapsId === place.googleMapsId) {
-          marker = googleFocusedMarker.marker;
-          setIsMarkerInList(true);
-        // focusedMarker로 없어 새로이 추가하는 경우
-        } else {
-          marker = new window.google.maps.Marker({
-            position: {
-              lat: place.latitude,
-              lng: place.longitude
-            },
-            icon: icon,
-            map: googleMap,
-            label: {
-              ...label,
-              text: place.name
-            }
-          });
-        }
-
-        marker.addListener('click', () => {
-          navigate(routeTo('PlaceInfoCard', { googleMapsId: place.googleMapsId }, location));
+    // 새 markers 추가
+    const newMarkers = currentPlaces.map(place => {
+      let marker;
+      // foucsedMarker로 이미 해당 장소에 대한 marker가 있다면
+      if (googleFocusedMarker && googleFocusedMarker.googleMapsId === place.googleMapsId) {
+        marker = googleFocusedMarker.marker;
+        setIsMarkerInList(true);
+      // focusedMarker로 없어 새로이 추가하는 경우
+      } else {
+        marker = new window.google.maps.Marker({
+          position: {
+            lat: place.latitude,
+            lng: place.longitude
+          },
+          icon: icon.current,
+          map: googleMap,
+          label: {
+            ...label,
+            text: place.name
+          }
         });
+      }
 
-        return {
-          googleMapsId: place.googleMapsId,
-          marker: marker
-        };
+      marker.addListener('click', () => {
+        setNavigateTo(place.googleMapsId);
       });
 
-      setMarkers(newMarkers);
+      return {
+        googleMapsId: place.googleMapsId,
+        marker: marker
+      };
+    });
+
+    setMarkers(newMarkers);
+  }, [currentPlaces]);
+
+  useEffect(() => {
+    if (navigateTo) {
+      navigate(routeTo('PlaceInfoCard', { googleMapsId: navigateTo }, location));
+      setNavigateTo(undefined);
     }
-  }, [googleMap, currentPlaces]);
+  }, [navigateTo]);
+
+  useEffect(() => {
+    if (switchToKakao) {
+      if (googleFocusedMarker) {
+        if (!isMarkerInList) googleFocusedMarker.marker.setMap(null);
+        dispatch(setGoogleFocusedMarker(undefined));
+      }
+      markers.forEach(marker => {
+        marker.marker.setMap(null);
+      });
+    }
+  }, [switchToKakao]);
 
   return (
     <GoogleFocusMarker
       markers={markers}
-      listIcon={icon}
+      listIcon={icon.current}
       label={label}
       isMarkerInList={isMarkerInList}
       setIsMarkerInList={setIsMarkerInList}

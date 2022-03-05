@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setGoogleFocusedMarker } from "../../../mapSlice";
+import redMarker from "../../../../../../utils/images/red-marker.png";
 
 const GoogleFocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMarkerInList }) => {
   const dispatch = useDispatch();
@@ -9,58 +10,65 @@ const GoogleFocusMarker = ({ markers, listIcon, label, isMarkerInList, setIsMark
   const googleFocusedMarker = useSelector(state => state.map.googleFocusedMarker);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
 
-  const icon = googleMap && {
-    path: "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z",
-    fillOpacity: 1,
-    fillColor: "#d85140",
-    strokeWeight: 2,
-    strokeColor: "#a3291e",
-    scale: 1.6,
-    anchor: new window.google.maps.Point(12,22),
-    labelOrigin: new window.google.maps.Point(12,30)
-  };
-
+  const icon = useRef({
+    url: redMarker,
+    scaledSize: new window.google.maps.Size(27, 46),
+    labelOrigin: new window.google.maps.Point(12, 45),
+  });
   const focusLabel = focusedPlace && {
     ...label,
     text: focusedPlace.name
   };
 
   useEffect(() => {
-    if (googleMap) {
-      if (googleFocusedMarker) {
-        if (isMarkerInList) googleFocusedMarker.marker.setIcon(listIcon);
-        else if (isMarkerInList === false) googleFocusedMarker.marker.setMap(null);
-        dispatch(setGoogleFocusedMarker(undefined));
-      }
+    if (googleFocusedMarker) {
+      if (isMarkerInList) {
+        googleFocusedMarker.marker.setIcon(listIcon);
+        googleFocusedMarker.marker.setZIndex(0);
+      } else if (isMarkerInList === false) googleFocusedMarker.marker.setMap(null);
+      dispatch(setGoogleFocusedMarker(undefined));
+    }
 
-      if (focusedPlace) {
-        const focusedPlaceMarker = markers.find(marker => marker.googleMapsId === focusedPlace.googleMapsId);
-        let marker;
-        if (focusedPlaceMarker) {
-          marker = focusedPlaceMarker.marker;
-          marker.setIcon(icon);
-          setIsMarkerInList(true);
-        } else {
-          const position = {
+    if (focusedPlace) {
+      const focusedPlaceMarker = markers.find(marker => marker.googleMapsId === focusedPlace.googleMapsId);
+      let marker;
+      if (focusedPlaceMarker) {
+        marker = focusedPlaceMarker.marker;
+        marker.setIcon(icon.current);
+        setIsMarkerInList(true);
+      } else {
+        marker = new window.google.maps.Marker({
+          position: {
             lat: focusedPlace.latitude,
             lng: focusedPlace.longitude
-          };
-          marker = new window.google.maps.Marker({
-            position: position,
-            icon: icon,
-            map: googleMap,
-            label: focusLabel
-          });
-          setIsMarkerInList(false);
-        }
-        dispatch(setGoogleFocusedMarker({
-          googleMapsId: focusedPlace.googleMapsId,
-          marker: marker
-        }));
-        googleMap.panTo(marker.position);
+          },
+          icon: icon.current,
+          map: googleMap,
+          label: focusLabel
+        });
+        setIsMarkerInList(false);
+      }
+      marker.setZIndex(1);
+
+      dispatch(setGoogleFocusedMarker({
+        googleMapsId: focusedPlace.googleMapsId,
+        marker: marker
+      }));
+      googleMap.panTo(marker.position);
+    }
+  }, [focusedPlace]);
+
+  useEffect(() => {
+    if (!isMarkerInList && googleFocusedMarker) {
+      const sameMarker = markers.find(marker => marker.googleMapsId === googleFocusedMarker.googleMapsId);
+      if (sameMarker) {
+        sameMarker.marker.setIcon(icon.current);
+        googleFocusedMarker.marker.setMap(null);
+        dispatch(setGoogleFocusedMarker(sameMarker));
+        setIsMarkerInList(true);
       }
     }
-  }, [googleMap, focusedPlace]);
+  }, [markers, googleFocusedMarker]);
 
   return (
     <></>

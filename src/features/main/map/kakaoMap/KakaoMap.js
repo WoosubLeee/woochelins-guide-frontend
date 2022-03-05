@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setKakaoMap, setMapCenter, setZoomLevel } from "../mapSlice";
+import { setKakaoFocusedMarker, setKakaoMap, setMapCenter, setZoomLevel } from "../mapSlice";
 import KakaoListMarkers from "./kakaoListMarkers/KakaoListMarkers";
 import { isInKorea } from "../../../../utils/functions/common";
 
@@ -64,6 +64,8 @@ const KakaoMap = ({ setCurrentMap, setNavigateToHome }) => {
     window.kakao.maps.event.addListener(newMap, 'zoom_changed', handleZoomChanged);
 
     return () => {
+      dispatch(setKakaoMap(undefined));
+      dispatch(setKakaoFocusedMarker(undefined));
       window.kakao.maps.event.removeListener(newMap, 'center_changed', handleCenterChanged);
       window.kakao.maps.event.removeListener(newMap, 'zoom_changed', handleZoomChanged);
     };
@@ -81,7 +83,9 @@ const KakaoMap = ({ setCurrentMap, setNavigateToHome }) => {
   }, [switchToGoogle]);
 
   return (
-    <KakaoListMarkers />
+    <>
+      {kakaoMap && <KakaoListMarkers />}
+    </>
   );
 }
  

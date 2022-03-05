@@ -20,11 +20,12 @@ const Map = () => {
   const [currentMap, setCurrentMap] = useState('kakao');
   const [navigateToHome, setNavigateToHome] = useState(false);
 
+  // Google Map은 search와 placesService 등에 사용되므로
+  // currentMap이 무엇인지에 관계없이 load시켜놓는다.
   useEffect(() => {
     const loader = new Loader({
       apiKey: 'AIzaSyADso4JNS7rJCc2DqF7dj5CJXBFaUXj61A',
       libraries: ['places', 'visualization', 'geometry'],
-      version: "beta"
     });
     
     loader.load()
@@ -41,6 +42,7 @@ const Map = () => {
           lng: 126.95,
         },
         disableDefaultUI: true,
+        clickableIcons: false,
       })
       dispatch(setGoogleMap(googleMap));
     }
@@ -69,7 +71,7 @@ const Map = () => {
         </div>
       }
       <div id="googleMap" className={`h-100 ${currentMap === 'kakao' && styles.googleMap}`}>
-        {currentMap === 'google' && <GoogleMap setCurrentMap={setCurrentMap} setNavigateToHome={setNavigateToHome} />}
+        {currentMap === 'google' && googleMap && <GoogleMap setCurrentMap={setCurrentMap} setNavigateToHome={setNavigateToHome} />}
       </div>
     </div>
   );

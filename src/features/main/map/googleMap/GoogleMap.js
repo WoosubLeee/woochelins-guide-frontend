@@ -14,31 +14,29 @@ const GoogleMap = ({ setCurrentMap, setNavigateToHome }) => {
   const [switchToKakao, setSwitchToKakao] = useState(false);
   
   useEffect(() => {
-    if (googleMap) {
-      googleMap.setCenter(mapCenter);
-      googleMap.setZoom(zoomLevel.map === 'kakao' ? 20 - zoomLevel.level : zoomLevel.level);
+    googleMap.setCenter(mapCenter);
+    googleMap.setZoom(zoomLevel.map === 'kakao' ? 20 - zoomLevel.level : zoomLevel.level);
 
-      googleMap.addListener('click', () => {
-        setNavigateToHome(true);
-      });
+    googleMap.addListener('click', () => {
+      setNavigateToHome(true);
+    });
 
-      const handleChanged = () => {
-        const center = googleMap.getCenter();
-        const zoomLevel = googleMap.getZoom();
-        if (isInKorea(center.lat(), center.lng()) && zoomLevel >= 8) {
-          setSwitchToKakao(true);
-        }
-      };
+    const handleChanged = () => {
+      const center = googleMap.getCenter();
+      const zoomLevel = googleMap.getZoom();
+      if (isInKorea(center.lat(), center.lng()) && zoomLevel >= 8) {
+        setSwitchToKakao(true);
+      }
+    };
 
-      const centerListener = googleMap.addListener('center_changed', handleChanged);
-      const zoomListener = googleMap.addListener('zoom_changed', handleChanged);
+    const centerListener = googleMap.addListener('center_changed', handleChanged);
+    const zoomListener = googleMap.addListener('zoom_changed', handleChanged);
 
-      return () => {
-        centerListener.remove();
-        zoomListener.remove();
-      };
-    }
-  }, [googleMap]);
+    return () => {
+      centerListener.remove();
+      zoomListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (switchToKakao) {
@@ -57,7 +55,7 @@ const GoogleMap = ({ setCurrentMap, setNavigateToHome }) => {
   }, [switchToKakao]);
 
   return (
-    <GoogleListMarkers />
+    <GoogleListMarkers switchToKakao={switchToKakao} />
   );
 }
  
