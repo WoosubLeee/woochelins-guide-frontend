@@ -19,6 +19,7 @@ export const store = configureStore({
           'map/setKakaoMap',
           'map/setGoogleFocusedMarker',
           'map/setKakaoFocusedMarker',
+          'place/setGooglePlacesService',
           'place/setSessionToken',
         ],
         ignoredPaths: [
@@ -26,6 +27,7 @@ export const store = configureStore({
           'map.kakaoMap',
           'map.googleFocusedMarker',
           'map.kakaoFocusedMarker',
+          'place.googlePlacesService',
           'place.sessionToken',
         ]
       }

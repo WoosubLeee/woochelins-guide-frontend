@@ -1,7 +1,7 @@
 import styles from './Main.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
+import { removeFocusedPlace, setCurrentPlaces, setFocusedPlace, setGooglePlacesService, setPlacesUpdateNeeded } from './place/placeSlice';
 import { setCurrentGroup, setGroups, setGroupsUpdateNeeded, setPlaceLists } from "./group/groupSlice";
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import queryString from "query-string";
@@ -33,20 +33,19 @@ const Main = () => {
   const googleMap = useSelector(state => state.map.googleMap);
   const placesUpdateNeeded = useSelector(state => state.place.placesUpdateNeeded);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
+  const googlePlacesService = useSelector(state => state.place.googlePlacesService);
   const sessionToken = useSelector(state => state.place.sessionToken);
   const groupsUpdateNeeded = useSelector(state => state.group.groupsUpdateNeeded);
 
-  const [placesService, setPlacesService] = useState(undefined);
-
   useEffect(() => {
     if (googleMap) {
-      setPlacesService(new window.google.maps.places.PlacesService(googleMap));
+      dispatch(setGooglePlacesService(new window.google.maps.places.PlacesService(googleMap)));
     }
   }, [googleMap]);
 
   // FocusedPlace 처리
   useEffect(() => {
-    if (googleMapsId && placesService) {
+    if (googleMapsId && googlePlacesService) {
       if (!focusedPlace || focusedPlace.googleMapsId !== googleMapsId) {
         requestGetPlace(googleMapsId)
           .then(async res => {  
@@ -57,7 +56,7 @@ const Main = () => {
 
               // 사진은 임시 comment 조치(WG-32)
               // // 사진 정보는 DB에 없으므로 Google에 다시 요청
-              // placesService.getDetails({
+              // googlePlacesService.getDetails({
               //   placeId: googleMapsId,
               //   fields: ['photos']
               // }, (place, status) => {
@@ -70,7 +69,7 @@ const Main = () => {
 
             // DB에 저장되지 않은 장소의 경우
             } else if (res.status === 204) {
-              if (placesService) {
+              if (googlePlacesService) {
                 const options = {
                   placeId: googleMapsId,
                   fields: [
@@ -90,7 +89,7 @@ const Main = () => {
                   options['sessionToken'] = sessionToken;
                 }
 
-                placesService.getDetails(options, (place, status) => {
+                googlePlacesService.getDetails(options, (place, status) => {
                   const payload = processGooglePlaceData(place);
                   dispatch(setFocusedPlace(payload));
                 });
@@ -101,7 +100,7 @@ const Main = () => {
     } else {
       dispatch(removeFocusedPlace());
     }
-  }, [googleMapsId, placesService]);
+  }, [googleMapsId, googlePlacesService]);
 
   useEffect(() => {
     updateCurrentPlaces();

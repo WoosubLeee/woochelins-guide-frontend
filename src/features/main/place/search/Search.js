@@ -7,13 +7,18 @@ import { setSessionToken } from "../placeSlice";
 const Search = ({ setIsSearching }) => {
   const dispatch = useDispatch();
   
-  const isMapApiLoaded = useSelector(state => state.map.isMapApiLoaded);
   const sessionToken = useSelector(state => state.place.sessionToken);
 
   const [autoComplete, setAutoComplete] = useState(undefined);
   const [inputVal, setInputVal] = useState('');
   const [predictions, setPredictions] = useState([]);
   const [curretPosition, setCurrentPosition] = useState(undefined);
+  
+  // Google Maps PlaceAutocomplete를 이용한 검색
+  useEffect(() => {
+    setAutoComplete(new window.google.maps.places.AutocompleteService());
+    dispatch(setSessionToken(new window.google.maps.places.AutocompleteSessionToken()));
+  }, []);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -25,13 +30,6 @@ const Search = ({ setIsSearching }) => {
       });
     }
   }, []);
-
-  useEffect(() => {
-    if (isMapApiLoaded) {
-      setAutoComplete(new window.google.maps.places.AutocompleteService());
-      dispatch(setSessionToken(new window.google.maps.places.AutocompleteSessionToken()));
-    }
-  }, [isMapApiLoaded]);
 
   useEffect(() => {
     if (autoComplete) {
