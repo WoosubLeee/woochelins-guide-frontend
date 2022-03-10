@@ -13,23 +13,24 @@ const Map = () => {
   const kakaoMap = useSelector(state => state.map.kakaoMap);
 
   useEffect(() => {
-    let center = {
-      lat: 37.48,
-      lng: 126.95
-    };
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        center.lat = position.coords.latitude;
-        center.lng = position.coords.longitude;
-      });
-    }
-
     const newMap = new window.kakao.maps.Map(document.getElementById('map'), {
-      center: new window.kakao.maps.LatLng(center.lat, center.lng),
+      // 기본 위치(위치 정보 조회 안될시)는 서울대입구역 근처
+      center: new window.kakao.maps.LatLng(37.48, 126.95),
       level: 7
     });
+
+    // 위치 조회 동의 시, 현위치 근처로 center 변경
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        newMap.setCenter(new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude));
+      });
+    }
     
+    // map에 marker가 없는 빈 구역 click 시 home으로 되돌아 오도록
     newMap.addListener('click', () => {
+      // addListener에서 바로 callback function을 작성할 경우 location이 callback이 선언될 때로 고정되어
+      // 제대로 반영되지 않는 문제 발생.
+      // 이에 useState(navigateToHome), useEffect를 활용하여 해결
       setNavigateToHome(true);
     });
 
@@ -37,7 +38,6 @@ const Map = () => {
   }, []);
 
   const [navigateToHome, setNavigateToHome] = useState(false);
-
   useEffect(() => {
     if (navigateToHome) {
       navigate(routeTo('Home', null, location));
