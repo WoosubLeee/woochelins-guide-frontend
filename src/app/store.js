@@ -15,20 +15,12 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
-          'map/setGoogleMap',
           'map/setKakaoMap',
-          'map/setGoogleFocusedMarker',
-          'map/setKakaoFocusedMarker',
-          'place/setGooglePlacesService',
-          'place/setSessionToken',
+          'map/setFocusedMarker',
         ],
         ignoredPaths: [
-          'map.googleMap',
           'map.kakaoMap',
-          'map.googleFocusedMarker',
-          'map.kakaoFocusedMarker',
-          'place.googlePlacesService',
-          'place.sessionToken',
+          'map.focusedMarker',
         ]
       }
     })

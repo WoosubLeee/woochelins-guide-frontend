@@ -1,22 +1,23 @@
-import styles from './KakaoListMarkers.module.css';
+import styles from './ListMarkers.module.css';
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import KakaoFocusMarker from './kakaoFocusMarker/KakaoFocusMarker';
-import { routeTo } from "../../../../../utils/functions/routes";
-import greenMarker from "../../../../../utils/images/green-marker.png";
+import FocusMarker from './focusMarker/FocusMarker';
+import { routeTo } from "../../../../utils/functions/routes";
+import greenMarker from "../../../../utils/images/green-marker.png";
 
-const KakaoListMarkers = () => {
+const ListMarkers = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const kakaoMap = useSelector(state => state.map.kakaoMap);
-  const kakaoFocusedMarker = useSelector(state => state.map.kakaoFocusedMarker);
+  const focusedMarker = useSelector(state => state.map.focusedMarker);
   const currentPlaces = useSelector(state => state.place.currentPlaces);
 
   const [markers, setMarkers] = useState([]);
   const [isMarkerInList, setIsMarkerInList] = useState(undefined);
   const [navigateTo, setNavigateTo] = useState(undefined);
+  const [overlayVisible, setOverlayVisible] = useState(true);
 
   const image = useRef(new window.kakao.maps.MarkerImage(greenMarker, new window.kakao.maps.Size(20, 34)));
 
@@ -24,18 +25,23 @@ const KakaoListMarkers = () => {
   useEffect(() => {
     // 기존 markers 삭제
     markers.forEach(marker => {
-      marker.marker.setMap(null);
-      marker.overlay.setMap(null);
+      if (!focusedMarker || marker.kakaoMapId !== focusedMarker.kakaoMapId) {
+        marker.marker.setMap(null);
+        marker.overlay.setMap(null);
+      }
     });
+    setIsMarkerInList(false);
 
     // 새 markers 추가
+    const zoomLevel = kakaoMap.getLevel();
+
     const newMarkers = currentPlaces.map(place => {
       let marker;
       let overlay;
-      // foucsedMarker로 이미 해당 장소에 대한 marker가 있다면
-      if (kakaoFocusedMarker && kakaoFocusedMarker.googleMapsId === place.googleMapsId) {
-        marker = kakaoFocusedMarker.marker;
-        overlay = kakaoFocusedMarker.overlay;
+      // foucsedMarker로 이미 해당 맛집에 대한 marker가 있다면
+      if (focusedMarker && focusedMarker.kakaoMapId === place.kakaoMapId) {
+        marker = focusedMarker.marker;
+        overlay = focusedMarker.overlay;
         setIsMarkerInList(true);
       // focusedMarker로 없어 새로이 추가하는 경우
       } else {
@@ -51,14 +57,15 @@ const KakaoListMarkers = () => {
           content: `<span class="${styles.markerLabel}">${place.name}</span>`,
           yAnchor: 0
         });
+        if (zoomLevel >= 6) overlay.setVisible(false);
       }
 
       marker.addListener('click', () => {
-        setNavigateTo(place.googleMapsId);
+        setNavigateTo(place.kakaoMapId);
       });
 
       return {
-        googleMapsId: place.googleMapsId,
+        kakaoMapId: place.kakaoMapId,
         marker: marker,
         overlay: overlay
       };
@@ -69,13 +76,32 @@ const KakaoListMarkers = () => {
 
   useEffect(() => {
     if (navigateTo) {
-      navigate(routeTo('PlaceInfoCard', { googleMapsId: navigateTo }, location));
+      navigate(routeTo('PlaceInfoCard', { kakaoMapId: navigateTo }, location));
       setNavigateTo(undefined);
     }
   }, [navigateTo]);
 
+  useEffect(() => {
+    if (kakaoMap) {
+      window.kakao.maps.event.addListener(kakaoMap, 'zoom_changed', () => {
+        const zoomLevel = kakaoMap.getLevel();
+        if (zoomLevel <= 5) setOverlayVisible(true);
+        else setOverlayVisible(false);
+      })
+    }
+  }, [kakaoMap]);
+
+  useEffect(() => {
+    if (overlayVisible !== undefined) {
+      markers.forEach(marker => {
+        if (marker.kakaoMapId !== focusedMarker?.kakaoMapId) marker.overlay.setVisible(overlayVisible);
+      });
+      setOverlayVisible(undefined);
+    }
+  }, [overlayVisible]);
+
   return (
-    <KakaoFocusMarker
+    <FocusMarker
       markers={markers}
       listImage={image.current}
       isMarkerInList={isMarkerInList}
@@ -84,4 +110,4 @@ const KakaoListMarkers = () => {
   );
 }
  
-export default KakaoListMarkers;
+export default ListMarkers;

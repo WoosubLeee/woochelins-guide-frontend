@@ -6,11 +6,11 @@ import ListHeader from "../../../../../components/etc/listHeader/ListHeader";
 
 const PlaceAddList = () => {
   const groups = useSelector(state => state.group.groups);
-  const placeLists = useSelector(state => state.group.placeLists);
+  const myLists = useSelector(state => state.group.myLists);
 
   return (
     <div className="full-screen-white">
-      <TopNavbar header="장소 저장" backBtnTo={-1} />
+      <TopNavbar header="맛집 저장" backBtnTo={-1} />
       <div className="body-without-topnavbar pt-2">
         <ListHeader headerText="모임" />
         <ul className={styles.ul}>
@@ -25,11 +25,11 @@ const PlaceAddList = () => {
         </ul>
         <ListHeader headerText="내 리스트" />
         <ul className={styles.ul}>
-          {placeLists.map((placeList, i) => {
+          {myLists.map((myList, i) => {
             return (
               <PlaceAddListItem
                 key={i}
-                group={placeList}
+                group={myList}
               />
             )
           })}

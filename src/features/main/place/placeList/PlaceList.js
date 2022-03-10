@@ -8,7 +8,7 @@ const PlaceList = () => {
   return (
     <div className="full-screen-white">
       <TopNavbar
-        header="장소 목록"
+        header="맛집 목록"
         backBtnTo={-1}
       />
       <ul className="body-without-topnavbar p-0">

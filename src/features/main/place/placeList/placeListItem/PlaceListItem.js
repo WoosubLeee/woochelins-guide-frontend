@@ -8,37 +8,34 @@ const PlaceListItem = ({ place }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const googleMap = useSelector(state => state.map.googleMap);
-  const currentGroup = useSelector(state => state.map.currentGroup);
+  const currentGroup = useSelector(state => state.group.currentGroup);
 
   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
-    if (googleMap) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          const currentPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          const placePosition = {
-            lat: place.latitude,
-            lng: place.longitude
-          }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const currentPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        const placePosition = {
+          lat: place.latitude,
+          lng: place.longitude
+        }
 
-          const distance = window.google.maps.geometry.spherical.computeDistanceBetween(currentPosition, placePosition);
-          if (distance > 1000) {
-            setDistance((distance / 1000).toFixed(1) + 'km');
-          } else {
-            setDistance(distance.toFixed(0) + 'm');
-          }
-        });
-      }
+        const distance = window.google.maps.geometry.spherical.computeDistanceBetween(currentPosition, placePosition);
+        if (distance > 1000) {
+          setDistance((distance / 1000).toFixed(1) + 'km');
+        } else {
+          setDistance(distance.toFixed(0) + 'm');
+        }
+      });
     }
-  }, [googleMap]);
+  }, []);
 
   const handleClick = () => {
-    navigate(routeTo('PlaceInfoCard', { googleMapsId: place.googleMapsId }, location));
+    navigate(routeTo('PlaceInfoCard', { kakaoMapId: place.kakaoMapId }, location));
   }
 
   return (
@@ -52,7 +49,7 @@ const PlaceListItem = ({ place }) => {
       </div>
       {currentGroup?.isGroup &&
         <span>
-          추천 <span className="text-success">{place.recommendedBy.length}</span>
+          추천 <span className="text-success">{place.recommenders.length}</span>
         </span>
       }
     </li>

@@ -11,7 +11,7 @@ const GroupListItem = ({ group }) => {
   const handleClick = () => {
     dispatch(setCurrentGroup(group));
 
-    const type = group.isGroup ? 'group' : 'placelist';
+    const type = group.isGroup ? 'group' : 'mylist';
     const search = `?${createSearchParams({
       type: type,
       id: group.id
@@ -27,7 +27,7 @@ const GroupListItem = ({ group }) => {
           <span>{group.isGroup && <><i className="bi bi-people-fill" />{group.members.length}</>}</span>
         </h3>
         <span className={styles.span}>
-          장소 {group.isGroup ? group.placeList.places.length : group.places.length}곳
+          맛집 {group.places.length}곳
         </span>
       </div>
     </li>

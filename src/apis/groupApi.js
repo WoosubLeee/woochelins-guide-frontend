@@ -1,4 +1,4 @@
-import { requestGETToken, requestPOSTToken } from "./apiRequest";
+import { requestDELETEToken, requestGETToken, requestPOSTToken } from "./apiRequest";
 import { snakeToCamel } from "../utils/functions/common";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + 'groups/';
@@ -33,20 +33,8 @@ export const requestGetGroup = async groupId => {
   }
 };
 
-export const requestAddMember = async (groupId, token) => {
-  const url = BASE_URL + `${groupId}/add/`;
-  const res = await requestPOSTToken(url, {token: token});
-  return res;
-};
-
-export const requestIsGroupAdmin = async groupId => {
-  const url = BASE_URL + `${groupId}/is_admin/`;
-  const res = await requestGETToken(url);
-  return res;
-};
-
 export const requestCreateGroupInvitationToken = async groupId => {
-  const url = BASE_URL + `${groupId}/invitation/`;
+  const url = BASE_URL + `${groupId}/token/`;
   const res = await requestPOSTToken(url);
   if (res.status === 201) {
     let data = await res.json();
@@ -56,7 +44,35 @@ export const requestCreateGroupInvitationToken = async groupId => {
 };
 
 export const requestGroupInvitationIsValid = async (groupId, token) => {
-  const url = BASE_URL + `${groupId}/invitation/${token}/`;
+  const url = BASE_URL + `${groupId}/token/?token=${token}`;
+  const res = await requestGETToken(url);
+  return res;
+};
+
+export const requestGroupMemberAdd = async (groupId, token) => {
+  const url = BASE_URL + `${groupId}/member/?token=${token}`;
   const res = await requestPOSTToken(url);
+  return res;
+};
+
+export const requestGroupPlaceAdd = async (groupId, placeInfo) => {
+  const url = BASE_URL + `${groupId}/place/`;
+  const res = await requestPOSTToken(url, placeInfo);
+  if (res.status === 201) {
+    return res;
+  }
+};
+
+export const requestGroupPlaceRemove = async (groupId, kakaoMapId) => {
+  const url = BASE_URL + `${groupId}/place/?kakao_map_id=${kakaoMapId}`;
+  const res = await requestDELETEToken(url);
+  if (res.status === 204) {
+    return res;
+  }
+};
+
+export const requestIsGroupAdmin = async groupId => {
+  const url = BASE_URL + `${groupId}/is_admin/`;
+  const res = await requestGETToken(url);
   return res;
 };

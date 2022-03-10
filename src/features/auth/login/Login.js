@@ -31,7 +31,7 @@ const Login = () => {
 
     requestLogin(userInfo)
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           dispatch(setIsLogin(true));
 
           if (state && 'location' in state) {

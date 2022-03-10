@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setGroupsUpdateNeeded } from "../groupSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { requestCreatePlaceList } from "../../../../apis/placeApi";
+import { requestCreateMyList } from "../../../../apis/placeApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
 import BottomBorderInput from "../../../../components/inputs/bottomBorderInput/BottomBorderInput";
 import FullWidthBtn from "../../../../components/buttons/fullWidthBtn/FullWidthBtn";
 import { routeTo } from "../../../../utils/functions/routes";
 
-const PlaceListCreate = () => {
+const MyListCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,10 +28,10 @@ const PlaceListCreate = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    requestCreatePlaceList(listInfo)
+    requestCreateMyList(listInfo)
       .then(data => {
         const search = `?${createSearchParams({
-          type: 'placelist',
+          type: 'mylist',
           id: data.id
         })}`;
         navigate(routeTo('Home', {}, { search: search }));
@@ -69,4 +69,4 @@ const PlaceListCreate = () => {
   );
 }
  
-export default PlaceListCreate;
+export default MyListCreate;

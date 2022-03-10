@@ -4,7 +4,7 @@ export const groupSlice = createSlice({
   name: 'group',
   initialState: {
     groups: [],
-    placeLists: [],
+    myLists: [],
     groupsUpdateNeeded: false,
     currentGroup: undefined,
   },
@@ -12,8 +12,8 @@ export const groupSlice = createSlice({
     setGroups: (state, action) => {
       state.groups = action.payload;
     },
-    setPlaceLists: (state, action) => {
-      state.placeLists = action.payload;
+    setMyLists: (state, action) => {
+      state.myLists = action.payload;
     },
     setGroupsUpdateNeeded: (state, action) => {
       state.groupsUpdateNeeded = action.payload;
@@ -26,7 +26,7 @@ export const groupSlice = createSlice({
 
 export const {
   setGroups,
-  setPlaceLists,
+  setMyLists,
   setGroupsUpdateNeeded,
   setCurrentGroup,
 } = groupSlice.actions;

@@ -1,0 +1,10 @@
+.noContentWrap {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.excMark {
+    font-size: 40px;
+    color: gray;
+}

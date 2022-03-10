@@ -1,40 +1,34 @@
-import { processPlaceListData, snakeToCamel } from "../utils/functions/common";
+import { processMyListData, snakeToCamel } from "../utils/functions/common";
 import { requestDELETEToken, requestGETToken, requestPOSTToken } from "./apiRequest";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + 'places/'
 
 // Place 관련 API들
 
-export const requestGetPlace = async googleMapsId => {
-  const url = BASE_URL + `${googleMapsId}/`;
+export const requestSavePlace = async placeInfo => {
+  const url = BASE_URL + 'place/';
+  const res = await requestPOSTToken(url, placeInfo);
+  return res;
+};
+
+export const requestGetPlace = async kakaoMapId => {
+  const url = BASE_URL + `place/${kakaoMapId}/`;
   const res = await requestGETToken(url);
   return res;
 };
 
-// PlaceList 관련 API들
+// GroupPlace 관련 API들
 
-export const requestGetPlaceListDefault = async () => {
-  const url = BASE_URL + 'list/user/default/';
+export const requestGetGroupPlace = async groupPlaceId => {
+  const url = BASE_URL + `groupplace/${groupPlaceId}/`;
   const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = snakeToCamel(data);
-    return processPlaceListData(data);
-  }
+  return res;
 };
 
-export const requestGetPlaceListsUser = async () => {
-  const url = BASE_URL + 'list/user';
-  const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = snakeToCamel(data);
-    return data.map(list => processPlaceListData(list));
-  }
-};
+// MyList 관련 API들
 
-export const requestCreatePlaceList = async listInfo => {
-  const url = BASE_URL + 'list/';
+export const requestCreateMyList = async listInfo => {
+  const url = BASE_URL + 'mylist/';
   const res = await requestPOSTToken(url, listInfo);
   if (res.status === 201) {
     let data = await res.json();
@@ -43,55 +37,48 @@ export const requestCreatePlaceList = async listInfo => {
   }
 };
 
-export const requestGetPlaceList = async listId => {
-  const url = BASE_URL + `list/${listId}/`;
+export const requestGetMyList = async listId => {
+  const url = BASE_URL + `mylist/${listId}/`;
   const res = await requestGETToken(url);
   if (res.status === 200) {
     let data = await res.json();
     data = snakeToCamel(data);
-    return processPlaceListData(data);
+    return processMyListData(data);
   }
 };
 
-export const requestAddPlace = async (listId, placeInfo) => {
-  const url = BASE_URL + `list/${listId}/add/`;
-  const res = await requestPOSTToken(url, placeInfo);
-  if (res.status === 201) {
-    return res;
-  }
-};
-
-export const requestRemovePlace = async (listId, googleMapsId) => {
-  const url = BASE_URL + `list/${listId}/remove/`;
-  const res = await requestDELETEToken(url, {google_maps_id: googleMapsId});
-  if (res.status === 204) {
-    return res;
-  }
-};
-
-// GroupPlaceList 관련 API들
-
-export const requestAddGroupPlace = async (listId, placeInfo) => {
-  const url = BASE_URL + `group/list/${listId}/add/`;
-  const res = await requestPOSTToken(url, placeInfo);
-  if (res.status === 201) {
-    return res;
-  }
-};
-
-export const requestRemoveGroupPlace = async (listId, googleMapsId) => {
-  const url = BASE_URL + `group/list/${listId}/remove/`;
-  const res = await requestDELETEToken(url, {google_maps_id: googleMapsId});
-  if (res.status === 204) {
-    return res;
-  }
-};
-
-export const requestGetGroupPlaceRecommenders = async (listId, googleMapsId) => {
-  const url = BASE_URL + `group/list/${listId}/${googleMapsId}/recommended/`;
+export const requestGetMyListsUser = async () => {
+  const url = BASE_URL + 'mylist/user';
   const res = await requestGETToken(url);
   if (res.status === 200) {
-    const data = await res.json();
-    return data;
+    let data = await res.json();
+    data = snakeToCamel(data);
+    return data.map(list => processMyListData(list));
+  }
+};
+
+export const requestGetMyListDefault = async () => {
+  const url = BASE_URL + 'mylist/user/?default=1';
+  const res = await requestGETToken(url);
+  if (res.status === 200) {
+    let data = await res.json();
+    data = snakeToCamel(data);
+    return processMyListData(data);
+  }
+};
+
+export const requestMyListPlaceAdd = async (listId, placeInfo) => {
+  const url = BASE_URL + `mylist/${listId}/place/`;
+  const res = await requestPOSTToken(url, placeInfo);
+  if (res.status === 201) {
+    return res;
+  }
+};
+
+export const requestMyListPlaceRemove = async (listId, kakaoMapId) => {
+  const url = BASE_URL + `mylist/${listId}/place/?kakao_map_id=${kakaoMapId}`;
+  const res = await requestDELETEToken(url);
+  if (res.status === 204) {
+    return res;
   }
 };

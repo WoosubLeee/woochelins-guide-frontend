@@ -43,66 +43,29 @@ export const changeGeometryToNum = place => {
 };
 
 export const extractPlacesFromGroupData = group => {
-  return group.placeList.places.map(place => {
+  return group.places.map(place => {
     const placeData = {
       ...place,
-      ...place.place,
-      latitude: Number(place.place.latitude),
-      longitude: Number(place.place.longitude)
+      ...changeGeometryToNum(place.place)
     };
     delete placeData.place;
     return placeData;
   });
 };
 
-export const processGroupData = data => {
-  return {
-    ...data,
-    placeList: {
-      ...data.placeList,
-      places: data.placeList.places.map(place => {
-        const placeData = {
-          ...place,
-          ...place.place,
-          latitude: Number(place.place.latitude),
-          longitude: Number(place.place.longitude)
-        };
-        delete placeData.place;
-        return placeData;
-      })
-    }
-  };
-};
-
-export const extractPlacesFromPlaceListData = placeList => {
-  return placeList.places.map(place => {
+export const extractPlacesFromMyListData = myList => {
+  return myList.places.map(place => {
     return changeGeometryToNum(place);
   });
 };
 
-export const processPlaceListData = data => {
+export const processMyListData = data => {
   return {
     ...data,
     places: data.places.map(place => {
       return changeGeometryToNum(place);
     })
   };
-};
-
-// Google Place API를 통해 받아온 Place detail 정보를 처리
-export const processGooglePlaceData = place => {
-  const newData = {
-    googleMapsId: place.place_id,
-    name: place.name,
-    latitude: place.geometry.location.lat(),
-    longitude: place.geometry.location.lng(),
-    address: place.formatted_address,
-    // 사진은 임시 comment 조치(WG-32)
-    // photos: place.photos ? place.photos.map(photo => photo.getUrl()) : [],
-    googleMapsUrl: place.url
-  };
-  if (place.phoneNumber) newData.phonNumber = place.formatted_phone_number;
-  return newData;
 };
 
 export const addIsGroupProperty = lists => {
@@ -112,11 +75,4 @@ export const addIsGroupProperty = lists => {
       isGroup: 'members' in list
     }
   });
-};
-
-export const isInKorea = (lat, lng) => {
-  if (lat < 33.11 || lat > 38.64 || lng < 125.08 || lng > 129.5) {
-    return false;
-  }
-  return true;
 };

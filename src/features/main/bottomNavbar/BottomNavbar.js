@@ -13,7 +13,7 @@ const BottomNavbar = () => {
       </Link>
       <Link to={routeTo('PlaceList', null, location)} className={styles.link}>
         <i className={`bi bi-geo-alt-fill ${styles.locationIcon}`}></i>
-        <span>장소 목록</span>
+        <span>맛집 목록</span>
       </Link>
       <Link to={routeTo('Menu', null, location)} className={styles.link}>
         <i className={`bi bi-three-dots ${styles.icon} ${styles.listIcon}`}></i>

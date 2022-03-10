@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setPlacesUpdateNeeded } from "../../../placeSlice";
 import { setGroupsUpdateNeeded } from "../../../../group/groupSlice";
-import { requestAddGroupPlace, requestAddPlace, requestRemoveGroupPlace, requestRemovePlace } from "../../../../../../apis/placeApi";
+import { requestGroupPlaceAdd, requestGroupPlaceRemove } from "../../../../../../apis/groupApi";
+import { requestMyListPlaceAdd, requestMyListPlaceRemove } from "../../../../../../apis/placeApi";
 import SmallLabel from "../../../../../../components/labels/smallLabel/SmallLabel";
 
 const PlaceAddListItem = ({ group }) => {
@@ -19,13 +20,13 @@ const PlaceAddListItem = ({ group }) => {
   useEffect(() => {
     if (focusedPlace) {
       if (group.isGroup) {
-        if (group.placeList.places.map(place => place.place.googleMapsId).includes(focusedPlace.googleMapsId)) {
+        if (group.places.map(place => place.place.kakaoMapId).includes(focusedPlace.kakaoMapId)) {
           setIsSaved(true);
         } else {
           setIsSaved(false);
         }
       } else {
-        if (group.places.map(place => place.googleMapsId).includes(focusedPlace.googleMapsId)) {
+        if (group.places.map(place => place.kakaoMapId).includes(focusedPlace.kakaoMapId)) {
           setIsSaved(true);
         } else {
           setIsSaved(false);
@@ -48,23 +49,24 @@ const PlaceAddListItem = ({ group }) => {
     const requestAddRemove = () => {
       if (!isSaved) {
         if (group.isGroup) {
-          return requestAddGroupPlace(group.id, focusedPlace);
+          return requestGroupPlaceAdd(group.id, focusedPlace);
         } else {
-          return requestAddPlace(group.id, focusedPlace);
+          return requestMyListPlaceAdd(group.id, focusedPlace);
         }
       } else {
         if (group.isGroup) {
-          return requestRemoveGroupPlace(group.id, focusedPlace.googleMapsId);
+          return requestGroupPlaceRemove(group.id, focusedPlace.kakaoMapId);
         } else {
-          return requestRemovePlace(group.id, focusedPlace.googleMapsId);
+          return requestMyListPlaceRemove(group.id, focusedPlace.kakaoMapId);
         }
       }
     };
 
     requestAddRemove()
       .then(() => {
+        setIsSaved(!isSaved);
         dispatch(setGroupsUpdateNeeded(true));
-        if (group.isGroup === currentGroup.isGroup) {
+        if (isCurrent) {
           dispatch(setPlacesUpdateNeeded(true));
         }
         setIsRequesting(false);

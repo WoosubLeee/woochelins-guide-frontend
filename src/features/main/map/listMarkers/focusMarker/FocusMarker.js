@@ -1,38 +1,40 @@
-import styles from '../KakaoListMarkers.module.css';
+import styles from '../ListMarkers.module.css';
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setKakaoFocusedMarker } from "../../../mapSlice";
-import redMarker from "../../../../../../utils/images/red-marker.png";
+import { setFocusedMarker } from "../../mapSlice";
+import redMarker from "../../../../../utils/images/red-marker.png";
 
-const KakaoFocusMarker = ({ markers, listImage, isMarkerInList, setIsMarkerInList }) => {
+const FocusMarker = ({ markers, listImage, isMarkerInList, setIsMarkerInList }) => {
   const dispatch = useDispatch();
 
   const kakaoMap = useSelector(state => state.map.kakaoMap);
-  const kakaoFocusedMarker = useSelector(state => state.map.kakaoFocusedMarker);
+  const focusedMarker = useSelector(state => state.map.focusedMarker);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
 
   const image = useRef(new window.kakao.maps.MarkerImage(redMarker, new window.kakao.maps.Size(27, 46)));
 
   useEffect(() => {
-    if (kakaoFocusedMarker) {
+    if (focusedMarker) {
       if (isMarkerInList) {
-        kakaoFocusedMarker.marker.setImage(listImage);
-        kakaoFocusedMarker.marker.setZIndex(0);
+        focusedMarker.marker.setImage(listImage);
+        focusedMarker.marker.setZIndex(0);
+        if (kakaoMap.getLevel() >= 6) focusedMarker.overlay.setVisible(false);
       } else {
-        kakaoFocusedMarker.marker.setMap(null);
-        kakaoFocusedMarker.overlay.setMap(null);
+        focusedMarker.marker.setMap(null);
+        focusedMarker.overlay.setMap(null);
       }
-      dispatch(setKakaoFocusedMarker(undefined));
+      dispatch(setFocusedMarker(undefined));
     }
 
     if (focusedPlace) {
-      const focusedPlaceMarker = markers.find(marker => marker.googleMapsId === focusedPlace.googleMapsId);
+      const focusedPlaceMarker = markers.find(marker => marker.kakaoMapId === focusedPlace.kakaoMapId);
       let marker;
       let overlay;
       if (focusedPlaceMarker) {
         marker = focusedPlaceMarker.marker;
         overlay = focusedPlaceMarker.overlay;
         marker.setImage(image.current);
+        overlay.setVisible(true);
         setIsMarkerInList(true);
       } else {
         marker = new window.kakao.maps.Marker({
@@ -52,8 +54,8 @@ const KakaoFocusMarker = ({ markers, listImage, isMarkerInList, setIsMarkerInLis
       }
       marker.setZIndex(1);
       
-      dispatch(setKakaoFocusedMarker({
-        googleMapsId: focusedPlace.googleMapsId,
+      dispatch(setFocusedMarker({
+        kakaoMapId: focusedPlace.kakaoMapId,
         marker: marker,
         overlay: overlay
       }));
@@ -61,22 +63,9 @@ const KakaoFocusMarker = ({ markers, listImage, isMarkerInList, setIsMarkerInLis
     }
   }, [focusedPlace]);
 
-  useEffect(() => {
-    if (!isMarkerInList && kakaoFocusedMarker) {
-      const sameMarker = markers.find(marker => marker.googleMapsId === kakaoFocusedMarker.googleMapsId);
-      if (sameMarker) {
-        sameMarker.marker.setImage(image.current);
-        kakaoFocusedMarker.marker.setMap(null);
-        kakaoFocusedMarker.overlay.setMap(null);
-        dispatch(setKakaoFocusedMarker(sameMarker));
-        setIsMarkerInList(true);
-      }
-    }
-  }, [markers, kakaoFocusedMarker]);
-
   return (
     <></>
   );
 }
  
-export default KakaoFocusMarker;
+export default FocusMarker;

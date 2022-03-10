@@ -6,8 +6,6 @@ export const placeSlice = createSlice({
     currentPlaces: [],
     placesUpdateNeeded: false,
     focusedPlace: undefined,
-    googlePlacesService: undefined,
-    sessionToken: undefined,
   },
   reducers: {
     setCurrentPlaces: (state, action) => {
@@ -19,15 +17,6 @@ export const placeSlice = createSlice({
     setFocusedPlace: (state, action) => {
       state.focusedPlace = action.payload;
     },
-    removeFocusedPlace: (state) => {
-      state.focusedPlace = undefined;
-    },
-    setGooglePlacesService: (state, action) => {
-      state.googlePlacesService = action.payload;
-    },
-    setSessionToken: (state, action) => {
-      state.sessionToken = action.payload;
-    },
   }
 });
 
@@ -35,9 +24,6 @@ export const {
   setCurrentPlaces,
   setPlacesUpdateNeeded,
   setFocusedPlace,
-  removeFocusedPlace,
-  setGooglePlacesService,
-  setSessionToken,
 } = placeSlice.actions;
 
 export default placeSlice.reducer;

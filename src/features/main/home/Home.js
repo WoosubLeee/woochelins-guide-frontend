@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import HomeTopNavbar from "./homeTopNavbar/HomeTopNavbar";
-import Search from "../place/search/Search";
+import SearchBar from "../place/search/searchBar/SearchBar";
 import LocationButton from "./locationButton/LocationButton";
 
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       {!isSearching && <HomeTopNavbar setIsSearching={setIsSearching} />}
-      {isSearching && <Search setIsSearching={setIsSearching} />}
+      {isSearching && <SearchBar setIsSearching={setIsSearching} />}
       <LocationButton />
       <Outlet />
     </>

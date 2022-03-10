@@ -11,7 +11,7 @@ export const requestSignup = async userInfo => {
 export const requestLogin = async userInfo => {
   const url = BASE_URL + 'login/';
   const res = await requestPOST(url, userInfo);
-  if (res.status === 200) {
+  if (res.status === 201) {
     const data = await res.json();
     localStorage.setItem('token', data.token);
   }

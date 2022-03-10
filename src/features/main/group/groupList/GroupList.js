@@ -12,7 +12,7 @@ const GroupList = () => {
 
   const currentGroup = useSelector(state => state.group.currentGroup);
   const groups = useSelector(state => state.group.groups);
-  const placeLists = useSelector(state => state.group.placeLists);
+  const myLists = useSelector(state => state.group.myLists);
 
   return (
     <div className="full-screen-white">
@@ -52,15 +52,15 @@ const GroupList = () => {
         <ListHeader
           headerText="내 리스트"
           rightElement={
-            <Link to={routeTo('PlaceListCreate', null, location)}>
+            <Link to={routeTo('MyListCreate', null, location)}>
               <i className={`bi bi-plus-circle-fill ${styles.icon}`}></i>
             </Link>
           }
         />
         <ul className={styles.ul}>
-          {placeLists.map((placeList, i) => {
+          {myLists.map((myList, i) => {
             return (
-              <GroupListItem key={i} group={placeList} />
+              <GroupListItem key={i} group={myList} />
             )
           })}
         </ul>
