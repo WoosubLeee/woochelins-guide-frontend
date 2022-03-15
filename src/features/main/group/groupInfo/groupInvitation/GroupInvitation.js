@@ -23,7 +23,7 @@ const GroupInvitation = () => {
         let data = await res.json();
         if (res.status === 200) {
           data = snakeToCamel(data);
-          setGroupName(data.groupName);
+          setGroupName(data.name);
         } else {
           setErrorMessage(data.message);
         }

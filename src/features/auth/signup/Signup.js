@@ -95,6 +95,7 @@ const Signup = () => {
         if (signupRes.status === 201) {
           requestLogin(userInfo)
             .then(() => {
+              alert('우슐랭가이드에 오신 것을 환영합니다!');
               dispatch(setIsLogin(true));
 
               if (location.state?.location) {
