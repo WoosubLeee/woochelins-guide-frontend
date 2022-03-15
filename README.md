@@ -1,44 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Woochelin's Guide
 
-## Available Scripts
+>너와 나의 맛집 지도!
+>우슐랭가이드
 
-In the project directory, you can run:
+[Backend repository link](https://github.com/WoosubLeee/woochelins-guide-backend)
 
-### `npm start`
+ 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 1. 기획 배경
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+:question: 맛집 광고에 속은 적이 있으신가요?
 
-### `npm test`
+:question: 단톡방에 맛집을 물어본 적 있으신가요?
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+:question: 입맛이 비슷한 친구의 추천 맛집이 궁금하신가요?
 
-### `npm run build`
+이런 분들을 위해 준비했습니다.
+친구들과 함께 만드는 신뢰할 수 있는 맛집 지도 **우슐랭가이드** 입니다.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**우슐랭가이드** 에서는:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+:point_right: 친구와 그룹을 만들어 맛집을 서로 추천하고
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+:point_right: 나만의 맛집 리스트도 만들고
 
-### `npm run eject`
+:point_right: 맛집 정보를 조회할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 2. 사용 방법
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 모임 생성 및 초대
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![group-making](README.assets/group-making-16472894499201.gif)![creating-invitation-token](README.assets/creating-invitation-token.gif)![모임생성및초대3](README.assets/모임생성및초대3.gif)
 
-## Learn More
+ 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 장소 검색 및 추천/저장
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![장소검색및저장](README.assets/장소검색및저장.gif) ![장소검색및추천2](README.assets/장소검색및추천2.gif)
+
+ 
+
+## 3. 개발
+
+### 3.1. 기술 스택
+
+> Frontend의 기술 스택만 담고 있습니다.
+
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" > version - 17.0.2
+
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=black"> 
+
+<img src="https://img.shields.io/badge/react router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=black"> version - 6
+
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+
+<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=black"> version - 5
+
+<img src="https://img.shields.io/badge/kakao map api-FFCD00?style=for-the-badge&logo=kakao&logoColor=black"> 
+
+### 3.2. 개발자
+
+  :raising_hand: **이우섭**
+
+- GitHub - https://github.com/WoosubLeee
+- Email - zbxv1423@naver.com
+
+### 3.3. 향후 과제
+
+- **모바일 앱 전환(React Native)**
+- 홈 화면에서 모임/내 리스트 모아보기 기능
+- 필터/정렬 기능
+- 리뷰 기능
+- UI 개선
+- 예외 처리 강화
