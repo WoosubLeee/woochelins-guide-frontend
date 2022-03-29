@@ -62,6 +62,9 @@
 
 <img src="https://img.shields.io/badge/kakao map api-FFCD00?style=for-the-badge&logo=kakao&logoColor=black"> 
 
+<img src="https://img.shields.io/badge/AWS EC2-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> 
+
+
 ### 3.2. 개발자
 
   :raising_hand: **이우섭**
