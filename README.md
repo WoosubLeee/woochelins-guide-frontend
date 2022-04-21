@@ -3,7 +3,7 @@
 >너와 나의 맛집 지도!
 >우슐랭가이드
 
-[사이트 링크](https://woochelins-guide.netlify.app/)
+[사이트 링크](http://woochelinsguide.com/)
 
 [Backend repository 링크](https://github.com/WoosubLeee/woochelins-guide-backend)
 
@@ -61,6 +61,9 @@
 <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=black"> version - 5
 
 <img src="https://img.shields.io/badge/kakao map api-FFCD00?style=for-the-badge&logo=kakao&logoColor=black"> 
+
+<img src="https://img.shields.io/badge/AWS EC2-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> 
+
 
 ### 3.2. 개발자
 
