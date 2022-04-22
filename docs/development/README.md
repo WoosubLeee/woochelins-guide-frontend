@@ -85,3 +85,52 @@ if (지도 중심 in 한국 영역 || 지도 zoom level < 한반도 다 보일 �
 - 지도와의 통일성 유지에도 더 좋았기 때문입니다
 
 이렇게 해서 카카오맵을 활용하여 개발은 마무리 지었지만, 향후 비용 문제가 해결이 된다면 Google Maps를 어떻게든 활용해보고자 하는 생각을 갖고있습니다.
+
+
+
+## HTTP to HTTPS
+
+대부분의 브라우저는 HTTP를 사용하는 웹사이트에서는 위치 권한을 사용할 수 없도록 막아놨습니다. 그 때문에 HTTPS로 전환하여 위치 권한을 사용할 수 있도록 하였습니다.
+
+### SSL(TLS) 발급받기
+
+HTTPS로 통신하기 위해서는 SSL을 발급받아야 합니다. SSL은 인증된 CA (Certificate Authority)로부터 발급받아야 합니다. 여러 발급 경로가 있지만 비용을 줄이기 위해 90일짜리 [무료 SSL](https://zerossl.com/)을 발급받았습니다.
+
+발급받는 과정은 정말 간단하고, 발급업체의 introduction을 따르면 됩니다. 발급 과정에서 발급 요청자가 해당 도메인의 진짜 주인인지 확인하는 과정이 있습니다.
+
+### Installing SSL certificate on Nginx
+
+CA로부터 발급받은 certificates 파일들을 서버에 업로드했습니다. 그리고 Nginx conf 파일에 다음과 같은 내용으로 변경해줬습니다.
+
+```
+server {
+  listen 80;
+  server_name woochelinsguide.com www.woochelinsguide.com;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl;
+
+  ssl                 on;
+  ssl_certificate     /home/ec2-user/ssl/certificate.crt;
+  ssl_certificate_key /home/ec2-user/ssl/private.key;
+
+  location / {
+    root /home/ec2-user/woochelins-guide-frontend/build;
+    index index.html index.htm;
+    try_files $uri $uri/ /index.html;
+  }
+}
+
+```
+
+앞으로 HTTP로 들어오는 요청은 모두 HTTPS로 다시 redirect 될 수 있도록 분기해줬습니다. 그리고 Nginx를 reload 해주었습니다.
+
+```bash
+$ sudo systemctl reload nginx
+```
+
+### References
+
+[Installing SSL Certificate on NGINX](https://help.zerossl.com/hc/en-us/articles/360058295894-Installing-SSL-Certificate-on-NGINX)
