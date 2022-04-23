@@ -1,8 +1,9 @@
 import styles from "./PlaceAddListItem.module.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setPlacesUpdateNeeded } from "../../../placeSlice";
+import { updateCurrentPlaces } from "../../../placeSlice";
 import { setGroupsUpdateNeeded } from "../../../../group/groupSlice";
+import { useLocation } from "react-router-dom";
 import { requestGroupPlaceAdd, requestGroupPlaceRemove } from "../../../../../../apis/groupApi";
 import { requestMyListPlaceAdd, requestMyListPlaceRemove } from "../../../../../../apis/placeApi";
 import SmallLabel from "../../../../../../components/labels/smallLabel/SmallLabel";
@@ -43,6 +44,7 @@ const PlaceAddListItem = ({ group }) => {
     }
   }, [currentGroup]);
   
+  const location = useLocation();
   const handleClick = () => {
     setIsRequesting(true);
 
@@ -67,7 +69,7 @@ const PlaceAddListItem = ({ group }) => {
         setIsSaved(!isSaved);
         dispatch(setGroupsUpdateNeeded(true));
         if (isCurrent) {
-          dispatch(setPlacesUpdateNeeded(true));
+          dispatch(updateCurrentPlaces(location));
         }
         setIsRequesting(false);
       });

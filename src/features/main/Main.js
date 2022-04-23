@@ -1,24 +1,19 @@
 import styles from './Main.module.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentGroup, setGroups, setGroupsUpdateNeeded, setMyLists } from "./group/groupSlice";
-import { setCurrentPlaces, setFocusedPlace, setPlacesUpdateNeeded } from './place/placeSlice';
+import { setGroups, setGroupsUpdateNeeded, setMyLists } from "./group/groupSlice";
+import { setFocusedPlace, updateCurrentPlaces } from './place/placeSlice';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import queryString from "query-string";
 import Map from "./map/Map";
 import BottomNavbar from './bottomNavbar/BottomNavbar';
 import {
   requestGetPlace,
-  requestGetMyList,
-  requestGetMyListDefault,
   requestGetMyListsUser
 } from '../../apis/placeApi';
-import { requestGetGroup, requestGetGroupsUser } from '../../apis/groupApi';
+import { requestGetGroupsUser } from '../../apis/groupApi';
 import {
   addIsGroupProperty,
   changeGeometryToNum,
-  extractPlacesFromGroupData,
-  extractPlacesFromMyListData,
   snakeToCamel
 } from '../../utils/functions/common';
 
@@ -29,7 +24,6 @@ const Main = () => {
   const { kakaoMapId } = useParams();
 
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
-  const placesUpdateNeeded = useSelector(state => state.place.placesUpdateNeeded);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
   const groupsUpdateNeeded = useSelector(state => state.group.groupsUpdateNeeded);
 
@@ -60,48 +54,8 @@ const Main = () => {
   }, [kakaoMapId]);
 
   useEffect(() => {
-    updateCurrentPlaces();
-  }, [location.search]);
-
-  useEffect(() => {
-    if (placesUpdateNeeded) {
-      updateCurrentPlaces();
-      dispatch(setPlacesUpdateNeeded(false));
-    }
-  }, [placesUpdateNeeded]);
-
-  const updateCurrentPlaces = () => {
-    const fetchData = async () => {
-      // query로 list type(Group인지, MyList)과 id를 확인하고
-      // 없으면 user의 default MyList 표시
-      const queries = queryString.parse(location.search);
-      let data;
-      if ('type' in queries && 'id' in queries) {
-        if (queries.type === 'group') {
-          data = await requestGetGroup(queries.id);
-          dispatch(setCurrentGroup({
-            ...data,
-            isGroup: true
-          }));
-          return extractPlacesFromGroupData(data);
-        } else if (queries.type === 'mylist') {
-          data = await requestGetMyList(queries.id);
-        }
-      } else {
-        data = await requestGetMyListDefault();
-      }
-      dispatch(setCurrentGroup({
-        ...data,
-        isGroup: false
-      }));
-      return extractPlacesFromMyListData(data);
-    };
-
-    fetchData() 
-      .then(data => {
-        dispatch(setCurrentPlaces(data));
-      });
-  };
+    dispatch(updateCurrentPlaces(location));
+  }, [location.search, dispatch, location]);
 
   // User의 Group과 MyList 목록 가져오기
   useEffect(() => {
