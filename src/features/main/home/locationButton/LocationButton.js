@@ -1,29 +1,33 @@
 import styles from "./LocationButton.module.css";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 const LocationButton = () => {
   const location = useLocation();
 
-  const map = useSelector(state => state.map.map);
+  const [position, setPosition] = useState();
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      setPosition(pos);
+    });
+  }, []);
 
+  const map = useSelector(state => state.map.kakaoMap);
   const handleClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        map.panTo({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        });
-      });
-    }
+    map.panTo(new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude));
   };
 
   return (
-    <i
-      onClick={handleClick}
-      className={`fa-solid fa-location-crosshairs ${styles.icon}
+    position ? (
+      <i
+        onClick={handleClick}
+        className={`fa-solid fa-location-crosshairs ${styles.icon}
         ${location.pathname.includes('place') ? styles.iconCardExpanded : styles.iconNormal}`}
-    />
+      />
+    ) : (
+      <></>
+    )
   );
 }
  

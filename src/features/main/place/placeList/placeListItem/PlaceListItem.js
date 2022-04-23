@@ -10,29 +10,27 @@ const PlaceListItem = ({ place }) => {
 
   const currentGroup = useSelector(state => state.group.currentGroup);
 
-  const [distance, setDistance] = useState(0);
-
+  // 현위치 - 식당 간 거리
+  const [distance, setDistance] = useState();
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const currentPosition = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        const placePosition = {
-          lat: place.latitude,
-          lng: place.longitude
-        }
+    navigator.geolocation.getCurrentPosition(position => {
+      const currentPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      const placePosition = {
+        lat: place.latitude,
+        lng: place.longitude
+      }
 
-        const distance = window.google.maps.geometry.spherical.computeDistanceBetween(currentPosition, placePosition);
-        if (distance > 1000) {
-          setDistance((distance / 1000).toFixed(1) + 'km');
-        } else {
-          setDistance(distance.toFixed(0) + 'm');
-        }
-      });
-    }
-  }, []);
+      const distance = window.google.maps.geometry.spherical.computeDistanceBetween(currentPosition, placePosition);
+      if (distance > 1000) {
+        setDistance((distance / 1000).toFixed(1) + 'km');
+      } else {
+        setDistance(distance.toFixed(0) + 'm');
+      }
+    });
+  }, [place]);
 
   const handleClick = () => {
     navigate(routeTo('PlaceInfoCard', { kakaoMapId: place.kakaoMapId }, location));

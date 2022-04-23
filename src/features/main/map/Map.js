@@ -20,11 +20,9 @@ const Map = () => {
     });
 
     // 위치 조회 동의 시, 현위치 근처로 center 변경
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        newMap.setCenter(new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude));
-      });
-    }
+    navigator.geolocation.getCurrentPosition(position => {
+      newMap.setCenter(new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    });
     
     // map에 marker가 없는 빈 구역 click 시 home으로 되돌아 오도록
     newMap.addListener('click', () => {
@@ -35,7 +33,7 @@ const Map = () => {
     });
 
     dispatch(setKakaoMap(newMap));
-  }, []);
+  }, [dispatch]);
 
   const [navigateToHome, setNavigateToHome] = useState(false);
   useEffect(() => {
