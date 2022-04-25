@@ -1,5 +1,7 @@
 import styles from './GroupInvitation.module.css';
 import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { updateGroupsAndMylists } from '../../groupSlice';
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import { requestGroupMemberAdd, requestGroupInvitationIsValid } from "../../../../../apis/groupApi";
 import TopNavbar from "../../../../../components/navbar/topNavbar/TopNavbar";
@@ -30,10 +32,12 @@ const GroupInvitation = () => {
       });
   }, []);
 
+  const dispatch = useDispatch();
   const handleClickYes = () => {
     requestGroupMemberAdd(groupId, token)
       .then(res => {
         if (res.status === 201) {
+          dispatch(updateGroupsAndMylists);
           const search = `?${createSearchParams({
             type: 'group',
             id: groupId
