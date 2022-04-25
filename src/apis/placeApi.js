@@ -50,11 +50,7 @@ export const requestGetMyList = async listId => {
 export const requestGetMyListsUser = async () => {
   const url = BASE_URL + 'mylist/user';
   const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = snakeToCamel(data);
-    return data.map(list => processMyListData(list));
-  }
+  return res;
 };
 
 export const requestGetMyListDefault = async () => {

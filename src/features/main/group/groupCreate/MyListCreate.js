@@ -1,7 +1,7 @@
 import styles from './GroupCreate.module.css';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setGroupsUpdateNeeded } from "../groupSlice";
+import { updateGroupsAndMylists } from "../groupSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { requestCreateMyList } from "../../../../apis/placeApi";
 import TopNavbar from "../../../../components/navbar/topNavbar/TopNavbar";
@@ -35,7 +35,7 @@ const MyListCreate = () => {
           id: data.id
         })}`;
         navigate(routeTo('Home', {}, { search: search }));
-        dispatch(setGroupsUpdateNeeded(true));
+        dispatch(updateGroupsAndMylists);
       });
   };
 

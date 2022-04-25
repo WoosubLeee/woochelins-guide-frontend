@@ -1,18 +1,15 @@
 import styles from './Main.module.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGroups, setGroupsUpdateNeeded, setMyLists } from "./group/groupSlice";
+import { updateGroupsAndMylists } from "./group/groupSlice";
 import { setFocusedPlace, updateCurrentPlaces } from './place/placeSlice';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Map from "./map/Map";
 import BottomNavbar from './bottomNavbar/BottomNavbar';
 import {
   requestGetPlace,
-  requestGetMyListsUser
 } from '../../apis/placeApi';
-import { requestGetGroupsUser } from '../../apis/groupApi';
 import {
-  addIsGroupProperty,
   changeGeometryToNum,
   snakeToCamel
 } from '../../utils/functions/common';
@@ -25,7 +22,6 @@ const Main = () => {
 
   const isLoginChecked = useSelector(state => state.auth.isLoginChecked);
   const focusedPlace = useSelector(state => state.place.focusedPlace);
-  const groupsUpdateNeeded = useSelector(state => state.group.groupsUpdateNeeded);
 
   // FocusedPlace 처리
   useEffect(() => {
@@ -59,28 +55,8 @@ const Main = () => {
 
   // User의 Group과 MyList 목록 가져오기
   useEffect(() => {
-    updateGroupsAndMyLists();
-  }, []);
-
-  useEffect(() => {
-    if (groupsUpdateNeeded) {
-      updateGroupsAndMyLists();
-      dispatch(setGroupsUpdateNeeded(false));
-    }
-  }, [groupsUpdateNeeded]);
-
-  const updateGroupsAndMyLists = () => {
-    requestGetGroupsUser()
-      .then(data => {
-        const groups = addIsGroupProperty(data);
-        dispatch(setGroups(groups));
-      })
-    requestGetMyListsUser()
-      .then(data => {
-        const myLists = addIsGroupProperty(data);
-        dispatch(setMyLists(myLists));
-      });
-  };
+    dispatch(updateGroupsAndMylists);
+  }, [dispatch]);
 
   return (
     <div className={styles.main}>

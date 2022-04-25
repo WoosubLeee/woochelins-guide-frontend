@@ -2,7 +2,7 @@ import styles from "./PlaceAddListItem.module.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentPlaces } from "../../../placeSlice";
-import { setGroupsUpdateNeeded } from "../../../../group/groupSlice";
+import { updateGroupsAndMylists } from "../../../../group/groupSlice";
 import { useLocation } from "react-router-dom";
 import { requestGroupPlaceAdd, requestGroupPlaceRemove } from "../../../../../../apis/groupApi";
 import { requestMyListPlaceAdd, requestMyListPlaceRemove } from "../../../../../../apis/placeApi";
@@ -67,7 +67,7 @@ const PlaceAddListItem = ({ group }) => {
     requestAddRemove()
       .then(() => {
         setIsSaved(!isSaved);
-        dispatch(setGroupsUpdateNeeded(true));
+        dispatch(updateGroupsAndMylists);
         if (isCurrent) {
           dispatch(updateCurrentPlaces(location));
         }

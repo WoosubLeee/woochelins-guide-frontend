@@ -16,11 +16,7 @@ export const requestCreateGroup = async groupInfo => {
 export const requestGetGroupsUser = async () => {
   const url = BASE_URL + 'user/';
   const res = await requestGETToken(url);
-  if (res.status === 200) {
-    let data = await res.json();
-    data = data.map(list => snakeToCamel(list));
-    return data;
-  }
+  return res;
 };
 
 export const requestGetGroup = async groupId => {
