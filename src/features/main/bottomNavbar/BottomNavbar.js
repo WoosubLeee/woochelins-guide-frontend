@@ -11,9 +11,9 @@ const BottomNavbar = () => {
         <i className={`fa-solid fa-map-location-dot ${styles.mapIcon}`}></i>
         <span className={styles.mapSpan}>지도</span>
       </Link>
-      <Link to={routeTo('PlaceList', null, location)} className={styles.link}>
-        <i className={`bi bi-geo-alt-fill ${styles.locationIcon}`}></i>
-        <span>맛집 목록</span>
+      <Link to={routeTo('GroupList', null, location)} className={styles.link}>
+        <i className={`bi bi-people-fill ${styles.peopleIcon}`}></i>
+        <span>모임 / 내 리스트</span>
       </Link>
       <Link to={routeTo('Menu', null, location)} className={styles.link}>
         <i className={`bi bi-three-dots ${styles.icon} ${styles.listIcon}`}></i>

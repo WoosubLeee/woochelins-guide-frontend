@@ -1,0 +1,19 @@
+.btnWrap {
+    position: absolute;
+    right: 0px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.btnWrapLow {
+    bottom: 50px;
+}
+.btnWrapHigh {
+    bottom: 195px;
+}
+.placeListBtn {
+    padding: 7px 10px;
+    border-radius: 14px;
+    background-color: white;
+}

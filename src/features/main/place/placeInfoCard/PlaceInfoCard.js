@@ -28,7 +28,10 @@ const PlaceInfoCard = () => {
   }, [focusedPlace, currentPlaces, currentGroup]);
 
   return (
-    <div className={styles.container}>
+    <div
+      id="place-info-card"
+      className={styles.container}
+    >
       {(focusedPlace && currentGroup) ? (<>
         <h5>{focusedPlace.name}</h5>
         {isInPlaces && <>
